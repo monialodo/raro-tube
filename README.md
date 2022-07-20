@@ -1,92 +1,149 @@
-# trabalho-final-grupo-200
+# Portal de videos Raro Academy - Raro Tube
+
+Atualmente, todas as aulas gravadas da Raro Academy estão no Zoom. Para os alunos terem acesso a essas aulas, disponibilizamos o link de cada uma em uma planilha. Estes conteúdos, desta forma, permanecem públicos, com acesso disponível a qualquer pessoa com o link de acesso.
+
+Queremos melhorar nosso modelo de distribuição deste conteúdo, criando um portal de acesso aos materiais de vídeo, onde nossos alunos poderão ter acesso ao conteúdo direcionados a eles.
+
+## O portal:
+
+### Página principal (área não logada)
+
+- Deverá existir uma área não logada do portal de vídeos, onde qualquer pessoa pode acessar as gravações dos nossos aulões públicos;
+- Ao clicar em qualquer uma destas aulas, esta pessoa deverá ser redirecionada para a Tela de Visualização do vídeo;
+- Ainda na página principal, no topo da tela, deve existir um botão de login do usuário, que leva à Tela de login.
+
+### Tela de login
+
+- Nesta tela, os alunos terão a opção de fazer login ou se cadastrar na plataforma, caso seja seu primeiro acesso;
+- No primeiro caso, alunos já cadastrados serão autenticados para terem acesso aos conteúdos referentes a sua turma;
+- Após o login, o usuário deverá ser redirecionado novamente à página principal da aplicação, que passará a exibir os vídeos referentes à turma do usuário.
+- Requisitos acessórios:
+  - "Esqueci minha senha"
+      - O usuário deverá preencher seu email de cadastro na aplicação. O sistema deverá enviar um email para o usuário, com o código de recuperação de senha. Ao receber este código, o usuário deverá preencher um formulário contendo o código recebido e a nova senha, seguida da confirmação da mesma. O código de recuperação de senha tem uma duração máxima de 2 horas.
+  - Cadastro de novos usuários
+      - Considerando que a pessoa foi aprovada em uma turma da Raro Academy, esta pessoa deverá receber um e-mail de boas vindas, com instruções de acesso ao Raro Tube, e um código de acesso. Este novo usuário deverá entrar na tela de cadastro e preencher seus dados pessoais (nome, email e senha), seguido do código de acesso recebido por email. Este código credencia este usuário para a turma na qual ele deverá ser inscrito. Usuários sem código de acesso devem ser impedidos de criar uma nova conta.
+
+### Página principal (área logada)
+
+- Após o login, além dos aulões públicos, a página principal do usuário também vai conter a lista de vídeos da sua turma;
+- Para facilitar a visualização, a lista de aulas deve estar separada por semanas (ou conteúdo), no formato de playlists;
+- A tela também vai exibir uma lista de "Favoritos", que contém os vídeos que foram favoritados pelo usuário. No caso de um primeiro acesso, essa lista vai estar em branco, com as instruções para o usuário favoritar seu primeiro vídeo.
+
+Extra: Esta tela também pode exibir uma lista com o histórico dos vídeos já acessados pelo usuário.
+
+### Tela de visualização dos vídeos
+
+- Quando o usuário clicar em um dos vídeos, seja dos aulões públicos, seja dos vídeos da turma, este deverá ser redirecionado para a tela de visualização;
+- Além do player do vídeo, esta tela também deverá exibir uma lista contendo os próximos vídeos sugeridos na sequência;
+- Ainda nesta tela, deverá existir uma área de comentários, onde os usuários podem deixar sugestões, reviews, dúvidas e respostas sobre o conteúdo. Todos os comentários devem ser identificados, ou seja, o usuário criador da mensagem é identificado. Todos os usuários logados podem responder e interagir com comentários de outros usuários, com upvote ou downvote;
+- O usuário também terá a opção de favoritar o vídeo, que ficará salvo na lista de favoritos a ser exibida na tela principal.
+
+> Importante: A ação de comentar vídeos está autorizada somente para usuários autenticados. Usuários não autenticados podem apenas visualizar os comentários, sem autorização de comentar ou interagir com estes comentários.
+
+## O painel Administrativo
+
+Este painel será de acesso exclusivo a usuários cadastrados como administradores do sistema.
+
+### Cadastro de turmas
+
+CRUD de gestão de turmas. Este registro deverá servir de agregador para as informações das turmas vigentes. Toda a informação privada para determinada turma estará restrita baseada neste registro. Ou seja, os alunos e vídeos pertencentes às turmas serão restritas à estas, a partir dos dados mantidos neste CRUD.
+- campos obrigatórios
+  - nome
+  - descrição
+  - Logo do curso
+
+### Cadastro de usuários
+
+Crud de criação de usuários do sistema. Os usuários podem assumir os papeis de: 
+  - Usuário comum do sistema: Este usuário terá direito de acesso ao portal de vídeos. Este usuário deverá estar vinculado a uma turma, e pode interagir exclusivamente com o conteúdo de sua turma. Interagir significa:
+    - consumir conteúdos de vídeo
+    - comentar vídeos
+    - dar upvotes e downvotes nos comentários dos vídeos da turma
+    - favoritar vídeos
+  - Professores: Este usuário deverá ter acesso à(s) turma(s) que ele leciona e fazer a gestão dos videos desta(s) turma(s). Este usuário poderá também ter acesso às funções do portal para as turmas às quais ele pertence, interagindo como um usuário comum.
+  - Administrador: Este usuário poderá ter acesso ao painel adminstrativo, com permissão de executar todas as tarefas dos CRUDs de turmas, usuários, e vídeos. Este usuário poderá também consumir todos os conteúdos de videos da plataforma.
+  - campos obrigatórios:
+    - nome
+    - email
+    - tipo de usuário (perfil)
+    - foto de perfil
+    - turma
+
+### Cadastro de vídeos
+
+- Crud de cadastro dos vídeos a serem publicados no portal. 
+Os vídeos deverão contar com os uploads dos arquivos de vídeo e o banner. Se associado a uma turma, este vídeo é exclusivo para usuários pertencentes à turma em questão. Caso contrário, este vídeo deverá ser público, disponível para todas as turmas e para os usuários não logados.
+- campos obrigatórios:
+  - nome
+  - descricão
+  - arquivo do vídeo
+  - imagem de banner do vídeo
+
+### Observações e dicas:
+Mock-up/Layout de baixa resolução:
+- Link para Diagrama: https://drive.google.com/file/d/1KrtXirxz-xs9KrCsDe-4xUjCjCpG0elT/view 
+- O diagrama foi distribuído através do diagrams.net, ferramenta integrada ao Google drive. Para melhor visualização de todo o layout, sugerimos seguir [este tutorial](https://www.diagrams.net/doc/faq/google-drive-diagrams#:~:text=In%20Google%20Drive%2C%20click%20New,in%20the%20diagrams.net%20editor.) para integrar este aplicativo à sua conta.
+- os uploads de arquivos (vídeos e imagens) para a API poderão ser armazenados em uma pasta local, da própria API. Não há um requisito de envio para armazenamento em nuvem.
+- dica: sugerimos a utilização do [multer](http://expressjs.com/en/resources/middleware/multer.html) para gestão de uploads de arquivos. Este [artigo](https://consolelog.com.br/upload-de-arquivos-imagens-utilizando-multer-express-nodejs/) pode ajudar o entendimento da biblioteca.
+- o envio de e-mail deverá ser feito por um cliente externo de envio. Sugerimos a utilização do [sendgrid](https://docs.airplane.dev/), por ser gratuito de de fácil utilização. Para depuração dos envios de e-mail, sugerimos também o uso do [mailtrap.io](https://mailtrap.io/)
 
 
+# REGRAS
 
-## Getting started
+## O que será avaliado?
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- Totalidade dos requisitos implementados: 12 pontos
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+  - O projeto deverá ser iniciado no template disponibilizado pelos instrutores ou a partir de um modelo que o próprio grupo decida que é mais cômodo. O template de exemplo descreve uma arquitetura MVC, implementada em typescript, utilizando o framework http express, para comunicação de rede, TypeORM, como ferramenta de gestão de dados;
+  - Precisa contar com recursos de armazenamento em banco de dados. A utilização de APIs terceiras para cumprir funções desta API é um requisito obrigatório;
+  - As issues (cada item a ser resolvido do backlog da API) precisam ser entregues para o repositório via Pull Requests/Merge Requests;
+  - O andamento do projeto precisa ser demonstrado através do fluxo das issues no board do gitlab;
+  - As funcionalidades previstas devem estar corretamente implementadas.
 
-## Add your files
+- Qualidade: 10 pontos
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+  - A qualidade do código e boas práticas de organização e segurança das rotas da API.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/g.zanco12/trabalho-final-grupo-200.git
-git branch -M main
-git push -uf origin main
-```
+- Documentação: 8 pontos
 
-## Integrate with your tools
+  - Deverá ser detalhada no README, a fim de ajudar a banca avaliadora e possíveis novos devs do projeto, para que consigam sustentar a aplicação de forma autônoma;
+  - Deverá conter os comandos de utilização do repositório;
+  - PRs, issue e gitflow são componentes importantes na documentação da entrega;
+  - Objetivos da API: deve conter um swagger operacional;
+  - Documento demonstrando as tabelas e relações entre elas no banco de dados;
+  - Recursos terceiros que sua API utiliza.
 
-- [ ] [Set up project integrations](https://gitlab.com/g.zanco12/trabalho-final-grupo-200/-/settings/integrations)
+- Desempenho: 5 pontos
 
-## Collaborate with your team
+  - Será verificado se há problemas do ponto de vista de desempenho. Ex.: Verificar se há um consumo excessivo da API, em atividades que esta utilização pode ser mais moderada;
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- Cobertura de testes: 5 pontos
 
-## Test and Deploy
+  - Cobertura com testes de unidade
 
-Use the built-in continuous integration in GitLab.
+- Apresentação: 5 pontos
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+  - Não temos critérios obrigatórios para essa apresentação. O importante é que cada grupo consiga vender a solução criada. Sejam criativos!
+  - As regras para a Apresentação/Banca Final são essas:
+  - 10 minutos de apresentação por grupo;
+  - 15 minutos para comentários e perguntas da banca;
+  - Banca composta pelos instrutores + Alguma(s) pessoa(s) de referência técnica da Raro Labs;
+  - A nota final para este critério será a média das notas de cada membro da banca;
+  - A nota da Apresentação será a mesma para todos os integrantes do grupo;
+  - Dicas:
+    - Eleger um porta-voz ou distribuir bem o tempo para que todos possam falar
+    - Produzir slides e materiais visuais
 
-***
+- TOTAL: 45 PONTOS
 
-# Editing this README
+ATENÇÃO:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- Os grupos serão pontuados coletivamente: será avaliado se os critérios acima descritos foram contemplados;
+- Os integrantes serão avaliados individualmente, de acordo com a contribuição, para o resultado alcançado. Ou seja, as notas do trabalho final serão individuais, ponderando a pontuação geral do grupo de acordo com a contribuição individual de cada integrante.
+A única exceção é a nota da Apresentação, que será a mesma para todos os integrantes.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## Sugerimos que:
 
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- O trabalho da equipe seja regido pelo gitflow
+- Cada entrega das issues seja feita em um pull request separado
+- Os integrantes do grupo se comuniquem, ajudando uns aos outros, e revisando as entregas dos códigos, para garantir a melhor qualidade possível
