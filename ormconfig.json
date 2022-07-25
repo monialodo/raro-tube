@@ -1,0 +1,21 @@
+{
+    "type": "mysql",
+    "port": 3307,
+    "host": "database",
+    "username": "monia_lodo",
+    "password": "2C4F4D51-A37D-4B59-B0E4-EFB945137",
+    "database": "ra_drive_monia_lodo",
+    "migrations": ["src/typeorm/migration/*.ts"],
+    "entities": ["./src/models/**/*Entity.ts"],
+    "subscribers": ["src/subscriber/**/*.ts"],
+
+
+    "cli": {
+        "entitiesDir": "src/models",
+        "migrationsDir": "src/typeorm/migration",
+        "subscribersDir": "src/subscriber"
+
+    }
+
+
+}

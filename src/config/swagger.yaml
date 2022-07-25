@@ -1,0 +1,86 @@
+openapi: 3.0.0
+paths:
+  
+ 
+info:
+  title: 
+  description: 
+  version: 1.0.0
+  contact: {}
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+          format: email
+        senha:
+          type: string
+      required:
+        - nome
+        - email
+        - senha
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+        - token
+    Plano:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        valor:
+          type: number
+        limiteGB:
+          type: number
+      required:
+        - id
+        - nome
+        - valor
+        - limiteGB
+    Arquivo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        usuarioId:
+          type: string
+        nome:
+          type: string
+        tipo:
+          type: string
+      required:
+        - id
+        - usuarioId
+        - nome
+        - tipo
+    CompartilhamentoDto:
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+        dataFim:
+          format: date-time
+          type: string
+      required:
+        - emails
+        - dataFim
