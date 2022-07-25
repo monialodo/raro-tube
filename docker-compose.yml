@@ -6,11 +6,9 @@ services:
     container_name: raro_tube_db
     restart: always
     environment:
-      - MYSQL_DATABASE= ra_drive_monia_lodo
-      - MYSQL_HOST=44.199.200.211
-      - MYSQL_ROOT_PASSWORD= 2C4F4D51-A37D-4B59-B0E4-EFB945137ED5
+      - MYSQL_ROOT_PASSWORD= root
     ports:
-      - 3307:3307
+      - 3306:3306
     volumes:
       - raro_tube:/var/lib/mysql
 
@@ -21,15 +19,6 @@ services:
     restart: always
     ports:
       - 3000:3000
-    environment:
-      - NODE_ENV=development
-      - NODE_PORT=3000
-      - NODE_HOST=localhost
-      - MYSQL_HOST=44.199.200.211
-      - MYSQL_PORT=3307
-      - MYSQL_USER=monia_lodo
-      - MYSQL_PASSWORD=2C4F4D51-A37D-4B59-B0E4-EFB945137ED5
-      - MYSQL_DATABASE=ra_drive_monia_lodo
     volumes:
       - .:/usr/app
     links:
