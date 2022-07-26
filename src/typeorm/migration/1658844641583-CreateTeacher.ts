@@ -30,11 +30,6 @@ export class CreateTeacher1658844641583 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'password',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
             name: 'avatar',
             type: 'varchar',
             isNullable: false,

@@ -1,6 +1,6 @@
-import { IsDate, IsDefined, IsString } from "class-validator";
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from "typeorm";
-import { turma } from "./classEntity";
+import { IsDate, IsDefined, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn } from "typeorm";
+import { studentsClass } from "./classEntity";
 
 
 
@@ -13,26 +13,21 @@ export class administrator {
 
   @IsString()
   @Column({ name: 'name' })
-  @IsDefined()
+  @IsNotEmpty()
   name: string;
 
   @IsString()
   @Column({ name: 'user_id' })
-  @IsDefined()
+  @IsNotEmpty()
   userId: string;
 
   @IsString()
-  @Column({ name: 'password' })
-  @IsDefined()
-  password: string;
-
-  @IsString()
-  @Column({ name: 'avatar' })
-  @IsDefined()
+  @Column({ name: 'avatar', nullable: true })
+  @IsOptional()
   avatar: string;
 
-  @OneToMany(() => turma, (turma) => turma.administrator)
-  turmas: turma[];
+  @OneToMany(() => studentsClass, (studentsClass) => studentsClass.administrator)
+  studentsClasss: studentsClass[];
 
   @IsDate()
   @Column({ name: 'created_at' })
@@ -40,7 +35,6 @@ export class administrator {
   createdAt: Date;
 
   @IsDate()
-  @Column({ name: 'updated_at' })
-  @IsDefined()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

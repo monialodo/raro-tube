@@ -1,5 +1,5 @@
-import { IsString, IsDefined, IsDate, IsNumber } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { IsString, IsDefined, IsDate, IsNumber, Min, IsNotEmpty } from "class-validator";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, UpdateDateColumn } from "typeorm";
 import { student } from "./studentEntity";
 import { video } from "./videoEntity";
 
@@ -11,14 +11,16 @@ export class commentary {
   id: string;
 
   @IsNumber()
-  @Column({ name: 'quantidade_downvote' })
-  @IsDefined()
-  quantidadeUpvote: number;
+  @Column({ name: 'downvote_quantity' })
+  @IsNotEmpty()
+  @Min(0)
+  UpvoteQuantity: number;
 
   @IsNumber()
-  @Column({ name: 'quantidade_downvote' })
-  @IsDefined()
-  quantidadeDownvote: number;
+  @Column({ name: 'downvote_quantity' })
+  @IsNotEmpty()
+  @Min(0)
+  DownvoteQuantity: number;
 
   @ManyToOne(() => video, (video) => video.commentarys)
   video: video;
@@ -31,6 +33,6 @@ export class commentary {
   createdAt: Date;
 
   @IsDate()
-  @Column({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

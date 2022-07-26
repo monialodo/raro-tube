@@ -1,6 +1,6 @@
-import { IsString, IsDefined, IsDate } from "class-validator";
-import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from "typeorm";
-import { turma } from "./classEntity";
+import { IsString, IsDefined, IsDate, IsOptional } from "class-validator";
+import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, UpdateDateColumn } from "typeorm";
+import { studentsClass } from "./classEntity";
 import { video } from "./videoEntity";
 
 
@@ -22,18 +22,13 @@ export class teacher {
   userId: string;
 
   @IsString()
-  @Column({ name: 'password' })
-  @IsDefined()
-  password: string;
-
-  @IsString()
-  @Column({ name: 'avatar' })
-  @IsDefined()
+  @Column({ name: 'avatar', nullable: true })
+  @IsOptional()
   avatar: string;
 
-  @OneToOne(() => turma, (turma) => turma.teacher)
-  @JoinColumn({name: 'turma_id'})
-  turma: turma;
+  @OneToOne(() => studentsClass, (studentsClass) => studentsClass.teacher)
+  @JoinColumn({name: 'studentsClass_id'})
+  studentsClass: studentsClass;
 
   @OneToOne(() => video, (video) => video.teacher)
   @JoinColumn({ name: 'video_id' })
@@ -45,7 +40,6 @@ export class teacher {
   createdAt: Date;
 
   @IsDate()
-  @Column({ name: 'updated_at' })
-  @IsDefined()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

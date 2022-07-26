@@ -1,6 +1,6 @@
 import { IsString, IsDefined, IsDate } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany } from "typeorm";
-import { turma } from "./classEntity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany, UpdateDateColumn } from "typeorm";
+import { studentsClass } from "./classEntity";
 import { commentary } from "./commentaryEntity";
 import { teacher } from "./teacherEntity";
 
@@ -36,8 +36,8 @@ export class video {
   @IsDefined()
   tags: string;
 
-  @ManyToOne(() => turma, (turma) => turma.videos)
-  turma: turma;
+  @ManyToOne(() => studentsClass, (studentsClass) => studentsClass.videos)
+  studentsClass: studentsClass;
 
   @OneToOne(() => teacher, (teacher) => teacher.video)
   @JoinColumn({ name: 'teacher_id' })
@@ -52,7 +52,6 @@ export class video {
   createdAt: Date;
 
   @IsDate()
-  @Column({ name: 'updated_at' })
-  @IsDefined()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

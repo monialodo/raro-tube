@@ -1,6 +1,6 @@
-import { IsString, IsDefined, IsDate } from "class-validator";
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToOne } from "typeorm";
-import { turma } from "./classEntity";
+import { IsString, IsDefined, IsDate, IsNotEmpty, IsOptional } from "class-validator";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToOne, UpdateDateColumn } from "typeorm";
+import { studentsClass } from "./classEntity";
 import { commentary } from "./commentaryEntity";
 
 @Entity()
@@ -11,29 +11,24 @@ export class student {
 
   @IsString()
   @Column({ name: 'name' })
-  @IsDefined()
+  @IsNotEmpty()
   name: string;
 
   @IsString()
   @Column({ name: 'user_id' })
-  @IsDefined()
+  @IsNotEmpty()
   userId: string;
 
   @IsString()
-  @Column({ name: 'password' })
-  @IsDefined()
-  password: string;
-
-  @IsString()
   @Column({ name: 'avatar' })
-  @IsDefined()
+  @IsOptional()
   avatar: string;
 
   @OneToMany(() => commentary, (commentary) => commentary.student)
   commentarys: commentary[];
 
-  @ManyToOne(() => turma, (turma) => turma.students)
-  turma: turma;
+  @ManyToOne(() => studentsClass, (studentsClass) => studentsClass.students)
+  studentsClass: studentsClass;
 
   @IsDate()
   @Column({ name: 'created_at' })
@@ -41,7 +36,6 @@ export class student {
   createdAt: Date;
 
   @IsDate()
-  @Column({ name: 'updated_at' })
-  @IsDefined()
+  @UpdateDateColumn({ name: 'updated_at', nullable: true })
   updatedAt: Date;
 }

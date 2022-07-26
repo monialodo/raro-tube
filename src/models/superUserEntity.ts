@@ -1,6 +1,6 @@
-import { IsDefined, IsUUID } from "class-validator";
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from "typeorm";
-import { turma } from "./classEntity";
+import { IsDate, isDate, IsDefined, IsNotEmpty, IsUUID } from "class-validator";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn } from "typeorm";
+import { studentsClass } from "./classEntity";
 
 
 @Entity()
@@ -11,21 +11,22 @@ export class superUser {
   id: string;
 
   @Column({ name:'name'})
-  @IsDefined()
+  @IsNotEmpty()
   name: string;
 
   @Column({ name:'user_id'})
-  @IsDefined()
+  @IsNotEmpty()
   userId: string;
 
-  @OneToMany(() => turma, (turma) => turma.superUser)
-  turmas: turma[];
+  @OneToMany(() => studentsClass, (studentsClass) => studentsClass.superUser)
+  studentsClasss: studentsClass[];
 
+  @IsDate()
   @Column({ name:'created_at'})
-  @IsDefined()
+  @IsNotEmpty()
   createdAd: Date;
 
-  @Column({name:'updated_at'})
-  @IsDefined()
+  @IsDate()
+  @UpdateDateColumn({name:'updated_at'})
   updatedAt: Date;
 }

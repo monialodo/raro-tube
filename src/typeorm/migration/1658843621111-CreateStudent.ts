@@ -25,11 +25,6 @@ export class CreateStudent1658843621111 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'password',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
             name: 'avatar',
             type: 'varchar',
             isNullable: false,

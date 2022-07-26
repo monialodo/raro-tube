@@ -1,5 +1,5 @@
 import { IsDate, IsNotEmpty, IsString } from "class-validator";
-import { PrimaryGeneratedColumn, Column, Entity } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class users {
@@ -28,7 +28,6 @@ export class users {
   createdAt: Date;
 
   @IsDate()
-  @IsNotEmpty()
-  @Column({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }
