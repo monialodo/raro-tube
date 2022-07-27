@@ -2,15 +2,18 @@ version: "3.1"
 
 services:
   database:
-    image: mysql:5.7
+    image: postgres 
     container_name: raro_tube_db
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD= root
     ports:
-      - 3306:3306
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=raro
+      - POSTGRES_PASSWORD=raro
+      - POSTGRES_DB=raro_tube
+
     volumes:
-      - raro_tube:/var/lib/mysql
+      - raro_tube:/data/postgres
 
   app:
     build: .
@@ -25,8 +28,6 @@ services:
       - database
     depends_on:
       - database
-   
-
 volumes:
   raro_tube:
     driver: local

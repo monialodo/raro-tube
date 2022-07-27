@@ -9,7 +9,7 @@ dotenv.config();
 
 export const start = async () => {
     try {
-      // await createDatabaseConnection();
+      await createDatabaseConnection();
       const app = createApp();
   
       createServer(app);
