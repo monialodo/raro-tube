@@ -11,8 +11,7 @@ export class CreateComments1658844420579 implements MigrationInterface {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+
           },
           {
             name: 'upvote_quantity',

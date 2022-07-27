@@ -11,8 +11,7 @@ export class CreateStudentsClass1658843395830 implements MigrationInterface {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+   
           },
           {
             name: 'name',
