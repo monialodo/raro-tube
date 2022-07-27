@@ -1,60 +1,61 @@
-import { IsString, IsDefined, IsDate, IsNotEmpty } from "class-validator";
-import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, Entity, ManyToOne, OneToMany, UpdateDateColumn } from "typeorm";
-import { administrator } from "./administratorEntity";
-import { student } from "./studentEntity";
-import { superUser } from "./superUserEntity";
-import { teacher } from "./teacherEntity";
-import { video } from "./videoEntity";
+import { IsString, IsDate, IsNotEmpty, IsUUID } from "class-validator";
+import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, Entity, ManyToOne, OneToMany, UpdateDateColumn, CreateDateColumn } from "typeorm";
+import { Administrator } from "./administratorEntity";
+import { Student } from "./studentEntity";
+import { SuperUser } from "./superUserEntity";
+import { Teacher } from "./teacherEntity";
+import { Video } from "./videoEntity";
 
 
-@Entity()
-export class studentsClass {
-
+@Entity('class')
+export class StudentsClass {
+  @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @IsString()
-  @Column({ name: 'name' })
   @IsNotEmpty()
+  @Column({ name: 'name' })
   name: string;
 
   @IsString()
-  @Column({ name: 'description' })
   @IsNotEmpty()
+  @Column({ name: 'description' })
   description: string;
 
   @IsString()
-  @Column({ name: 'logo' })
   @IsNotEmpty()
+  @Column({ name: 'logo' })
   logo: string;
 
   @IsString()
-  @Column({ name: 'tags' })
   @IsNotEmpty()
+  @Column({ name: 'tags' })
   tags: string;
 
-  @ManyToOne(() => superUser, (superUser) => superUser.studentsClasss)
-  superUser: superUser;
+  @ManyToOne(() => SuperUser, (superUser) => superUser.studentsClass)
+  superUser: SuperUser;
 
-  @ManyToOne(() => administrator, (administrator) => administrator.studentsClasss)
-  administrator: administrator;
+  @ManyToOne(() => Administrator, (administrator) => administrator.studentsClasss)
+  administrator: Administrator;
 
-  @OneToOne(() => teacher, (teacher) => teacher.studentsClass)
+  @OneToOne(() => Teacher, (teacher) => teacher.studentsClass)
   @JoinColumn({ name: 'teacher_id' })
-  teacher: teacher;
+  teacher: Teacher;
 
-  @OneToMany(() => video, (video) => video.studentsClass)
-  videos: video[];
+  @OneToMany(() => Video, (video) => video.studentsClass)
+  videos: Video[];
 
-  @OneToMany(() => student, (student) => student.studentsClass)
-  students: student[];
+  @OneToMany(() => Student, (student) => student.studentsClass)
+  students: Student[];
 
   @IsDate()
-  @Column({ name: 'created_at' })
-  @IsDefined()
+  @IsNotEmpty()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
-
+  
   @IsDate()
+  @IsNotEmpty()
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

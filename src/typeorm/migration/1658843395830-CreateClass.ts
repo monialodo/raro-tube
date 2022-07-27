@@ -62,7 +62,6 @@ export class CreateStudentsClass1658843395830 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'ForeignKeySuperUser',
             columnNames: ['super_user_id'],
             referencedTableName: 'super_user',
             referencedColumnNames: ['id'],
@@ -70,17 +69,15 @@ export class CreateStudentsClass1658843395830 implements MigrationInterface {
             onUpdate: 'CASCADE',
           },
           {
-            name: 'ForeignKeyAdministrator',
             columnNames: ['administrator_id'],
-            referencedTableName: 'administrator',
+            referencedTableName: 'administrators',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'ForeignKeyTeacher',
             columnNames: ['teacher_id'],
-            referencedTableName: 'teacher',
+            referencedTableName: 'teachers',
             referencedColumnNames: ['id'],  
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',

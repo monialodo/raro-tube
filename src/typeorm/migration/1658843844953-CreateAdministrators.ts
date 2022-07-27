@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateTeacher1658844641583 implements MigrationInterface {
+export class CreateAdministrators1658843844953 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'teacher',
+        name: 'administrators',
         columns: [
           {
             name: 'id',
@@ -20,22 +20,17 @@ export class CreateTeacher1658844641583 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'user_id',
-            type: 'uuid',
-            isNullable: false,
-          },
-          {
-            name: 'turma_id',
-            type: 'uuid',
-            isNullable: false,
-          },
-          {
             name: 'avatar',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'video_id',
+            name: 'user_id',
+            type: 'uuid',
+            isNullable: false,
+          },
+          {
+            name: 'class_id',
             type: 'uuid',
             isNullable: false,
           },
@@ -52,17 +47,15 @@ export class CreateTeacher1658844641583 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'video',
-            columnNames: ['video_id'],
-            referencedTableName: 'video',
+            columnNames: ['user_id'],
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'turma',
-            columnNames: ['turma_id'],
-            referencedTableName: 'turma',
+            columnNames: ['class_id'],
+            referencedTableName: 'class',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -73,7 +66,7 @@ export class CreateTeacher1658844641583 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('teacher');
+    await queryRunner.dropTable('administrators');
   }
 
 }

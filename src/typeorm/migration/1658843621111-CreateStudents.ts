@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateVideo1658843997425 implements MigrationInterface {
+export class CreateStudents1658843621111 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'video',
+        name: 'students',
         columns: [
           {
             name: 'id',
@@ -20,37 +20,22 @@ export class CreateVideo1658843997425 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'duration',
+            name: 'email',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'subjects',
+            name: 'avatar',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'tags',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'thumbnail',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'teacher_id',
+            name: 'comment_id',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'turma_id',
-            type: 'uuid',
-            isNullable: false,
-          },
-          {
-            name: 'commentary_id',
+            name: 'class_id',
             type: 'uuid',
             isNullable: false,
           },
@@ -67,26 +52,16 @@ export class CreateVideo1658843997425 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'Turma',
-            columnNames: ['turma_id'],
-            referencedTableName: 'turma',
+            columnNames: ['class_id'],
             referencedColumnNames: ['id'],
+            referencedTableName: 'class',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'Commentary',
-            columnNames: ['commentary_id'],
-            referencedTableName: 'commentary',
+            columnNames: ['comment_id'],
             referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            name: 'Teacher',
-            columnNames: ['teacher_id'],
-            referencedTableName: 'teacher',
-            referencedColumnNames: ['id'],
+            referencedTableName: 'comments',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -96,7 +71,7 @@ export class CreateVideo1658843997425 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('video');
+    await queryRunner.dropTable('students');
   }
 
 }

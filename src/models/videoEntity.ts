@@ -1,57 +1,58 @@
-import { IsString, IsDefined, IsDate } from "class-validator";
+import { IsString, IsDate, IsNotEmpty, IsUUID } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany, UpdateDateColumn } from "typeorm";
-import { studentsClass } from "./classEntity";
-import { commentary } from "./commentaryEntity";
-import { teacher } from "./teacherEntity";
+import { StudentsClass } from "./classEntity";
+import { Comment } from "./commentEntity";
+import { Teacher } from "./teacherEntity";
 
 
-@Entity()
-export class video {
-
+@Entity('videos')
+export class Video {
+  @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @IsString()
+  @IsNotEmpty()
   @Column({ name: 'name' })
-  @IsDefined()
   name: string;
 
   @IsString()
+  @IsNotEmpty()
   @Column({ name: 'duration' })
-  @IsDefined()
   duration: string;
 
   @IsString()
+  @IsNotEmpty()
   @Column({ name: 'subjects' })
-  @IsDefined()
   subjects: string;
 
   @IsString()
+  @IsNotEmpty()
   @Column({ name: 'thumbnail' })
-  @IsDefined()
   thumbnail: string;
 
   @IsString()
+  @IsNotEmpty()
   @Column({ name: 'tags' })
-  @IsDefined()
   tags: string;
 
-  @ManyToOne(() => studentsClass, (studentsClass) => studentsClass.videos)
-  studentsClass: studentsClass;
+  @ManyToOne(() => StudentsClass, (studentsClass) => studentsClass.videos)
+  studentsClass: StudentsClass;
 
-  @OneToOne(() => teacher, (teacher) => teacher.video)
+  @OneToOne(() => Teacher, (teacher) => teacher.video)
   @JoinColumn({ name: 'teacher_id' })
-  teacher: teacher;
+  teacher: Teacher;
 
-  @OneToMany(() => commentary, (commentary) => commentary.video)
-  commentarys: commentary[];
+  @OneToMany(() => Comment, (comment) => comment.video)
+  comments: Comment[];
 
   @IsDate()
+  @IsNotEmpty()
   @Column({ name: 'created_at' })
-  @IsDefined()
   createdAt: Date;
-
+  
   @IsDate()
+  @IsNotEmpty()
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

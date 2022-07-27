@@ -1,40 +1,39 @@
-import { IsDate, IsDefined, IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn } from "typeorm";
-import { studentsClass } from "./classEntity";
+import { IsDate, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn, CreateDateColumn } from "typeorm";
+import { StudentsClass } from "./classEntity";
 
 
-
-
-@Entity()
-export class administrator {
-
+@Entity('administrators')
+export class Administrator {
+  @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @IsString()
-  @Column({ name: 'name' })
   @IsNotEmpty()
+  @Column({ name: 'name' })
   name: string;
 
   @IsString()
-  @Column({ name: 'user_id' })
   @IsNotEmpty()
+  @Column({ name: 'user_id' })
   userId: string;
 
   @IsString()
-  @Column({ name: 'avatar', nullable: true })
   @IsOptional()
+  @Column({ name: 'avatar', nullable: true })
   avatar: string;
 
-  @OneToMany(() => studentsClass, (studentsClass) => studentsClass.administrator)
-  studentsClasss: studentsClass[];
+  @OneToMany(() => StudentsClass, (studentsClass) => studentsClass.administrator)
+  studentsClasss: StudentsClass[];
 
   @IsDate()
-  @Column({ name: 'created_at' })
-  @IsDefined()
+  @IsNotEmpty()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @IsDate()
+  @IsNotEmpty()
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

@@ -1,45 +1,44 @@
-import { IsString, IsDefined, IsDate, IsOptional } from "class-validator";
-import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, UpdateDateColumn } from "typeorm";
-import { studentsClass } from "./classEntity";
-import { video } from "./videoEntity";
+import { IsString, IsDate, IsOptional, IsNotEmpty, IsUUID } from "class-validator";
+import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, UpdateDateColumn, CreateDateColumn, Entity } from "typeorm";
+import { StudentsClass } from "./classEntity";
+import { Video } from "./videoEntity";
 
-
-
-
-export class teacher {
-
+@Entity('teachers')
+export class Teacher {
+  @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @IsString()
+  @IsNotEmpty()
   @Column({ name: 'name' })
-  @IsDefined()
   name: string;
 
   @IsString()
+  @IsNotEmpty()
   @Column({ name: 'user_id' })
-  @IsDefined()
   userId: string;
 
   @IsString()
-  @Column({ name: 'avatar', nullable: true })
   @IsOptional()
+  @Column({ name: 'avatar', nullable: true })
   avatar: string;
 
-  @OneToOne(() => studentsClass, (studentsClass) => studentsClass.teacher)
+  @OneToOne(() => StudentsClass, (studentsClass) => studentsClass.teacher)
   @JoinColumn({name: 'studentsClass_id'})
-  studentsClass: studentsClass;
+  studentsClass: StudentsClass;
 
-  @OneToOne(() => video, (video) => video.teacher)
+  @OneToOne(() => Video, (video) => video.teacher)
   @JoinColumn({ name: 'video_id' })
-  video: video;
+  video: Video;
   
   @IsDate()
-  @Column({ name: 'created_at' })
-  @IsDefined()
+  @IsNotEmpty()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
-
+  
   @IsDate()
+  @IsNotEmpty()
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

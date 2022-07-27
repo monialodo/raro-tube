@@ -1,32 +1,34 @@
-import { IsDate, isDate, IsDefined, IsNotEmpty, IsUUID } from "class-validator";
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn } from "typeorm";
-import { studentsClass } from "./classEntity";
+import { IsDate, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn, CreateDateColumn } from "typeorm";
+import { StudentsClass } from "./classEntity";
 
 
-@Entity()
-export class superUser {
-
+@Entity('super_user')
+export class SuperUser {
   @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name:'name'})
+  @IsString()
   @IsNotEmpty()
+  @Column({ name:'name'})
   name: string;
 
-  @Column({ name:'user_id'})
+  @IsString()
   @IsNotEmpty()
+  @Column({ name:'user_id'})
   userId: string;
 
-  @OneToMany(() => studentsClass, (studentsClass) => studentsClass.superUser)
-  studentsClasss: studentsClass[];
+  @OneToMany(() => StudentsClass, (studentsClass) => studentsClass.superUser)
+  studentsClass: StudentsClass[];
 
   @IsDate()
-  @Column({ name:'created_at'})
   @IsNotEmpty()
+  @CreateDateColumn({ name:'created_at'})
   createdAd: Date;
-
+  
   @IsDate()
+  @IsNotEmpty()
   @UpdateDateColumn({name:'updated_at'})
   updatedAt: Date;
 }

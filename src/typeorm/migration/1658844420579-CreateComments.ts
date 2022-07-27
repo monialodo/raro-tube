@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateAdministrator1658843844953 implements MigrationInterface {
+export class CreateComments1658844420579 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'administrator',
+        name: 'comments',
         columns: [
           {
             name: 'id',
@@ -15,22 +15,22 @@ export class CreateAdministrator1658843844953 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
-            type: 'varchar',
+            name: 'upvote_quantity',
+            type: 'integer',
             isNullable: false,
           },
           {
-            name: 'avatar',
-            type: 'varchar',
+            name: 'downvote_quantity',
+            type: 'integer',
             isNullable: false,
           },
           {
-            name: 'user_id',
+            name: 'video_id',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'turma_id',
+            name: 'student_id',
             type: 'uuid',
             isNullable: false,
           },
@@ -47,9 +47,15 @@ export class CreateAdministrator1658843844953 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'turma',
-            columnNames: ['turma_id'],
-            referencedTableName: 'turma',
+            columnNames: ['student_id'],
+            referencedTableName: 'students',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            columnNames: ['video_id'],
+            referencedTableName: 'videos',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -60,7 +66,7 @@ export class CreateAdministrator1658843844953 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('administrator');
-  }
+    await queryRunner.dropTable('comments');
+    }
 
 }

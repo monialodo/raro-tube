@@ -25,7 +25,7 @@ export class CreateSuperUser1658844844459 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'turma_id',
+            name: 'class_id',
             type: 'uuid',
             isNullable: false,
           },
@@ -42,9 +42,9 @@ export class CreateSuperUser1658844844459 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'turma',
-            columnNames: ['turma_id'],
-            referencedTableName: 'turma',
+            name: 'class',
+            columnNames: ['class_id'],
+            referencedTableName: 'class',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
