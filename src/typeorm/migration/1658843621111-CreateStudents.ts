@@ -49,22 +49,6 @@ export class CreateStudents1658843621111 implements MigrationInterface {
             default: 'now()',
           },
         ],
-        foreignKeys: [
-          {
-            columnNames: ['class_id'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'class',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            columnNames: ['comment_id'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'comments',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-        ],
       }),
     );
   }

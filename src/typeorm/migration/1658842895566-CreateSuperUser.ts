@@ -39,16 +39,6 @@ export class CreateSuperUser1658842895566 implements MigrationInterface {
             default: 'now()',
           },
         ],
-        foreignKeys: [
-          {
-            name: 'class',
-            columnNames: ['class_id'],
-            referencedTableName: 'class',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-        ],
       }),
     );
   }

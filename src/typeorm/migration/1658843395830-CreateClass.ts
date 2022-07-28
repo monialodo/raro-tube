@@ -59,29 +59,6 @@ export class CreateStudentsClass1658843395830 implements MigrationInterface {
             default: 'now()',
           },
         ],
-        foreignKeys: [
-          {
-            columnNames: ['super_user_id'],
-            referencedTableName: 'super_user',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            columnNames: ['administrator_id'],
-            referencedTableName: 'administrators',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            columnNames: ['teacher_id'],
-            referencedTableName: 'teachers',
-            referencedColumnNames: ['id'],  
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-        ],
       }),
     );
     
