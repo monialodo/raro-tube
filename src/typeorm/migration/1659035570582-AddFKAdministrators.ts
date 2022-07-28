@@ -6,7 +6,6 @@ export class AddFKAdministrators1659035570582 implements MigrationInterface {
         await queryRunner.createForeignKeys('administrators',
             [
                 new TableForeignKey({
-                    name : 'user',
                     columnNames: ['user_id'],
                     referencedTableName: 'users',
                     referencedColumnNames: ['id'],
@@ -14,7 +13,6 @@ export class AddFKAdministrators1659035570582 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name : 'class',
                     columnNames: ['class_id'],
                     referencedTableName: 'class',
                     referencedColumnNames: ['id'],
@@ -30,7 +28,6 @@ export class AddFKAdministrators1659035570582 implements MigrationInterface {
         await queryRunner.dropForeignKeys('administrators',
         [
             new TableForeignKey({
-                name : 'user',
                 columnNames: ['user_id'],
                 referencedTableName: 'users',
                 referencedColumnNames: ['id'],
@@ -38,7 +35,6 @@ export class AddFKAdministrators1659035570582 implements MigrationInterface {
                 onUpdate: 'CASCADE',
             }),
             new TableForeignKey({
-                name : 'class',
                 columnNames: ['class_id'],
                 referencedTableName: 'class',
                 referencedColumnNames: ['id'],

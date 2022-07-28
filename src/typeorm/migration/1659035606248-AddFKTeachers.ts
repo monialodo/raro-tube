@@ -6,7 +6,6 @@ export class AddFKTeachers1659035606248 implements MigrationInterface {
         await queryRunner.createForeignKeys('teachers',
             [
                 new TableForeignKey({
-                    name: 'class',
                     columnNames: ['class_id'],
                     referencedTableName: 'class',
                     referencedColumnNames: ['id'],
@@ -14,7 +13,6 @@ export class AddFKTeachers1659035606248 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name : 'videos',
                     columnNames: ['video_id'],
                     referencedTableName: 'videos',
                     referencedColumnNames: ['id'],
@@ -22,7 +20,6 @@ export class AddFKTeachers1659035606248 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name : 'user',
                     columnNames: ['user_id'],
                     referencedTableName: 'users',
                     referencedColumnNames: ['id'],
@@ -40,7 +37,6 @@ export class AddFKTeachers1659035606248 implements MigrationInterface {
         await queryRunner.dropForeignKeys('teachers',
             [
                 new TableForeignKey({
-                    name: 'class',
                     columnNames: ['class_id'],
                     referencedTableName: 'class',
                     referencedColumnNames: ['id'],
@@ -48,7 +44,6 @@ export class AddFKTeachers1659035606248 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name : 'videos',
                     columnNames: ['video_id'],
                     referencedTableName: 'videos',
                     referencedColumnNames: ['id'],
@@ -56,7 +51,6 @@ export class AddFKTeachers1659035606248 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name : 'user',
                     columnNames: ['user_id'],
                     referencedTableName: 'users',
                     referencedColumnNames: ['id'],

@@ -6,7 +6,6 @@ export class AddFKStudents1659035523852 implements MigrationInterface {
         await queryRunner.createForeignKeys('students',
             [
                 new TableForeignKey({
-                    name: 'class',
                     columnNames: ['class_id'],
                     referencedColumnNames: ['id'],
                     referencedTableName: 'class',
@@ -14,7 +13,6 @@ export class AddFKStudents1659035523852 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'comments',
                     columnNames: ['comment_id'],
                     referencedColumnNames: ['id'],
                     referencedTableName: 'comments',
@@ -30,7 +28,6 @@ export class AddFKStudents1659035523852 implements MigrationInterface {
         await queryRunner.dropForeignKeys('students',
             [
                 new TableForeignKey({
-                    name: 'class',
                     columnNames: ['class_id'],
                     referencedColumnNames: ['id'],
                     referencedTableName: 'class',
@@ -38,7 +35,6 @@ export class AddFKStudents1659035523852 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'comments',
                     columnNames: ['comment_id'],
                     referencedColumnNames: ['id'],
                     referencedTableName: 'comments',

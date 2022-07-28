@@ -6,7 +6,6 @@ export class AddFKVideos1659035594257 implements MigrationInterface {
         await queryRunner.createForeignKeys('videos',
             [
                 new TableForeignKey({
-                    name: 'class',
                     columnNames: ['class_id'],
                     referencedTableName: 'class',
                     referencedColumnNames: ['id'],
@@ -14,7 +13,6 @@ export class AddFKVideos1659035594257 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'comments',
                     columnNames: ['comment_id'],
                     referencedTableName: 'comments',
                     referencedColumnNames: ['id'],
@@ -22,7 +20,6 @@ export class AddFKVideos1659035594257 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'teacher',
                     columnNames: ['teacher_id'],
                     referencedTableName: 'teachers',
                     referencedColumnNames: ['id'],
@@ -38,7 +35,6 @@ export class AddFKVideos1659035594257 implements MigrationInterface {
         await queryRunner.dropForeignKeys('videos',
         [
             new TableForeignKey({
-                name: 'class',
                 columnNames: ['class_id'],
                 referencedTableName: 'class',
                 referencedColumnNames: ['id'],
@@ -46,7 +42,6 @@ export class AddFKVideos1659035594257 implements MigrationInterface {
                 onUpdate: 'CASCADE',
             }),
             new TableForeignKey({
-                name: 'comments',
                 columnNames: ['comment_id'],
                 referencedTableName: 'comments',
                 referencedColumnNames: ['id'],
@@ -54,7 +49,6 @@ export class AddFKVideos1659035594257 implements MigrationInterface {
                 onUpdate: 'CASCADE',
             }),
             new TableForeignKey({
-                name: 'teacher',
                 columnNames: ['teacher_id'],
                 referencedTableName: 'teachers',
                 referencedColumnNames: ['id'],

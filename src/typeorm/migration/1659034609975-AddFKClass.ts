@@ -6,7 +6,6 @@ export class AddFKClass1659034609975 implements MigrationInterface {
         await queryRunner.createForeignKeys('class',
             [
                 new TableForeignKey({
-                    name: 'super_user',
                     columnNames: ['super_user_id'],
                     referencedTableName: 'super_user',
                     referencedColumnNames: ['id'],
@@ -14,7 +13,6 @@ export class AddFKClass1659034609975 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'administrator',
                     columnNames: ['administrator_id'],
                     referencedTableName: 'administrators',
                     referencedColumnNames: ['id'],
@@ -22,7 +20,6 @@ export class AddFKClass1659034609975 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'teacher',
                     columnNames: ['teacher_id'],
                     referencedTableName: 'teachers',
                     referencedColumnNames: ['id'],
@@ -40,7 +37,6 @@ export class AddFKClass1659034609975 implements MigrationInterface {
         await queryRunner.dropForeignKeys('class',
             [
                 new TableForeignKey({
-                    name: 'super_user',
                     columnNames: ['super_user_id'],
                     referencedTableName: 'super_user',
                     referencedColumnNames: ['id'],
@@ -48,7 +44,6 @@ export class AddFKClass1659034609975 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'administrator',
                     columnNames: ['administrator_id'],
                     referencedTableName: 'administrators',
                     referencedColumnNames: ['id'],
@@ -56,7 +51,6 @@ export class AddFKClass1659034609975 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
-                    name: 'teacher',
                     columnNames: ['teacher_id'],
                     referencedTableName: 'teachers',
                     referencedColumnNames: ['id'],
