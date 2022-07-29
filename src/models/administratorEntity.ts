@@ -1,6 +1,6 @@
 import { IsDate, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn, CreateDateColumn } from "typeorm";
-import { StudentsClass } from "./classEntity";
+import { Classroom } from "./classroomEntity";
 
 
 @Entity('administrators')
@@ -24,8 +24,8 @@ export class Administrator {
   @Column({ name: 'avatar', nullable: true })
   avatar: string;
 
-  @OneToMany(() => StudentsClass, (studentsClass) => studentsClass.administrator)
-  studentsClasss: StudentsClass[];
+  @OneToMany(() => Classroom, (classroom) => classroom.administrator)
+  classrooms: Classroom[];
 
   @IsDate()
   @IsNotEmpty()

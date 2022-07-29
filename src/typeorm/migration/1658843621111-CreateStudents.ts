@@ -34,6 +34,11 @@ export class CreateStudents1658843621111 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'user_id',
+            type: 'uuid',
+            isNullable: false,
+          },
+          {
             name: 'class_id',
             type: 'uuid',
             isNullable: false,

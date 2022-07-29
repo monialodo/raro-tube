@@ -8,7 +8,7 @@ import { Video } from "./videoEntity";
 
 
 @Entity('class')
-export class StudentsClass {
+export class Classroom {
   @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -33,20 +33,20 @@ export class StudentsClass {
   @Column({ name: 'tags' })
   tags: string;
 
-  @ManyToOne(() => SuperUser, (superUser) => superUser.studentsClass)
+  @ManyToOne(() => SuperUser, (superUser) => superUser.classroom)
   superUser: SuperUser;
 
-  @ManyToOne(() => Administrator, (administrator) => administrator.studentsClasss)
+  @ManyToOne(() => Administrator, (administrator) => administrator.classrooms)
   administrator: Administrator;
 
-  @OneToOne(() => Teacher, (teacher) => teacher.studentsClass)
+  @OneToOne(() => Teacher, (teacher) => teacher.classroom)
   @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
 
-  @OneToMany(() => Video, (video) => video.studentsClass)
+  @OneToMany(() => Video, (video) => video.classroom)
   videos: Video[];
 
-  @OneToMany(() => Student, (student) => student.studentsClass)
+  @OneToMany(() => Student, (student) => student.classroom)
   students: Student[];
 
   @IsDate()

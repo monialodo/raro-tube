@@ -1,15 +1,8 @@
-import * as express from 'express';
-
+import * as express from "express";
+import createStudentRouter from "./studentRouter";
 
 const createRouters = (app: express.Express) => {
-    const router = express.Router();
-    router.get('/', (req, res) => {
-        res.send('Hello World!');
-    });
-    app.use('/', router);
-
-}
-
-
+  app.use("/v1/students", createStudentRouter());
+};
 
 export default createRouters;
