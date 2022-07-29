@@ -1,6 +1,6 @@
 import { IsString, IsDate, IsNotEmpty, IsUUID } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany, UpdateDateColumn } from "typeorm";
-import { StudentsClass } from "./classEntity";
+import { Classroom } from "./classroomEntity";
 import { Comment } from "./commentEntity";
 import { Teacher } from "./teacherEntity";
 
@@ -36,8 +36,8 @@ export class Video {
   @Column({ name: 'tags' })
   tags: string;
 
-  @ManyToOne(() => StudentsClass, (studentsClass) => studentsClass.videos)
-  studentsClass: StudentsClass;
+  @ManyToOne(() => Classroom, (classroom) => classroom.videos)
+  classroom: Classroom;
 
   @OneToOne(() => Teacher, (teacher) => teacher.video)
   @JoinColumn({ name: 'teacher_id' })

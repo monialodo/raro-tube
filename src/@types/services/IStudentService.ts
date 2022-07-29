@@ -1,12 +1,10 @@
-import { StudentDTO } from "../../@types/dto/studentsDTO";
 import { Student } from "../../models/studentEntity";
-
-
+import { StudentDTO } from "../dto/StudentsDto";
 
 export interface IStudentService {
-  buscarTodos(): Promise<Student[]>;
-  buscar(id: string): Promise<Student>;
-  criar(StudentDTO: StudentDTO): Promise<Student>;
-  atualizar(id: string, Student: Partial<StudentDTO>): Promise<Student>;
-  deletar(id: string): Promise<void>;
+  findAll(): Promise<Student[]>;
+  findOne(id: string): Promise<Student>;
+  create(student: StudentDTO): Promise<Student>;
+  update(id: string, student: StudentDTO): Promise<Student>;
+  delete(id: string): Promise<void>;
 }

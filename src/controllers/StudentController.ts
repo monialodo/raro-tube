@@ -5,26 +5,27 @@ import { Request, Response } from "express";
 @Service('StudentController')
 export class StudentController {
   constructor(
-    @Inject('StudentsService') private readonly studentService: IStudentService
+    @Inject('StudentService') private readonly studentService: IStudentService
   ){}
 
   async buscarTodos(request: Request, response: Response) {
-    const students = await this.studentService.buscarTodos();
+    const students = await this.studentService.findAll();
+    console.log(students);
     response.send(students);
   }
 
   async buscar(request: Request, response: Response) {
-    const student = await this.studentService.buscar(request.params.id);
+    const student = await this.studentService.findOne(request.params.id);
     response.send(student);
   }
 
   async criar(request: Request, response: Response) {
-    const student = await this.studentService.criar(request.body);
+    const student = await this.studentService.create(request.body);
     response.status(201).send(student);
   }
 
   async atualizar(request: Request, response: Response) {
-    const student = await this.studentService.atualizar(
+    const student = await this.studentService.update(
       request.params.id,
       request.body
     );
@@ -32,7 +33,7 @@ export class StudentController {
   }
 
   async deletar(request: Request, response: Response) {
-    await this.studentService.deletar(request.params.id);
+    await this.studentService.delete(request.params.id);
     response.send();
   }
 }

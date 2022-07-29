@@ -7,7 +7,7 @@ const getController = (): StudentController => {
   return Container.get<StudentController>('StudentController');
 };
 
-const createRouter = () => {
+const createStudentRouter = () => {
   router.get('/',(req, res) => getController().buscarTodos(req, res));
   router.get('/:id', (req, res) => getController().buscar(req, res));
   router.post('/', (req, res) => getController().criar(req, res));
@@ -17,4 +17,4 @@ const createRouter = () => {
   return router;
 }
 
-export default createRouter;
+export default createStudentRouter;

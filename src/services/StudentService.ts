@@ -1,43 +1,43 @@
 import { IStudentRepository } from '../@types/repositories/IStudentRepository';
 import { Student } from '../models/studentEntity';
 import {Inject, Service} from 'typedi';
-import { StudentDTO } from '../@types/dto/studentsDTO';
+import { StudentDTO } from '../@types/dto/StudentsDto';
+import { IStudentService } from '../@types/services/IStudentService';
 
 
-@Service('StudentsService')
-export class StudentsService implements IStudentRepository {
+@Service('StudentService')
+export class StudentsService implements IStudentService{
   constructor(
-    @Inject('StudentsRepository') private studentRepository: IStudentRepository
+    @Inject('StudentRepository') private studentRepository: IStudentRepository
   ){}
 
-  async buscarTodos() {
-    return await this.studentRepository.buscarTodos();
+  async findAll(): Promise<Student[]> {
+    return await this.studentRepository.find();
   }
 
-  async buscar(id: string): Promise<Student> {
-    const student = await this.studentRepository.buscar(id);
+  async create(student: Student): Promise<Student> {
+    return this.studentRepository.save(student);
+  }
+
+  async delete(id: string): Promise<void> {
+    const studentDelete = await this.studentRepository.findOne(id);
+    if (!studentDelete) {
+      throw new Error ('Student not found'), 404;
+    }
+
+    await this.studentRepository.delete(id);
+  }
+
+  async findOne(id: string): Promise<Student> {
+    const student = await this.studentRepository.findOne(id);
     if(!student) {
       throw new Error ('Student not found'), 404;
     }
     return student;
   }
-  
-  async criar(StudentDTO: StudentDTO) {
-    return this.studentRepository.criar(StudentDTO);
+
+  async update(id: string, student: StudentDTO): Promise<Student> {
+    return await this.studentRepository.save({id, ...student});
   }
-
-  async atualizar(id: string, Student: Partial<StudentDTO>): Promise<Student> {
-    return await this.studentRepository.atualizar(id, Student);
-  }
-
-  async deletar(id: string) {
-    const studentDelete = await this.studentRepository.buscar(id);
-    if (!studentDelete) {
-      throw new Error ('Student not found'), 404;
-    }
-
-    await this.studentRepository.deletar(id);
-  }
-
 }
 

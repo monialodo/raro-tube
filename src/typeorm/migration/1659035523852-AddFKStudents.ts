@@ -13,6 +13,13 @@ export class AddFKStudents1659035523852 implements MigrationInterface {
                     onUpdate: 'CASCADE',
                 }),
                 new TableForeignKey({
+                    columnNames: ['user_id'],
+                    referencedColumnNames: ['id'],
+                    referencedTableName: 'users',
+                    onDelete: 'CASCADE',
+                    onUpdate: 'CASCADE',
+                }),
+                new TableForeignKey({
                     columnNames: ['comment_id'],
                     referencedColumnNames: ['id'],
                     referencedTableName: 'comments',
@@ -31,6 +38,13 @@ export class AddFKStudents1659035523852 implements MigrationInterface {
                     columnNames: ['class_id'],
                     referencedColumnNames: ['id'],
                     referencedTableName: 'class',
+                    onDelete: 'CASCADE',
+                    onUpdate: 'CASCADE',
+                }),
+                new TableForeignKey({
+                    columnNames: ['user_id'],
+                    referencedColumnNames: ['id'],
+                    referencedTableName: 'users',
                     onDelete: 'CASCADE',
                     onUpdate: 'CASCADE',
                 }),

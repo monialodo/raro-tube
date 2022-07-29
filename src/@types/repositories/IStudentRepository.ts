@@ -1,10 +1,11 @@
-import { StudentDTO } from "../../@types/dto/studentsDTO";
+import { StudentDTO } from "../dto/StudentsDto";
 import { Student } from "../../models/studentEntity";
+import { DeleteResult, FindConditions, ObjectID, Repository, UpdateResult } from "typeorm";
 
 export interface IStudentRepository {
-    criar(student: Student): Promise<Student>;
-    atualizar(id: string, student: Partial<StudentDTO>): Promise<Student>;
-    deletar(id: string): Promise<void>;
-    buscarTodos(): Promise<Student[]>;
-    buscar(id: string): Promise<Student>;
+  find(): Promise<Student[]>;
+  findOne(id: string): Promise<Student>;
+  save(student: StudentDTO): Promise<Student>;
+  // softDelete(id: string): Promise<UpdateResult>;
+  delete(id: string): Promise<DeleteResult>;
 }

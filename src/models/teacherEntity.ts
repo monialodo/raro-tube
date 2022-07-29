@@ -1,6 +1,6 @@
 import { IsString, IsDate, IsOptional, IsNotEmpty, IsUUID } from "class-validator";
 import { PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, UpdateDateColumn, CreateDateColumn, Entity } from "typeorm";
-import { StudentsClass } from "./classEntity";
+import { Classroom } from "./classroomEntity";
 import { Video } from "./videoEntity";
 
 @Entity('teachers')
@@ -24,9 +24,9 @@ export class Teacher {
   @Column({ name: 'avatar', nullable: true })
   avatar: string;
 
-  @OneToOne(() => StudentsClass, (studentsClass) => studentsClass.teacher)
-  @JoinColumn({name: 'studentsClass_id'})
-  studentsClass: StudentsClass;
+  @OneToOne(() => Classroom, (classroom) => classroom.teacher)
+  @JoinColumn({name: 'classroom_id'})
+  classroom: Classroom;
 
   @OneToOne(() => Video, (video) => video.teacher)
   @JoinColumn({ name: 'video_id' })

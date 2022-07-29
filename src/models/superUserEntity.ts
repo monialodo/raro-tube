@@ -1,6 +1,6 @@
 import { IsDate, IsNotEmpty, IsString, IsUUID } from "class-validator";
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany, UpdateDateColumn, CreateDateColumn } from "typeorm";
-import { StudentsClass } from "./classEntity";
+import { Classroom } from "./classroomEntity";
 
 
 @Entity('super_user')
@@ -19,8 +19,8 @@ export class SuperUser {
   @Column({ name:'user_id'})
   userId: string;
 
-  @OneToMany(() => StudentsClass, (studentsClass) => studentsClass.superUser)
-  studentsClass: StudentsClass[];
+  @OneToMany(() => Classroom, (classroom) => classroom.superUser)
+  classroom: Classroom[];
 
   @IsDate()
   @IsNotEmpty()
