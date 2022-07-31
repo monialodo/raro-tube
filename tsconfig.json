@@ -12,5 +12,6 @@
     "incremental": true,
     "resolveJsonModule": true
   },
+  "include": ["src/**/*.ts", "declariations/**.d.ts"],
   "exclude": ["node_modules", "tests", "dist", "**/*spec.ts", "./exemples/**/*"]
 }

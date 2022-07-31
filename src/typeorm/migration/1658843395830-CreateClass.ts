@@ -1,71 +1,67 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class CreateClassroom1658843395830 implements MigrationInterface {
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'class',
+        name: "class",
         columns: [
           {
-            name: 'id',
-            type: 'uuid',
+            name: "id",
+            type: "uuid",
             isPrimary: true,
-   
           },
           {
-            name: 'name',
-            type: 'varchar',
+            name: "name",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'description',
-            type: 'varchar',
+            name: "description",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'logo',
-            type: 'varchar',
+            name: "logo",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'tags',
-            type: 'varchar',
+            name: "tags",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'super_user_id',
-            type: 'uuid',
+            name: "super_user_id",
+            type: "uuid",
             isNullable: false,
           },
           {
-            name: 'administrator_id',
-            type: 'uuid',
+            name: "administrator_id",
+            type: "uuid",
             isNullable: false,
           },
           {
-            name: 'teacher_id',
-            type: 'uuid',
+            name: "teacher_id",
+            type: "uuid",
             isNullable: false,
           },
           {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
+            name: "created_at",
+            type: "timestamp",
+            default: "now()",
           },
           {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
+            name: "updated_at",
+            type: "timestamp",
+            default: "now()",
           },
         ],
-      }),
+      })
     );
-    
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('class');
+    await queryRunner.dropTable("class");
   }
-
 }

@@ -1,15 +1,13 @@
 import * as express from "express";
-import createRouters from "../../src/routes";
+
+import createRouters from "../routes";
 
 const createApp = (): express.Express => {
-    const app = express();
+  const app = express();
 
+  createRouters(app);
 
-    createRouters(app);
-
-    return app;
-
-}
+  return app;
+};
 
 export default createApp;
-

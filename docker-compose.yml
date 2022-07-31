@@ -6,7 +6,7 @@ services:
     container_name: raro_tube_db
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_USER=raro
       - POSTGRES_PASSWORD=raro
@@ -21,7 +21,7 @@ services:
     container_name: raro_tube
     restart: always
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - .:/usr/app
     links:

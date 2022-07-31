@@ -1,75 +1,72 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class CreateVideos1658843997425 implements MigrationInterface {
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'videos',
+        name: "videos",
         columns: [
           {
-            name: 'id',
-            type: 'uuid',
+            name: "id",
+            type: "uuid",
             isPrimary: true,
-
           },
           {
-            name: 'name',
-            type: 'varchar',
+            name: "name",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'duration',
-            type: 'varchar',
+            name: "duration",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'subjects',
-            type: 'varchar',
+            name: "subjects",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'tags',
-            type: 'varchar',
+            name: "tags",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'thumbnail',
-            type: 'varchar',
+            name: "thumbnail",
+            type: "varchar",
             isNullable: false,
           },
           {
-            name: 'teacher_id',
-            type: 'uuid',
+            name: "teacher_id",
+            type: "uuid",
             isNullable: false,
           },
           {
-            name: 'class_id',
-            type: 'uuid',
+            name: "class_id",
+            type: "uuid",
             isNullable: false,
           },
           {
-            name: 'comment_id',
-            type: 'uuid',
+            name: "comment_id",
+            type: "uuid",
             isNullable: false,
           },
           {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
+            name: "created_at",
+            type: "timestamp",
+            default: "now()",
           },
           {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
+            name: "updated_at",
+            type: "timestamp",
+            default: "now()",
           },
         ],
-      }),
+      })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('videos');
+    await queryRunner.dropTable("videos");
   }
-
 }

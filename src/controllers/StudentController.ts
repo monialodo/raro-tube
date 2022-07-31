@@ -1,30 +1,31 @@
-import { Inject, Service } from "typedi";
-import { IStudentService } from "../@types/services/IStudentService";
 import { Request, Response } from "express";
+import { Inject, Service } from "typedi";
 
-@Service('StudentController')
+import { IStudentService } from "../@types/services/IStudentService";
+
+@Service("StudentController")
 export class StudentController {
   constructor(
-    @Inject('StudentService') private readonly studentService: IStudentService
-  ){}
+    @Inject("StudentService") private readonly studentService: IStudentService
+  ) {}
 
-  async buscarTodos(request: Request, response: Response) {
+  async findAll(request: Request, response: Response) {
     const students = await this.studentService.findAll();
     console.log(students);
     response.send(students);
   }
 
-  async buscar(request: Request, response: Response) {
+  async find(request: Request, response: Response) {
     const student = await this.studentService.findOne(request.params.id);
     response.send(student);
   }
 
-  async criar(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const student = await this.studentService.create(request.body);
     response.status(201).send(student);
   }
 
-  async atualizar(request: Request, response: Response) {
+  async update(request: Request, response: Response) {
     const student = await this.studentService.update(
       request.params.id,
       request.body
@@ -32,7 +33,7 @@ export class StudentController {
     response.send(student);
   }
 
-  async deletar(request: Request, response: Response) {
+  async delete(request: Request, response: Response) {
     await this.studentService.delete(request.params.id);
     response.send();
   }

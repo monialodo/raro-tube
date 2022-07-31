@@ -68,6 +68,7 @@
 
 ### Regras de negócio
 - Não deve ser possível excluir turmas se tiverem alunos associados
+- Não deve ser possível excluir turmas se tiverem professores associados
 - Não deve ser possível a alunos e professores alterar alunos de turmas
 - Não deve ser possível a alunos acessar conteúdos relacionados a turmas às quais não esteja vinculado
 

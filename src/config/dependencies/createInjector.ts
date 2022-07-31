@@ -1,17 +1,21 @@
-import { getCustomRepository } from "typeorm";
 import Container from "typedi";
+import { getCustomRepository } from "typeorm";
+
 import { StudentRepository } from "../../repositories/studentsRepository";
+import { SuperUserRepository } from "../../repositories/superUserRepository";
 
-// inicializador de dependências:
-// inicializa controllers
-import "../../controllers/StudentController"
+import "../../controllers/StudentController";
+import "../../controllers/SuperUserController";
 
-
-// inicializa services
-import "../../services/StudentService.ts";
+import "../../services/StudentService";
+import "../../services/SuperUserService";
 
 const createDependencyInjector = () => {
   Container.set("StudentRepository", getCustomRepository(StudentRepository));
+  Container.set(
+    "SuperUserRepository",
+    getCustomRepository(SuperUserRepository)
+  );
 };
 
 export default createDependencyInjector;
