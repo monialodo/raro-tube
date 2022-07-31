@@ -11,7 +11,6 @@ export class StudentController {
 
   async findAll(request: Request, response: Response) {
     const students = await this.studentService.findAll();
-    console.log(students);
     response.send(students);
   }
 
