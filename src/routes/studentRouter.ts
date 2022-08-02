@@ -1,5 +1,3 @@
-// noinspection DuplicatedCode
-
 import { Router } from "express";
 import Container from "typedi";
 
