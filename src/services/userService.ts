@@ -29,7 +29,11 @@ export class UserService implements IUserService {
   }
 
   async update(id: string, user: User): Promise<User> {
-    return this.userRepository.update(id, user);
+    const foundUser = await this.userRepository.findOne(id);
+    if (!foundUser) {
+      throw new NotFoundError("User not found");
+    }
+    return this.userRepository.save(user);
   }
 
   async delete(id: string): Promise<void> {
