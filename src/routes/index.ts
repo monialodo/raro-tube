@@ -1,9 +1,9 @@
 import * as express from "express";
 
+import createUserRouter from "./userRouter";
+
 const createRouters = (app: express.Express) => {
-  app.get("/", (req, res) => {
-    res.send("Hello World!");
-  });
+  app.use("/v1/users", createUserRouter);
 };
 
 export default createRouters;
