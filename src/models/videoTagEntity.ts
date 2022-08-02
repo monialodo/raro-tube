@@ -9,24 +9,24 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-import { User } from "./userEntity";
+import { Tag } from "./tagEntity";
 import { Video } from "./videoEntity";
 
-@Entity("favorites")
-export class Favorites {
-  @PrimaryColumn({ name: "user_id" })
-  userId: string;
-
+@Entity("video_tags")
+export class VideoTag {
   @PrimaryColumn({ name: "video_id" })
   videoId: string;
 
-  @JoinColumn({ name: "user_id" })
-  @ManyToOne(() => User, (user) => user.favorites)
-  user: User;
+  @PrimaryColumn({ name: "tag_id" })
+  tagId: string;
 
+  @ManyToOne(() => Video, (video) => video.videoTags)
   @JoinColumn({ name: "video_id" })
-  @ManyToOne(() => Video, (video) => video.favorites)
   video: Video;
+
+  @ManyToOne(() => Tag, (tag) => tag.videoTags)
+  @JoinColumn({ name: "tag_id" })
+  tag: Tag;
 
   @IsDate()
   @IsNotEmpty()

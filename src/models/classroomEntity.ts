@@ -1,17 +1,25 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import {
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from "class-validator";
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
+import { File } from "./fileEntity";
 
-import { UserClassroom } from "./userClasroom";
+import { UserClassroom } from "./userClasroomEntity";
 import { Video } from "./videoEntity";
 
 @Entity("class")
@@ -50,11 +58,16 @@ export class Classroom {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
+  @IsDate()
+  @IsOptional()
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt?: Date;
+
   constructor() {
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    if (!this.id) {
+    if (!this.id && !this.updatedAt) {
       this.id = uuidV4();
+      this.updatedAt = new Date();
     }
+    this.updatedAt = new Date();
   }
 }

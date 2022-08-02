@@ -1,5 +1,6 @@
-import { IsDate, IsNotEmpty, IsOptional } from "class-validator";
+import { IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import {
+  Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
@@ -9,24 +10,29 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
+import { Comment } from "./commentEntity";
 import { User } from "./userEntity";
-import { Video } from "./videoEntity";
 
-@Entity("favorites")
-export class Favorites {
+@Entity("comment_reactions")
+export class CommentReaction {
+  @PrimaryColumn({ name: "comment_id" })
+  commentId: string;
+
   @PrimaryColumn({ name: "user_id" })
   userId: string;
 
-  @PrimaryColumn({ name: "video_id" })
-  videoId: string;
+  @IsString()
+  @IsOptional()
+  @Column({ name: "reaction" })
+  reaction?: string;
+
+  @JoinColumn({ name: "comment_id" })
+  @ManyToOne(() => Comment, (comment) => comment.commentReactions)
+  comment: Comment;
 
   @JoinColumn({ name: "user_id" })
-  @ManyToOne(() => User, (user) => user.favorites)
+  @ManyToOne(() => User, (user) => user.commentReactions)
   user: User;
-
-  @JoinColumn({ name: "video_id" })
-  @ManyToOne(() => Video, (video) => video.favorites)
-  video: Video;
 
   @IsDate()
   @IsNotEmpty()

@@ -1,13 +1,21 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import {
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from "class-validator";
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
@@ -15,9 +23,8 @@ import { Classroom } from "./classroomEntity";
 import { Comment } from "./commentEntity";
 import { Favorites } from "./favoritesEntity";
 import { File } from "./fileEntity";
-import { Tag } from "./tagsEntity";
 import { User } from "./userEntity";
-import { videoTags } from "./videoTags";
+import { VideoTag } from "./videoTagEntity";
 
 @Entity("videos")
 export class Video {
@@ -36,27 +43,28 @@ export class Video {
   duration: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Column({ name: "description" })
-  description: string;
+  description?: string;
 
+  @IsOptional()
+  @OneToOne(() => File)
   @JoinColumn({ name: "thumbnail_file_id" })
-  @OneToOne(() => File)
-  thumbnail: File;
+  thumbnail?: File;
 
-  @JoinColumn({ name: "video_file_id" })
   @OneToOne(() => File)
+  @JoinColumn({ name: "video_file_id" })
   video: File;
 
-  @OneToMany(() => videoTags, (videoTags) => videoTags.video)
-  videoTags: Tag[];
+  @OneToOne(() => User)
+  @JoinColumn({ name: "teacher_id" })
+  teacher: User;
+
+  @OneToMany(() => VideoTag, (videoTag) => videoTag.video)
+  videoTags: VideoTag[];
 
   @ManyToOne(() => Classroom, (classroom) => classroom.videos)
   classroom: Classroom;
-
-  @JoinColumn({ name: "teacher_id" })
-  @OneToOne(() => User)
-  teacher: User;
 
   @OneToMany(() => Comment, (comment) => comment.video)
   comments: Comment[];
@@ -66,7 +74,7 @@ export class Video {
 
   @IsDate()
   @IsNotEmpty()
-  @Column({ name: "created_at" })
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
   @IsDate()
@@ -74,11 +82,16 @@ export class Video {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
+  @IsDate()
+  @IsOptional()
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt?: Date;
+
   constructor() {
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    if (!this.id) {
+    if (!this.id && !this.updatedAt) {
       this.id = uuidV4();
+      this.updatedAt = new Date();
     }
+    this.updatedAt = new Date();
   }
 }

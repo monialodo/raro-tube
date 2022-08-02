@@ -1,15 +1,22 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import {
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from "class-validator";
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
-import { videoTags } from "./videoTags";
+import { VideoTag } from "./videoTagEntity";
 
 @Entity("tags")
 export class Tag {
@@ -22,8 +29,8 @@ export class Tag {
   @Column({ name: "name" })
   name: string;
 
-  @OneToMany(() => videoTags, (videoTags) => videoTags.tag)
-  videosTags: videoTags[];
+  @OneToMany(() => VideoTag, (videoTag) => videoTag.tag)
+  videoTags: VideoTag[];
 
   @IsDate()
   @IsNotEmpty()
@@ -35,11 +42,16 @@ export class Tag {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
+  @IsDate()
+  @IsOptional()
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt?: Date;
+
   constructor() {
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    if (!this.id) {
+    if (!this.id && !this.updatedAt) {
       this.id = uuidV4();
+      this.updatedAt = new Date();
     }
+    this.updatedAt = new Date();
   }
 }

@@ -1,10 +1,19 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import {
+  IsDate,
+  IsDefined,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from "class-validator";
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
@@ -24,8 +33,9 @@ export class File {
   @Column({ name: "path" })
   path: string;
 
-  @IsNotEmpty()
-  @Column({ name: "sizeBytes" })
+  @IsNumber()
+  @IsDefined()
+  @Column({ name: "size_bytes" })
   sizeBytes: number;
 
   @IsString()
@@ -48,11 +58,16 @@ export class File {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
+  @IsDate()
+  @IsOptional()
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt?: Date;
+
   constructor() {
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    if (!this.id) {
+    if (!this.id && !this.updatedAt) {
       this.id = uuidV4();
+      this.updatedAt = new Date();
     }
+    this.updatedAt = new Date();
   }
 }

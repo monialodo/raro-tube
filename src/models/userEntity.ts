@@ -1,21 +1,30 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import {
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from "class-validator";
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
 import { Comment } from "./commentEntity";
-import { CommentReaction } from "./commentReaction";
+import { CommentReaction } from "./commentReactionEntity";
 import { Favorites } from "./favoritesEntity";
-import { UserClassroom } from "./userClasroom";
+import { File } from "./fileEntity";
+import { UserClassroom } from "./userClasroomEntity";
 
-@Entity("user")
+@Entity("users")
 export class User {
   @IsUUID()
   @PrimaryGeneratedColumn("uuid")
@@ -41,9 +50,10 @@ export class User {
   @Column({ name: "role" })
   role: string;
 
-  @JoinColumn({ name: "avatar_id" })
+  @IsOptional()
   @OneToOne(() => File)
-  avatar: File;
+  @JoinColumn({ name: "avatar_id" })
+  avatar?: File;
 
   @OneToMany(() => Favorites, (favorites) => favorites.user)
   favorites: Favorites[];
@@ -59,7 +69,7 @@ export class User {
 
   @IsDate()
   @IsNotEmpty()
-  @Column({ name: "created_at" })
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
   @IsDate()
@@ -67,11 +77,16 @@ export class User {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
+  @IsDate()
+  @IsOptional()
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt?: Date;
+
   constructor() {
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    if (!this.id) {
+    if (!this.id && !this.updatedAt) {
       this.id = uuidV4();
+      this.updatedAt = new Date();
     }
+    this.updatedAt = new Date();
   }
 }

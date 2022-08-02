@@ -3,21 +3,24 @@ import {
   IsDefined,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsUUID,
-  Min
+  Min,
 } from "class-validator";
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
-import { CommentReaction } from "./commentReaction";
+import { CommentReaction } from "./commentReactionEntity";
 import { User } from "./userEntity";
 import { Video } from "./videoEntity";
 
@@ -40,9 +43,11 @@ export class Comment {
   downvoteQuantity: number;
 
   @ManyToOne(() => Video, (video) => video.comments)
+  @JoinColumn({ name: "video_id" })
   video: Video;
 
   @ManyToOne(() => User, (user) => user.comments)
+  @JoinColumn({ name: "user_id" })
   user: User;
 
   @OneToMany(
@@ -61,11 +66,16 @@ export class Comment {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
+  @IsDate()
+  @IsOptional()
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt?: Date;
+
   constructor() {
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    if (!this.id) {
+    if (!this.id && !this.updatedAt) {
       this.id = uuidV4();
+      this.updatedAt = new Date();
     }
+    this.updatedAt = new Date();
   }
 }
