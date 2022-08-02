@@ -1,19 +1,23 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateTags1659402747981 implements MigrationInterface {
+export class CommentReactions1659402797602 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "tags",
+        name: "comment_reactions",
         columns: [
           {
-            name: "id",
+            name: "comment_id",
             type: "uuid",
-            isPrimary: true,
           },
           {
-            name: "name",
+            name: "user_id",
+            type: "uuid",
+          },
+          {
+            name: "reaction",
             type: "varchar",
+            isNullable: true,
           },
           {
             name: "created_at",
@@ -28,12 +32,23 @@ export class CreateTags1659402747981 implements MigrationInterface {
             type: "timestamp",
             isNullable: true,
           },
-        ]
+        ],
+        foreignKeys: [
+          {
+            columnNames: ["comment_id"],
+            referencedTableName: "comments",
+            referencedColumnNames: ["id"],
+          },
+          {
+            columnNames: ["user_id"],
+            referencedTableName: "users",
+            referencedColumnNames: ["id"],
+          },
+        ],
       })
     );
   }
-
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("tags");
+    await queryRunner.dropTable("comment_reactions");
   }
 }

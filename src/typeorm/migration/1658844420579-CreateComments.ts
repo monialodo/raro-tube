@@ -14,32 +14,43 @@ export class CreateComments1658844420579 implements MigrationInterface {
           {
             name: "upvote_quantity",
             type: "integer",
-            isNullable: false,
           },
           {
             name: "downvote_quantity",
             type: "integer",
-            isNullable: false,
           },
           {
             name: "video_id",
             type: "uuid",
-            isNullable: false,
           },
           {
-            name: "student_id",
+            name: "user_id",
             type: "uuid",
-            isNullable: false,
           },
           {
             name: "created_at",
             type: "timestamp",
-            default: "now()",
           },
           {
             name: "updated_at",
             type: "timestamp",
-            default: "now()",
+          },
+          {
+            name: "deleted_at",
+            type: "timestamp",
+            isNullable: true,
+          },
+        ],
+        foreignKeys: [
+          {
+            columnNames: ["video_id"],
+            referencedTableName: "videos",
+            referencedColumnNames: ["id"],
+          },
+          {
+            columnNames: ["user_id"],
+            referencedTableName: "users",
+            referencedColumnNames: ["id"],
           },
         ],
       })

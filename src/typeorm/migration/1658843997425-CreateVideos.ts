@@ -18,6 +18,7 @@ export class CreateVideos1658843997425 implements MigrationInterface {
           {
             name: "thumbnail_file_id",
             type: "uuid",
+            isNullable: true,
           },
           {
             name: "teacher_id",
@@ -34,7 +35,7 @@ export class CreateVideos1658843997425 implements MigrationInterface {
           {
             name: "description",
             type: "varchar",
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: "created_at",
@@ -43,6 +44,11 @@ export class CreateVideos1658843997425 implements MigrationInterface {
           {
             name: "updated_at",
             type: "timestamp",
+          },
+          {
+            name: "deleted_at",
+            type: "timestamp",
+            isNullable: true,
           },
         ],
         foreignKeys: [

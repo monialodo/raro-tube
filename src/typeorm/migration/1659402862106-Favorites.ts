@@ -4,7 +4,7 @@ export class Favorites1659402862106 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "class",
+        name: "favorites",
         columns: [
           {
             name: "user_id",
@@ -16,16 +16,29 @@ export class Favorites1659402862106 implements MigrationInterface {
             type: "uuid",
             isNullable: false,
           },
+          {
+            name: "created_at",
+            type: "timestamp",
+          },
+          {
+            name: "updated_at",
+            type: "timestamp",
+          },
+          {
+            name: "deleted_at",
+            type: "timestamp",
+            isNullable: true,
+          },
         ],
         foreignKeys: [
           {
             columnNames: ["user_id"],
-            referencedTableName: "user",
+            referencedTableName: "users",
             referencedColumnNames: ["id"],
           },
           {
             columnNames: ["video_id"],
-            referencedTableName: "video",
+            referencedTableName: "videos",
             referencedColumnNames: ["id"],
           },
         ],
@@ -34,6 +47,6 @@ export class Favorites1659402862106 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("Favorites");
+    await queryRunner.dropTable("favorites");
   }
 }

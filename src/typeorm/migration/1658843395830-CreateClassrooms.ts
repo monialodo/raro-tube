@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateFile1658842895467 implements MigrationInterface {
+export class CreateClassrooms1658843395830 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "files",
+        name: "classrooms",
         columns: [
           {
             name: "id",
@@ -12,23 +12,15 @@ export class CreateFile1658842895467 implements MigrationInterface {
             isPrimary: true,
           },
           {
+            name: "logo_id",
+            type: "uuid",
+          },
+          {
             name: "name",
             type: "varchar",
           },
           {
-            name: "path",
-            type: "varchar",
-          },
-          {
-            name: "sizeBytes",
-            type: "bigint(13)",
-          },
-          {
-            name: "format",
-            type: "varchar",
-          },
-          {
-            name: "type",
+            name: "description",
             type: "varchar",
           },
           {
@@ -39,12 +31,24 @@ export class CreateFile1658842895467 implements MigrationInterface {
             name: "updated_at",
             type: "timestamp",
           },
+          {
+            name: "deleted_at",
+            type: "timestamp",
+            isNullable: true,
+          },
+        ],
+        foreignKeys: [
+          {
+            columnNames: ["logo_id"],
+            referencedTableName: "files",
+            referencedColumnNames: ["id"],
+          },
         ],
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("files");
+    await queryRunner.dropTable("classrooms");
   }
 }
