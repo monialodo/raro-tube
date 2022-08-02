@@ -33,7 +33,7 @@ export class ClassroomController {
     response.send(classroom);
   }
 
-  async delete(request: Request, response: Response) {
+  async softDelete(request: Request, response: Response) {
     await this.classroomService.delete(request.params.id);
     response.send();
   }

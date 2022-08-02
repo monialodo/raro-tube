@@ -6,5 +6,5 @@ export interface IClassroomService {
   findAll(): Promise<Classroom[]>;
   findOne(id: string): Promise<Classroom>;
   update(id: string, Classroom: ClassroomsDto): Promise<Classroom>;
-  delete(id: string): Promise<void>;
+  softDelete(id: string): Promise<void>;
 }

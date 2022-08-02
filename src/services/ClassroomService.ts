@@ -34,7 +34,7 @@ export class ClassroomsService implements IClassroomService {
     return this.ClassroomRepository.save({ id, ...classroom });
   }
 
-  async delete(id: string): Promise<void> {
+  async softDelete(id: string): Promise<void> {
     const classroomDelete = await this.ClassroomRepository.findOne(id);
     if (!classroomDelete) {
       throw new NotFoundError("classroom not found");
