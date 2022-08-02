@@ -1,17 +1,15 @@
-// noinspection DuplicatedCode
-
 import { Router } from "express";
-import Container from "typedi";
+import { Container } from "typedi";
 
-import { StudentController } from "../controllers/StudentController";
+import { UserController } from "../controllers/UserController";
 
 const router = Router();
 
-const getController = (): StudentController => {
-  return Container.get<StudentController>("StudentController");
+const getController = (): UserController => {
+  return Container.get<UserController>("UserController");
 };
 
-const createStudentRouter = () => {
+const createUserRouter = () => {
   router.get("/", (req, res) => getController().findAll(req, res));
   router.get("/:id", (req, res) => getController().find(req, res));
   router.post("/", (req, res) => getController().create(req, res));
@@ -21,4 +19,4 @@ const createStudentRouter = () => {
   return router;
 };
 
-export default createStudentRouter;
+export default createUserRouter;
