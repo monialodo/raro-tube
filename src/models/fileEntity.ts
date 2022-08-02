@@ -3,19 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
-import { UserClassroom } from "./userClasroom";
-import { Video } from "./videoEntity";
-
-@Entity("class")
-export class Classroom {
+@Entity("files")
+export class File {
   @IsUUID()
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -27,18 +21,22 @@ export class Classroom {
 
   @IsString()
   @IsNotEmpty()
-  @Column({ name: "description" })
-  description: string;
+  @Column({ name: "path" })
+  path: string;
 
-  @JoinColumn({ name: "logo_id" })
-  @OneToOne(() => File)
-  logo: File;
+  @IsNotEmpty()
+  @Column({ name: "sizeBytes" })
+  sizeBytes: number;
 
-  @OneToMany(() => Video, (video) => video.classroom)
-  videos: Video[];
+  @IsString()
+  @IsNotEmpty()
+  @Column({ name: "format" })
+  format: string;
 
-  @OneToMany(() => UserClassroom, (userClassroom) => userClassroom.classroom)
-  userClassrooms: UserClassroom[];
+  @IsString()
+  @IsNotEmpty()
+  @Column({ name: "type" })
+  type: string;
 
   @IsDate()
   @IsNotEmpty()

@@ -14,47 +14,25 @@ export class CreateClassroom1658843395830 implements MigrationInterface {
           {
             name: "name",
             type: "varchar",
-            isNullable: false,
           },
           {
             name: "description",
             type: "varchar",
-            isNullable: false,
-          },
-          {
-            name: "logo",
-            type: "varchar",
-            isNullable: false,
-          },
-          {
-            name: "tags",
-            type: "varchar",
-            isNullable: false,
-          },
-          {
-            name: "super_user_id",
-            type: "uuid",
-            isNullable: false,
-          },
-          {
-            name: "administrator_id",
-            type: "uuid",
-            isNullable: false,
-          },
-          {
-            name: "teacher_id",
-            type: "uuid",
-            isNullable: false,
           },
           {
             name: "created_at",
             type: "timestamp",
-            default: "now()",
           },
           {
             name: "updated_at",
             type: "timestamp",
-            default: "now()",
+          },
+        ],
+        foreignKeys: [
+          {
+            columnNames: ["logo_id"],
+            referencedTableName: "files",
+            referencedColumnNames: ["id"],
           },
         ],
       })

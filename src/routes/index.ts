@@ -1,6 +1,6 @@
 import * as express from "express";
 
-import createAdministratorRouter from "./AdministratorRouter";
+import createAdministratorRouter from "./administratorRouter";
 import createStudentRouter from "./studentRouter";
 import createSuperUserRouter from "./superUserRouter";
 import createTeacherRouter from "./teacherRouter";

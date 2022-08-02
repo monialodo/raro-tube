@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateTeachers1658844641583 implements MigrationInterface {
+export class CreateFile1658842895467 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "teachers",
+        name: "files",
         columns: [
           {
             name: "id",
@@ -14,37 +14,30 @@ export class CreateTeachers1658844641583 implements MigrationInterface {
           {
             name: "name",
             type: "varchar",
-            isNullable: false,
           },
           {
-            name: "user_id",
-            type: "uuid",
-            isNullable: false,
-          },
-          {
-            name: "class_id",
-            type: "uuid",
-            isNullable: false,
-          },
-          {
-            name: "avatar",
+            name: "path",
             type: "varchar",
-            isNullable: false,
           },
           {
-            name: "video_id",
-            type: "uuid",
-            isNullable: false,
+            name: "sizeBytes",
+            type: "bigint(13)",
+          },
+          {
+            name: "format",
+            type: "varchar",
+          },
+          {
+            name: "type",
+            type: "varchar",
           },
           {
             name: "created_at",
             type: "timestamp",
-            default: "now()",
           },
           {
             name: "updated_at",
             type: "timestamp",
-            default: "now()",
           },
         ],
       })
@@ -52,6 +45,6 @@ export class CreateTeachers1658844641583 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("teachers");
+    await queryRunner.dropTable("files");
   }
 }

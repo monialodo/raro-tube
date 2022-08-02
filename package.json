@@ -10,8 +10,8 @@
     "typeorm:run": "npm run typeorm migration:run",
     "typeorm:create": "npm run typeorm migration:create -- -n",
     "seed:superUser": "ts-node-dev src/config/database/SuperUserSeed.ts",
-    "eslint": "eslint src/**/*.ts",
-    "lint:fix": "npm run eslint -- --fix"
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",

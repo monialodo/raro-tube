@@ -1,21 +1,24 @@
 import {
-  IsDefined,
   IsDate,
-  IsNumber,
-  Min,
+  IsDefined,
   IsNotEmpty,
+  IsNumber,
   IsUUID,
+  Min
 } from "class-validator";
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
-  UpdateDateColumn,
   CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
 
-import { Student } from "./studentEntity";
+import { CommentReaction } from "./commentReaction";
+import { User } from "./userEntity";
 import { Video } from "./videoEntity";
 
 @Entity("comments")
@@ -39,8 +42,14 @@ export class Comment {
   @ManyToOne(() => Video, (video) => video.comments)
   video: Video;
 
-  @ManyToOne(() => Student, (student) => student.comments)
-  student: Student;
+  @ManyToOne(() => User, (user) => user.comments)
+  user: User;
+
+  @OneToMany(
+    () => CommentReaction,
+    (commentReactions) => commentReactions.comment
+  )
+  commentReactions: CommentReaction[];
 
   @IsDate()
   @IsNotEmpty()
@@ -51,4 +60,12 @@ export class Comment {
   @IsNotEmpty()
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
+
+  constructor() {
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
+    if (!this.id) {
+      this.id = uuidV4();
+    }
+  }
 }

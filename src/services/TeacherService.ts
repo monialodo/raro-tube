@@ -1,8 +1,9 @@
-import { IStudentRepository } from "../@types/repositories/IStudentRepository";
-import { Student } from "../models/studentEntity";
 import { Inject, Service } from "typedi";
+
 import { StudentDTO } from "../@types/dto/StudentsDto";
+import { IStudentRepository } from "../@types/repositories/IStudentRepository";
 import { IStudentService } from "../@types/services/IStudentService";
+import { Student } from "../models/studentEntity";
 
 @Service("StudentService")
 export class StudentsService implements IStudentService {
@@ -11,7 +12,7 @@ export class StudentsService implements IStudentService {
   ) {}
 
   async findAll(): Promise<Student[]> {
-    return await this.studentRepository.find();
+    return this.studentRepository.find();
   }
 
   async create(student: Student): Promise<Student> {
@@ -36,6 +37,6 @@ export class StudentsService implements IStudentService {
   }
 
   async update(id: string, student: StudentDTO): Promise<Student> {
-    return await this.studentRepository.save({ id, ...student });
+    return this.studentRepository.save({ id, ...student });
   }
 }

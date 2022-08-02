@@ -1,6 +1,7 @@
-import { Inject, Service } from "typedi";
-import { ITeacherService } from "../@types/services/ITeacherService";
 import { Request, Response } from "express";
+import { Inject, Service } from "typedi";
+
+import { ITeacherService } from "../@types/services/ITeacherService";
 
 @Service("TeacherController")
 export class TeacherController {

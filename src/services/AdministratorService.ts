@@ -1,41 +1,39 @@
+import { Inject, Service } from "typedi";
+
+import { AdminDTO } from "../@types/dto/AdministratorDto";
 import { IAdministratorService } from "../@types/services/IAdministratorService";
 import { Administrator } from "../models/administratorEntity";
-import { Inject, Service } from "typedi";
-import { AdminDTO } from '../@types/dto/AdministratorDto'
-import { AdministratorRepository } from "../repositories/AdministratorRepository";
+import { AdministratorRepository } from "../repositories/administratorRepository";
 
-@Service('AdministratorService')
+@Service("AdministratorService")
 export class AdministratorService implements IAdministratorService {
+  constructor(
+    @Inject("AdministratorRepository")
+    private administratorRepository: AdministratorRepository
+  ) {}
 
-    constructor(@Inject('AdministratorRepository')
-    private AdministratorRepository: AdministratorRepository) { }
+  async findAll(): Promise<Administrator[]> {
+    return this.administratorRepository.find();
+  }
 
-    async findAll(): Promise<Administrator[]> {
-        return await this.AdministratorRepository.find()
+  async create(admin: AdminDTO): Promise<Administrator> {
+    return this.administratorRepository.save(admin);
+  }
+  async delete(id: string): Promise<void> {
+    const adm = await this.administratorRepository.findOne(id);
+    if (!adm) {
+      throw new Error();
     }
-
-    async create(admin: AdminDTO): Promise<Administrator> {
-        return this.AdministratorRepository.save(admin)
+    await this.administratorRepository.delete(id);
+  }
+  async findOne(id: string): Promise<Administrator> {
+    const adm = await this.administratorRepository.findOne(id);
+    if (!adm) {
+      throw new Error();
     }
-    async delete(id: string): Promise<void> {
-        const adm = await this.AdministratorRepository.findOne(id)
-        if (!adm) {
-            throw new Error
-        }
-        await this.AdministratorRepository.delete(id)
-    }
-    async findOne(id: string): Promise<Administrator> {
-        const adm = await this.AdministratorRepository.findOne(id)
-        if (!adm) {
-            throw new Error
-        }
-        return adm
-    }
-    async update(id: string, admin: AdminDTO): Promise<Administrator> {
-
-        return await this.AdministratorRepository.save({ id, ...admin })
-
-    }
-
+    return adm;
+  }
+  async update(id: string, admin: AdminDTO): Promise<Administrator> {
+    return this.administratorRepository.save({ id, ...admin });
+  }
 }
-

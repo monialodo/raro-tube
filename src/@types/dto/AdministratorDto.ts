@@ -1,5 +1,3 @@
-import { Administrator } from "../../models/administratorEntity"
+import { Administrator } from "../../models/administratorEntity";
 
-
-
-export interface AdminDTO extends Administrator{}
+export type AdminDTO = Administrator;

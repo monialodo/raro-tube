@@ -1,35 +1,32 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateSuperUser1658842895566 implements MigrationInterface {
+export class UserClassroom1659402916755 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "super_user",
+        name: "classrooms",
         columns: [
-          {
-            name: "id",
-            type: "uuid",
-            isPrimary: true,
-          },
-          {
-            name: "name",
-            type: "varchar",
-            isNullable: false,
-          },
           {
             name: "user_id",
             type: "uuid",
             isNullable: false,
           },
           {
-            name: "created_at",
-            type: "timestamp",
-            default: "now()",
+            name: "classroom_id",
+            type: "uuid",
+            isNullable: false,
+          },
+        ],
+        foreignKeys: [
+          {
+            columnNames: ["user_id"],
+            referencedTableName: "user",
+            referencedColumnNames: ["id"],
           },
           {
-            name: "updated_at",
-            type: "timestamp",
-            default: "now()",
+            columnNames: ["classroom_id"],
+            referencedTableName: "classroom",
+            referencedColumnNames: ["id"],
           },
         ],
       })
@@ -37,6 +34,6 @@ export class CreateSuperUser1658842895566 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("super_user");
+    await queryRunner.dropTable("classrooms");
   }
 }

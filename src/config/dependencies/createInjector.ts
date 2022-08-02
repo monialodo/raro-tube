@@ -1,7 +1,7 @@
 import Container from "typedi";
 import { getCustomRepository } from "typeorm";
 
-import { AdministratorRepository } from "../../repositories/AdministratorRepository";
+import { AdministratorRepository } from "../../repositories/administratorRepository";
 import { StudentRepository } from "../../repositories/studentsRepository";
 import { SuperUserRepository } from "../../repositories/superUserRepository";
 import { TeacherRepository } from "../../repositories/teachersRepository";

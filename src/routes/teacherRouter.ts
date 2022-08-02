@@ -1,6 +1,8 @@
-import { TeacherController } from "../controllers/TeacherController";
 import { Router } from "express";
 import Container from "typedi";
+
+import { TeacherController } from "../controllers/TeacherController";
+
 const router = Router();
 
 const getController = (): TeacherController => {

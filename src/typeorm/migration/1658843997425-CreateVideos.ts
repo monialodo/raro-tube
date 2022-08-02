@@ -12,54 +12,54 @@ export class CreateVideos1658843997425 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: "name",
-            type: "varchar",
-            isNullable: false,
+            name: "video_file_id",
+            type: "uuid",
           },
           {
-            name: "duration",
-            type: "varchar",
-            isNullable: false,
-          },
-          {
-            name: "subjects",
-            type: "varchar",
-            isNullable: false,
-          },
-          {
-            name: "tags",
-            type: "varchar",
-            isNullable: false,
-          },
-          {
-            name: "thumbnail",
-            type: "varchar",
-            isNullable: false,
+            name: "thumbnail_file_id",
+            type: "uuid",
           },
           {
             name: "teacher_id",
             type: "uuid",
-            isNullable: false,
           },
           {
-            name: "class_id",
-            type: "uuid",
-            isNullable: false,
+            name: "title",
+            type: "varchar",
           },
           {
-            name: "comment_id",
-            type: "uuid",
+            name: "duration",
+            type: "varchar",
+          },
+          {
+            name: "description",
+            type: "varchar",
             isNullable: false,
           },
           {
             name: "created_at",
             type: "timestamp",
-            default: "now()",
           },
           {
             name: "updated_at",
             type: "timestamp",
-            default: "now()",
+          },
+        ],
+        foreignKeys: [
+          {
+            columnNames: ["thumbnail_file_id"],
+            referencedTableName: "files",
+            referencedColumnNames: ["id"],
+          },
+          {
+            columnNames: ["video_file_id"],
+            referencedTableName: "files",
+            referencedColumnNames: ["id"],
+          },
+          {
+            columnNames: ["teacher_id"],
+            referencedTableName: "users",
+            referencedColumnNames: ["id"],
           },
         ],
       })

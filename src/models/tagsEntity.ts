@@ -5,14 +5,14 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
-import { Classroom } from "./classroomEntity";
+import { videoTags } from "./videoTags";
 
-@Entity("super_user")
-export class SuperUser {
+@Entity("tags")
+export class Tag {
   @IsUUID()
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -22,18 +22,13 @@ export class SuperUser {
   @Column({ name: "name" })
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Column({ name: "user_id" })
-  userId: string;
-
-  @OneToMany(() => Classroom, (classroom) => classroom.superUser)
-  classroom: Classroom[];
+  @OneToMany(() => videoTags, (videoTags) => videoTags.tag)
+  videosTags: videoTags[];
 
   @IsDate()
   @IsNotEmpty()
   @CreateDateColumn({ name: "created_at" })
-  createdAd: Date;
+  createdAt: Date;
 
   @IsDate()
   @IsNotEmpty()
@@ -41,6 +36,8 @@ export class SuperUser {
   updatedAt: Date;
 
   constructor() {
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
     if (!this.id) {
       this.id = uuidV4();
     }

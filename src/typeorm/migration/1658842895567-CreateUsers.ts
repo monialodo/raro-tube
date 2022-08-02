@@ -12,29 +12,40 @@ export class CreateUsers1658842895567 implements MigrationInterface {
             isPrimary: true,
           },
           {
+            name: "name",
+            type: "varchar",
+          },
+          {
             name: "email",
             type: "varchar",
-            isNullable: false,
           },
           {
             name: "password",
             type: "varchar",
-            isNullable: false,
           },
           {
             name: "role",
             type: "varchar",
-            isNullable: false,
+          },
+          {
+            name: "avatar_id",
+            type: "uuid",
+            isNullable: true,
           },
           {
             name: "created_at",
             type: "timestamp",
-            default: "now()",
           },
           {
             name: "updated_at",
             type: "timestamp",
-            default: "now()",
+          },
+        ],
+        foreignKeys: [
+          {
+            columnNames: ["avatar_id"],
+            referencedTableName: "files",
+            referencedColumnNames: ["id"],
           },
         ],
       })
