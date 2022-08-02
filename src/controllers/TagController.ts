@@ -27,7 +27,7 @@ export class TagController {
     response.send(Tag);
   }
 
-  async delete(request: Request, response: Response) {
+  async softDelete(request: Request, response: Response) {
     await this.TagService.delete(request.params.id);
     response.send();
   }

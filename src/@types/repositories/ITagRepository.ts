@@ -6,5 +6,5 @@ export interface ITagRepository {
   find(): Promise<Tag[]>;
   findOne(id: string): Promise<Tag>;
   update(id: string, Tag: Tag): Promise<Tag>;
-  delete(id: string): Promise<void>;
+  softDelete(id: string): Promise<void>;
 }

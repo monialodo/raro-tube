@@ -30,7 +30,7 @@ export class TagsService implements ITagService {
     return this.TagRepository.save({ id, ...Tag });
   }
 
-  async delete(id: string): Promise<void> {
+  async softDelete(id: string): Promise<void> {
     const TagDelete = await this.TagRepository.findOne(id);
     if (!TagDelete) {
       throw new NotFoundError("Tag not found");

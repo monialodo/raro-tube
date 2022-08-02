@@ -6,5 +6,5 @@ export interface ITagService {
   findAll(): Promise<Tag[]>;
   findOne(id: string): Promise<Tag>;
   update(id: string, Tag: TagDto): Promise<Tag>;
-  delete(id: string): Promise<void>;
+  softDelete(id: string): Promise<void>;
 }
