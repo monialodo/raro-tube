@@ -6,5 +6,5 @@ export interface IFileService {
   findAll(): Promise<File[]>;
   findOne(id: string): Promise<File>;
   update(id: string, fileDTO: FileDto): Promise<File>;
-  delete(id: string): Promise<void>;
+  softDelete(id: string): Promise<void>;
 }

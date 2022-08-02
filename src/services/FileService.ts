@@ -19,7 +19,7 @@ export class FileService implements IFileService {
     return this.fileRepository.save(file);
   }
 
-  async delete(id: string): Promise<void> {
+  async softDelete(id: string): Promise<void> {
     const file = await this.fileRepository.findOne(id);
     if (!file) {
       throw new Error();

@@ -5,5 +5,5 @@ export interface IFilesRepository {
   find(): Promise<File[]>;
   findOne(id: string): Promise<File>;
   save(Files: FileDto): Promise<File>;
-  delete(id: string): Promise<void>;
+  softDelete(id: string): Promise<void>;
 }
