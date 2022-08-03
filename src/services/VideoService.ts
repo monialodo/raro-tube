@@ -11,31 +11,31 @@ import { IVideoRepository } from "../@types/repositories/IVideosRepository";
 export class VideosService implements IVideosService {
     
     constructor(@Inject("VideoRepository")
-        private VideoRepository: IVideoRepository){}
+        private videoRepository: IVideoRepository){}
     
     async create(video: VideoDTO): Promise<Video> {
-       return this.VideoRepository.save(video)
+       return this.videoRepository.save(video)
     }
     async findAll(): Promise<Video[]> {
-       return this.VideoRepository.find()
+       return this.videoRepository.find()
     }
     async findOne(id: string): Promise<Video> {
-        const video = await this.VideoRepository.findOne(id)
+        const video = await this.videoRepository.findOne(id)
         if(!video){
             throw new NotFoundError("Video not found")
         }
         return video
     }
     async update(id: string, video: VideoDTO): Promise<Video> {
-       return this.VideoRepository.save({id, ...video})
+       return this.videoRepository.save({id, ...video})
     }
     async delete(id: string): Promise<void> {
-        const video = await this.VideoRepository.findOne(id)
+        const video = await this.videoRepository.findOne(id)
         if(!video){
             throw new NotFoundError("Video not found")
         }
 
-        await this.VideoRepository.softDelete(id)
+        await this.videoRepository.softDelete(id)
 
 
     }
