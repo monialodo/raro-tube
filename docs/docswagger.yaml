@@ -1,0 +1,644 @@
+swagger: "2.0"
+info:
+  title: "Raro Tube"
+  version: "1.0.0"
+  description: "Site de vídeoaulas da Raro"
+host: "localhost:3000"
+basePath: "/v1"
+tags:
+  - name: "videos"
+    description: "Operations about videos"
+  - name: "users"
+    description: "Operations about users"
+  - name: "tags"
+    description: "Operations about tags"
+  - name: "comments"
+    description: "Operations about comments"
+  - name: "reactions"
+    description: "Operations about reactions"
+  - name: "files"
+    description: "Operations about files"
+  - name: "favorites"
+    description: "Operations about favorites"
+  - name: "classroom"
+    description: "Operations about classroom"
+  - name: "classroom_users"
+    description: "Operations about classroom_users"
+schemes:
+  - "http"
+definitions:
+  CreateVideoDTO:
+    type: "object"
+    required:
+      - title
+      - description
+      - video_file_id
+      - tags
+      - teacher_id
+      - classroom_id
+      - duration
+    properties:
+      title:
+        type: "string"
+        example: "Example video"
+      description:
+        type: "string"
+        example: "Video about CSS"
+      video_file_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+          example: "CSS"
+      teacher_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      classroom_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      duration:
+        type: "string"
+        example: "00:00:00"
+  VideoDTO:
+    type: "object"
+    required:
+      - id
+      - title
+      - description
+      - video_file_id
+      - tags
+      - teacher_id
+      - classroom_id
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      title:
+        type: "string"
+        example: "Example video"
+      description:
+        type: "string"
+        example: "Video about CSS"
+      video_file_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+          example: "CSS"
+      teacher_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      classroom_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      duration:
+        type: "string"
+        example: "00:00:00"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateClassroomDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - description
+      - logo_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example classroom"
+      description:
+        type: "string"
+        example: "Classroom about CSS"
+      logo_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  ClassroomDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - description
+      - teacher_id
+      - logo_id
+      - created_at
+      - updated_at
+      - deleted_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example classroom"
+      teacher_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      description:
+        type: "string"
+        example: "Classroom about CSS"
+      logo_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateUsersDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - email
+      - password
+      - avatar_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example user"
+      email:
+        type: "string"
+        example: "email@raro.com"
+      password:
+        type: "string"
+        example: "123456"
+      avatar_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      role:
+        type: "string"
+        example: "teacher"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  UsersDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - email
+      - password
+      - avatar_id
+      - role
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example user"
+      email:
+        type: "string"
+        example: "email@raro.com"
+      password:
+        type: "string"
+        example: "123456"
+      avatar_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      role:
+        type: "string"
+        example: "teacher"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateFilesDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - size_bites
+      - format
+      - path
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example file"
+      size_bites:
+        type: "integer"
+        example: "1536"
+      format:
+        type: "string"
+        example: "mp4"
+      path:
+        type: "string"
+        example: "https://example.com/file.pdf"
+      type:
+        type: "string"
+        example: "video"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  FilesDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - size_bites
+      - format
+      - path
+      - type
+      - created_at
+      - updated_at
+      - deleted_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example file"
+      size_bites:
+        type: "integer"
+        example: "1536"
+      format:
+        type: "string"
+        example: "mp4"
+      path:
+        type: "string"
+        example: "https://example.com/file.pdf"
+      type:
+        type: "string"
+        example: "video"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateCommentsDTO:
+    type: "object"
+    required:
+      - id
+      - content
+      - upvoteQuantity
+      - downvoteQuantity
+      - user_id
+      - video_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      content:
+        type: "string"
+        example: "Example comment"
+      upvoteQuantity:
+        type: "integer"
+        example: "10"
+      downvoteQuantity:
+        type: "integer"
+        example: "10"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      video_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CommentsDTO:
+    type: "object"
+    required:
+      - id
+      - content
+      - upvoteQuantity
+      - downvoteQuantity
+      - user_id
+      - video_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      content:
+        type: "string"
+        example: "Example comment"
+      upvoteQuantity:
+        type: "integer"
+        example: "10"
+      downvoteQuantity:
+        type: "integer"
+        example: "10"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      video_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateTagsDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example tag"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  TagsDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example tag"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateCommentsReactionDTO:
+    type: "object"
+    required:
+      - id
+      - user_id
+      - comment_id
+      - reaction
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      comment_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      reaction:
+        type: "string"
+        example: "upvote"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CommentsReactionDTO:
+    type: "object"
+    required:
+      - id
+      - user_id
+      - comment_id
+      - reaction
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      comment_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      reaction:
+        type: "string"
+        example: "upvote"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateFavoriteDTO:
+    type: "object"
+    required:
+      - id
+      - user_id
+      - video_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      video_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  FavoriteDTO:
+    type: "object"
+    required:
+      - id
+      - user_id
+      - video_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      video_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateUserClassroomDTO:
+    type: "object"
+    required:
+      - id
+      - user_id
+      - classroom_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      classroom_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  UserClassroomDTO:
+    type: "object"
+    required:
+      - id
+      - user_id
+      - classroom_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      user_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      classroom_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
