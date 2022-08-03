@@ -1,4 +1,5 @@
 import * as express from "express";
+import createFavoritesRouter from "./favoritesRouter";
 
 import createClassroomRouter from "./classroomRouter";
 import createCommentRouter from "./commentRouter";
@@ -14,6 +15,7 @@ const createRouters = (app: express.Express) => {
   app.use("/v1/tags", createTagRouter());
   app.use("/v1/videos", createVideoRouter())
   app.use("/v1/files", createFileRouter());
+  app.use("/v1/favorites", createFavoritesRouter())
 };
 
 export default createRouters;

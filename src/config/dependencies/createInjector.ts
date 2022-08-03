@@ -14,19 +14,25 @@ import { VideoRepository } from "../../repositories/videoRepository";
 
 import "../../controllers/ClassroomController";
 import "../../controllers/CommentController";
+import "../../controllers/FavoritesController";
 import "../../controllers/FileController";
 import "../../controllers/TagController";
 import "../../controllers/UserController";
 import "../../controllers/VideoController";
 
 
+
 // inicializa services
+import { FavoritesRepository } from "../../repositories/favoritesRepository";
 import "../../services/ClassroomService";
 import "../../services/CommentService";
+import "../../services/favoritesService";
 import "../../services/FileService";
 import "../../services/TagService";
 import "../../services/userService";
 import "../../services/VideoService";
+
+
 
 
 const createDependencyInjector = () => {
@@ -47,6 +53,8 @@ const createDependencyInjector = () => {
 
 
   Container.set("FilesRepository", getCustomRepository(FileRepository));
+
+  Container.set("FavoriteRepository", getCustomRepository(FavoritesRepository));
 };
 
 export default createDependencyInjector;
