@@ -1,9 +1,8 @@
 import * as express from "express";
+import createFavoritesRouter from "./favoritesRouter";
 
 const createRouters = (app: express.Express) => {
-  app.get("/", (req, res) => {
-    res.send("Hello World!");
-  });
+    app.use("/v1/favorites", createFavoritesRouter())
 };
 
 export default createRouters;
