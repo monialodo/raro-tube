@@ -30,7 +30,7 @@ export class FileController {
   }
 
   async delete(request: Request, response: Response) {
-    await this.fileService.softDelete(request.params.id);
+    await this.fileService.delete(request.params.id);
     response.send();
   }
 }
