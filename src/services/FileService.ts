@@ -10,8 +10,8 @@ export class FileService implements IFileService {
     @Inject("FileRepository") private fileRepository: IFilesRepository
   ) { }
 
-  async create(fileDto: FileDto): Promise<File> {
-    return this.fileRepository.save(fileDto);
+  async create(file: File): Promise<File> {
+    return this.fileRepository.save(file);
   }
 
   async findAll(): Promise<File[]> {

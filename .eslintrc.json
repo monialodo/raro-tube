@@ -20,8 +20,21 @@
         "eslint-plugin-import-helpers",
         "prettier"
     ],
+    "settings": {
+        "import/resolver": {
+          "typescript": {}
+        }
+      },
+    
     "rules": {
-        "prettier/prettier": "error",
+        "prettier/prettier": [ 
+            "error",
+        {},
+            {
+                "usePrettierrc": false
+            }
+            ]
+        },
         "camelcase": "off",
         "import/no-unresolved": "error",
         "@typescript-eslint/naming-convention": [
@@ -63,11 +76,4 @@
         "error",
         {"devDependencies": true, "optionalDependencies": true, "peerDependencies": true}
     ]
-},    
-
-"settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
-  }
 }

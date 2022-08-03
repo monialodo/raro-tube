@@ -13,7 +13,7 @@ export class VideosService implements IVideosService {
     constructor(@Inject("VideoRepository")
         private videoRepository: IVideoRepository){}
     
-    async create(video: VideoDTO): Promise<Video> {
+    async create(video: Video): Promise<Video> {
        return this.videoRepository.save(video)
     }
     async findAll(): Promise<Video[]> {
@@ -26,7 +26,7 @@ export class VideosService implements IVideosService {
         }
         return video
     }
-    async update(id: string, video: VideoDTO): Promise<Video> {
+    async update(id: string, video: Video): Promise<Video> {
        return this.videoRepository.save({id, ...video})
     }
     async delete(id: string): Promise<void> {

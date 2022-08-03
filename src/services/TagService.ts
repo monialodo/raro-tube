@@ -10,8 +10,8 @@ import { Tag } from "../models/tagEntity";
 export class TagsService implements ITagService {
   constructor(@Inject("TagRepository") private tagRepository: ITagRepository) {}
 
-  async create(Tag: Tag): Promise<Tag> {
-    return this.tagRepository.save(Tag);
+  async create(tag: Tag): Promise<Tag> {
+    return this.tagRepository.save(tag);
   }
 
   async findAll(): Promise<Tag[]> {
@@ -26,7 +26,7 @@ export class TagsService implements ITagService {
     return Tag;
   }
 
-  async update(id: string, Tag: TagDto): Promise<Tag> {
+  async update(id: string, Tag: Tag): Promise<Tag> {
     return this.tagRepository.save({ id, ...Tag });
   }
 
