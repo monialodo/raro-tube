@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "RaroTube"
   version: "1.0.0"
-  description: "RaroTube video-lessons site"
+  description: "RaroTube videos-lessons site"
 host: "localhost:3000"
 basePath: "/v1"
 tags:
@@ -30,7 +30,7 @@ definitions:
       email:
         type: string
         format: email
-        description: "Email of the user"
+        description: "Email of the users"
   LogOutDTO:
     type: object
     required:
@@ -49,24 +49,24 @@ definitions:
         type: string
         format: token
         description: "JWT token"
-  CreateVideoDTO:
+  CreateVideosDTO:
     type: "object"
     required:
       - title
       - description
-      - video_file_id
+      - videos_file_id
       - tags
       - teacher_id
-      - classroom_id
+      - classrooms_id
       - duration
     properties:
       title:
         type: "string"
-        example: "Example video"
+        example: "Example videos"
       description:
         type: "string"
-        example: "Video about CSS"
-      video_file_id:
+        example: "Videos about CSS"
+      videos_file_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -79,23 +79,23 @@ definitions:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      classroom_id:
+      classrooms_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
       duration:
         type: "string"
         example: "00:00:00"
-  VideoDTO:
+  VideosDTO:
     type: "object"
     required:
       - id
       - title
       - description
-      - video_file_id
+      - videos_file_id
       - tags
       - teacher_id
-      - classroom_id
+      - classrooms_id
       - created_at
       - updated_at
     properties:
@@ -105,11 +105,11 @@ definitions:
         example: "123e4567-e89b-12d3-a456-426614174000"
       title:
         type: "string"
-        example: "Example video"
+        example: "Example videos"
       description:
         type: "string"
-        example: "Video about CSS"
-      video_file_id:
+        example: "Videos about CSS"
+      videos_file_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -122,7 +122,7 @@ definitions:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      classroom_id:
+      classrooms_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -141,7 +141,7 @@ definitions:
         type: "string"
         format: "date-time"
         example: "2020-01-01T00:00:00.000Z"
-  CreateClassroomDTO:
+  CreateClassroomsDTO:
     type: "object"
     required:
       - id
@@ -156,10 +156,10 @@ definitions:
         example: "123e4567-e89b-12d3-a456-426614174000"
       name:
         type: "string"
-        example: "Example classroom"
+        example: "Example classrooms"
       description:
         type: "string"
-        example: "Classroom about CSS"
+        example: "Classrooms about CSS"
       logo_id:
         type: "string"
         format: "uuid"
@@ -168,7 +168,7 @@ definitions:
         type: "string"
         format: "date-time"
         example: "2020-01-01T00:00:00.000Z"
-  ClassroomDTO:
+  ClassroomsDTO:
     type: "object"
     required:
       - id
@@ -186,14 +186,14 @@ definitions:
         example: "123e4567-e89b-12d3-a456-426614174000"
       name:
         type: "string"
-        example: "Example classroom"
+        example: "Example classrooms"
       teacher_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
       description:
         type: "string"
-        example: "Classroom about CSS"
+        example: "Classrooms about CSS"
       logo_id:
         type: "string"
         format: "uuid"
@@ -210,7 +210,7 @@ definitions:
         type: "string"
         format: "date-time"
         example: "2020-01-01T00:00:00.000Z"
-  UpdateClassroomDTO:
+  UpdateClassroomsDTO:
     type: "object"
     required:
       - id
@@ -221,15 +221,15 @@ definitions:
         example: "123e4567-e89b-12d3-a456-426614174000"
       name:
         type: "string"
-        example: "Example classroom"
+        example: "Example classrooms"
       description:
         type: "string"
-        example: "Classroom about CSS"
+        example: "Classrooms about CSS"
       logo_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-  CreateUserDTO:
+  CreateUsersDTO:
     type: "object"
     required:
       - id
@@ -245,7 +245,7 @@ definitions:
         example: "123e4567-e89b-12d3-a456-426614174000"
       name:
         type: "string"
-        example: "Example user"
+        example: "Example users"
       email:
         type: "string"
         example: "email@raro.com"
@@ -263,7 +263,7 @@ definitions:
         type: "string"
         format: "date-time"
         example: "2020-01-01T00:00:00.000Z"
-  UserDTO:
+  UsersDTO:
     type: "object"
     required:
       - id
@@ -280,7 +280,7 @@ definitions:
         example: "123e4567-e89b-12d3-a456-426614174000"
       name:
         type: "string"
-        example: "Example user"
+        example: "Example users"
       email:
         type: "string"
         example: "email@raro.com"
@@ -306,7 +306,7 @@ definitions:
         type: "string"
         format: "date-time"
         example: "2020-01-01T00:00:00.000Z"
-  UpdateUserDTO:
+  UpdateUsersDTO:
     type: "object"
     required:
       - id
@@ -343,7 +343,7 @@ definitions:
         example: "https://example.com/file.pdf"
       type:
         type: "string"
-        example: "video"
+        example: "videos"
       created_at:
         type: "string"
         format: "date-time"
@@ -379,7 +379,7 @@ definitions:
         example: "https://example.com/file.pdf"
       type:
         type: "string"
-        example: "video"
+        example: "videos"
       created_at:
         type: "string"
         format: "date-time"
@@ -399,8 +399,8 @@ definitions:
       - content
       - upvoteQuantity
       - downvoteQuantity
-      - user_id
-      - video_id
+      - users_id
+      - videos_id
       - created_at
     properties:
       id:
@@ -416,11 +416,11 @@ definitions:
       downvoteQuantity:
         type: "integer"
         example: "10"
-      user_id:
+      users_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      video_id:
+      videos_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -435,8 +435,8 @@ definitions:
       - content
       - upvoteQuantity
       - downvoteQuantity
-      - user_id
-      - video_id
+      - users_id
+      - videos_id
       - created_at
     properties:
       id:
@@ -452,11 +452,11 @@ definitions:
       downvoteQuantity:
         type: "integer"
         example: "10"
-      user_id:
+      users_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      video_id:
+      videos_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -520,7 +520,7 @@ definitions:
     type: "object"
     required:
       - id
-      - user_id
+      - users_id
       - comment_id
       - reaction
       - created_at
@@ -529,7 +529,7 @@ definitions:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      user_id:
+      users_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -548,7 +548,7 @@ definitions:
     type: "object"
     required:
       - id
-      - user_id
+      - users_id
       - comment_id
       - reaction
       - created_at
@@ -557,7 +557,7 @@ definitions:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      user_id:
+      users_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -584,19 +584,19 @@ definitions:
     type: "object"
     required:
       - id
-      - user_id
-      - video_id
+      - users_id
+      - videos_id
       - created_at
     properties:
       id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      user_id:
+      users_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      video_id:
+      videos_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -608,19 +608,19 @@ definitions:
     type: "object"
     required:
       - id
-      - user_id
-      - video_id
+      - users_id
+      - videos_id
       - created_at
     properties:
       id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      user_id:
+      users_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
-      video_id:
+      videos_id:
         type: "string"
         format: "uuid"
         example: "123e4567-e89b-12d3-a456-426614174000"
@@ -651,7 +651,7 @@ paths:
       tags:
         - Authentication
       summary: "Sign Up"
-      description: "Sign Up a user"
+      description: "Sign Up a users"
       operationId: "authenticate"
       consumes:
         - "application/json"
@@ -660,13 +660,13 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "User credentials"
+          description: "Users credentials"
           required: true
           schema:
             $ref: "#/definitions/AuthenticationDTO"
       responses:
         200:
-          description: "User authenticated"
+          description: "Users authenticated"
           schema:
             $ref: "#/definitions/AuthenticationDTO"
         400:
@@ -686,7 +686,7 @@ paths:
       tags:
         - Authentication
       summary: "Sign In"
-      description: "Sign In a user"
+      description: "Sign In a users"
       operationId: "authenticateSignIn"
       consumes:
         - "application/json"
@@ -695,13 +695,13 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "User credentials"
+          description: "Users credentials"
           required: true
           schema:
             $ref: "#/definitions/AuthenticationDTO"
       responses:
         200:
-          description: "User authenticated"
+          description: "Users authenticated"
           schema:
             $ref: "#/definitions/AuthenticationDTO"
         400:
@@ -730,13 +730,13 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "User credentials"
+          description: "Users credentials"
           required: true
           schema:
             $ref: "#/definitions/ForgotDTO"
       responses:
         200:
-          description: "User authenticated"
+          description: "Users authenticated"
           schema:
             $ref: "#/definitions/ForgotDTO"
         404:
@@ -761,13 +761,13 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "User credentials"
+          description: "Users credentials"
           required: true
           schema:
             $ref: "#/definitions/LogOutDTO"
       responses:
         200:
-          description: "User authenticated"
+          description: "Users authenticated"
           schema:
             $ref: "#/definitions/LogOutDTO"
         400:
@@ -792,13 +792,13 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "User credentials"
+          description: "Users credentials"
           required: true
           schema:
             $ref: "#/definitions/TokenDTO"
       responses:
         200:
-          description: "User authenticated"
+          description: "Users authenticated"
           schema:
             $ref: "#/definitions/TokenDTO"
         400:
@@ -809,7 +809,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /user:
+  /users:
     get:
       tags:
         - Users
@@ -822,17 +822,17 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/UserDTO"
+            $ref: "#/definitions/UsersDTO"
         500:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
     post:
       tags:
-        - User
-      summary: "Post a user"
-      description: "Post a user"
-      operationId: "createUser"
+        - Users
+      summary: "Post a users"
+      description: "Post a users"
+      operationId: "createUsers"
       consumes:
         - "application/json"
       produces:
@@ -840,15 +840,15 @@ paths:
       parameters:
         - name: body
           in: body
-          description: "User that will be added"
+          description: "Users that will be added"
           required: true
           schema:
-            $ref: "#/definitions/CreateUserDTO"
+            $ref: "#/definitions/CreateUsersDTO"
       responses:
         201:
           description: "OK"
           schema:
-            $ref: "#/definitions/UserDTO"
+            $ref: "#/definitions/UsersDTO"
         400:
           description: "Bad Request"
           schema:
@@ -857,19 +857,19 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /user/{id}:
+  /users/{id}:
     get:
       tags:
-        - User
-      summary: "Get a user by id"
-      description: "Get a user by id"
-      operationId: "getUser"
+        - Users
+      summary: "Get a users by id"
+      description: "Get a users by id"
+      operationId: "getUsers"
       produces:
         - "application/json"
       parameters:
         - name: id
           in: path
-          description: "User id"
+          description: "Users id"
           required: true
           type: string
           format: uuid
@@ -877,7 +877,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/UserDTO"
+            $ref: "#/definitions/UsersDTO"
         400:
           description: "Bad Request"
           schema:
@@ -888,10 +888,10 @@ paths:
             $ref: "#/definitions/ErrorDTO"
     put:
       tags:
-        - User
-      summary: "Update a user"
-      description: "Update a user"
-      operationId: "updateUser"
+        - Users
+      summary: "Update a users"
+      description: "Update a users"
+      operationId: "updateUsers"
       consumes:
         - "application/json"
       produces:
@@ -899,21 +899,21 @@ paths:
       parameters:
         - name: id
           in: path
-          description: "User id"
+          description: "Users id"
           required: true
           type: string
           format: uuid
         - name: body
           in: body
-          description: "User that will be updated"
+          description: "Users that will be updated"
           required: true
           schema:
-            $ref: "#/definitions/UpdateUserDTO"
+            $ref: "#/definitions/UpdateUsersDTO"
       responses:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/UserDTO"
+            $ref: "#/definitions/UsersDTO"
         400:
           description: "Bad Request"
           schema:
@@ -924,16 +924,16 @@ paths:
             $ref: "#/definitions/ErrorDTO"
     delete:
       tags:
-        - User
-      summary: "Delete a user"
-      description: "Delete a user"
-      operationId: "deleteUser"
+        - Users
+      summary: "Delete a users"
+      description: "Delete a users"
+      operationId: "deleteUsers"
       produces:
         - "application/json"
       parameters:
         - name: id
           in: path
-          description: "User id"
+          description: "Users id"
           required: true
           type: string
           format: uuid
@@ -941,7 +941,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/UserDTO"
+            $ref: "#/definitions/UsersDTO"
         400:
           description: "Bad Request"
           schema:
@@ -950,7 +950,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /classroom:
+  /classrooms:
     get:
       tags:
         - Classrooms
@@ -963,17 +963,17 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/ClassroomDTO"
+            $ref: "#/definitions/ClassroomsDTO"
         500:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
     post:
       tags:
-        - Classroom
-      summary: "Post a classroom"
-      description: "Post a classroom"
-      operationId: "createClassroom"
+        - Classrooms
+      summary: "Post a classrooms"
+      description: "Post a classrooms"
+      operationId: "createClassrooms"
       consumes:
         - "application/json"
       produces:
@@ -981,15 +981,15 @@ paths:
       parameters:
         - name: body
           in: body
-          description: "Classroom that will be added"
+          description: "Classrooms that will be added"
           required: true
           schema:
-            $ref: "#/definitions/CreateClassroomDTO"
+            $ref: "#/definitions/CreateClassroomsDTO"
       responses:
         201:
           description: "OK"
           schema:
-            $ref: "#/definitions/ClassroomDTO"
+            $ref: "#/definitions/ClassroomsDTO"
         400:
           description: "Bad Request"
           schema:
@@ -998,19 +998,19 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /classroom/{id}:
+  /classrooms/{id}:
     get:
       tags:
-        - Classroom
-      summary: "Get a classroom by id"
-      description: "Get a classroom by id"
-      operationId: "getClassroom"
+        - Classrooms
+      summary: "Get a classrooms by id"
+      description: "Get a classrooms by id"
+      operationId: "getClassrooms"
       produces:
         - "application/json"
       parameters:
         - name: id
           in: path
-          description: "Classroom id"
+          description: "Classrooms id"
           required: true
           type: string
           format: uuid
@@ -1018,7 +1018,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/ClassroomDTO"
+            $ref: "#/definitions/ClassroomsDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1029,10 +1029,10 @@ paths:
             $ref: "#/definitions/ErrorDTO"
     put:
       tags:
-        - Classroom
-      summary: "Update a classroom"
-      description: "Update a classroom"
-      operationId: "updateClassroom"
+        - Classrooms
+      summary: "Update a classrooms"
+      description: "Update a classrooms"
+      operationId: "updateClassrooms"
       consumes:
         - "application/json"
       produces:
@@ -1040,21 +1040,21 @@ paths:
       parameters:
         - name: id
           in: path
-          description: "Classroom id"
+          description: "Classrooms id"
           required: true
           type: string
           format: uuid
         - name: body
           in: body
-          description: "Classroom that will be updated"
+          description: "Classrooms that will be updated"
           required: true
           schema:
-            $ref: "#/definitions/UpdateClassroomDTO"
+            $ref: "#/definitions/UpdateClassroomsDTO"
       responses:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/ClassroomDTO"
+            $ref: "#/definitions/ClassroomsDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1065,16 +1065,16 @@ paths:
             $ref: "#/definitions/ErrorDTO"
     delete:
       tags:
-        - Classroom
-      summary: "Delete a classroom"
-      description: "Delete a classroom"
-      operationId: "deleteClassroom"
+        - Classrooms
+      summary: "Delete a classrooms"
+      description: "Delete a classrooms"
+      operationId: "deleteClassrooms"
       produces:
         - "application/json"
       parameters:
         - name: id
           in: path
-          description: "Classroom id"
+          description: "Classrooms id"
           required: true
           type: string
           format: uuid
@@ -1082,7 +1082,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/ClassroomDTO"
+            $ref: "#/definitions/ClassroomsDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1091,19 +1091,19 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /classroom/{id}/user:
+  /classrooms/{id}/users:
     get:
       tags:
-        - Classroom
-      summary: "Get all users from a classroom"
-      description: "Get all users from a classroom"
-      operationId: "getClassroomUsers"
+        - Classrooms
+      summary: "Get all users from a classrooms"
+      description: "Get all users from a classrooms"
+      operationId: "getClassroomsUsers"
       produces:
         - "application/json"
       parameters:
         - name: id
           in: path
-          description: "Classroom id"
+          description: "Classrooms id"
           required: true
           type: string
           format: uuid
@@ -1111,7 +1111,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/UserDTO"
+            $ref: "#/definitions/UsersDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1120,19 +1120,19 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /classroom/{id}/teacher:
+  /classrooms/{id}/teacher:
     get:
       tags:
-        - Classroom
-      summary: "Get all teachers from a classroom"
-      description: "Get all teachers from a classroom"
-      operationId: "getClassroomTeachers"
+        - Classrooms
+      summary: "Get all teachers from a classrooms"
+      description: "Get all teachers from a classrooms"
+      operationId: "getClassroomsTeachers"
       produces:
         - "application/json"
       parameters:
         - name: id
           in: path
-          description: "Classroom id"
+          description: "Classrooms id"
           required: true
           type: string
           format: uuid
@@ -1140,7 +1140,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/UserDTO"
+            $ref: "#/definitions/UsersDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1164,7 +1164,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/VideoDTO"
+              $ref: "#/definitions/VideosDTO"
         500:
           description: "Internal Server Error"
           schema:
@@ -1172,9 +1172,9 @@ paths:
     post:
       tags:
         - "videos"
-      summary: "Post a video"
-      description: "Post a video to a classroom"
-      operationId: "createVideo"
+      summary: "Post a videos"
+      description: "Post a videos to a classrooms"
+      operationId: "createVideos"
       consumes:
         - "application/json"
       produces:
@@ -1182,15 +1182,15 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "Video object that needs to be added to the database"
+          description: "Videos object that needs to be added to the database"
           required: true
           schema:
-            $ref: "#/definitions/CreateVideoDTO"
+            $ref: "#/definitions/CreateVideosDTO"
       responses:
         201:
           description: "Created"
           schema:
-            $ref: "#/definitions/VideoDTO"
+            $ref: "#/definitions/VideosDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1203,22 +1203,22 @@ paths:
     get:
       tags:
         - "videos"
-      summary: "Get a video"
-      description: "Get a video by its id"
-      operationId: "findVideoById"
+      summary: "Get a videos"
+      description: "Get a videos by its id"
+      operationId: "findVideosById"
       produces:
         - "application/json"
       parameters:
         - name: "id"
           in: "path"
-          description: "Id of video that needs to be fetched"
+          description: "Id of videos that needs to be fetched"
           required: true
           type: "string"
       responses:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/VideoDTO"
+            $ref: "#/definitions/VideosDTO"
         404:
           description: "Not Found"
           schema:
@@ -1230,9 +1230,9 @@ paths:
     put:
       tags:
         - "videos"
-      summary: "Update a video"
-      description: "Update a video by its id"
-      operationId: "updateVideo"
+      summary: "Update a videos"
+      description: "Update a videos by its id"
+      operationId: "updateVideos"
       consumes:
         - "application/json"
       produces:
@@ -1240,20 +1240,20 @@ paths:
       parameters:
         - name: "id"
           in: "path"
-          description: "Id of video that needs to be updated"
+          description: "Id of videos that needs to be updated"
           required: true
           type: "string"
         - in: "body"
           name: "body"
-          description: "Video object that needs to be updated"
+          description: "Videos object that needs to be updated"
           required: true
           schema:
-            $ref: "#/definitions/VideoDTO"
+            $ref: "#/definitions/VideosDTO"
       responses:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/VideoDTO"
+            $ref: "#/definitions/VideosDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1269,22 +1269,22 @@ paths:
     delete:
       tags:
         - "videos"
-      summary: "Delete a video"
-      description: "Delete a video by its id"
-      operationId: "deleteVideo"
+      summary: "Delete a videos"
+      description: "Delete a videos by its id"
+      operationId: "deleteVideos"
       produces:
         - "application/json"
       parameters:
         - name: "id"
           in: "path"
-          description: "Id of video that needs to be deleted"
+          description: "Id of videos that needs to be deleted"
           required: true
           type: "string"
       responses:
         202:
           description: "OK"
           schema:
-            $ref: "#/definitions/VideoDTO"
+            $ref: "#/definitions/VideosDTO"
         404:
           description: "Not Found"
           schema:
@@ -1308,7 +1308,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/VideoDTO"
+              $ref: "#/definitions/VideosDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1321,9 +1321,9 @@ paths:
     patch:
       tags:
         - "videos"
-      summary: "Favorite a video"
-      description: "Favorite a video"
-      operationId: "favoriteVideo"
+      summary: "Favorite a videos"
+      description: "Favorite a videos"
+      operationId: "favoriteVideos"
       consumes:
         - "application/json"
       produces:
@@ -1331,14 +1331,14 @@ paths:
       parameters:
         - name: "id"
           in: "path"
-          description: "Id of video that will to be favorited"
+          description: "Id of videos that will to be favorited"
           required: true
           type: "string"
       responses:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/VideoDTO"
+            $ref: "#/definitions/VideosDTO"
         400:
           description: "Bad Request"
           schema:
@@ -1355,15 +1355,15 @@ paths:
     get:
       tags:
         - "videos"
-      summary: "Get all comments of a video"
-      description: "Get all comments of a video"
-      operationId: "findAllCommentsOfVideo"
+      summary: "Get all comments of a videos"
+      description: "Get all comments of a videos"
+      operationId: "findAllCommentsOfVideos"
       produces:
         - "application/json"
       parameters:
         - name: "id"
           in: "path"
-          description: "Id of video that will has the comments"
+          description: "Id of videos that will has the comments"
           required: true
           type: "string"
       responses:
@@ -1388,8 +1388,8 @@ paths:
     post:
       tags:
         - "videos"
-      summary: "Post a comment to a video"
-      description: "Post a comment to a video"
+      summary: "Post a comment to a videos"
+      description: "Post a comment to a videos"
       operationId: "createComment"
       consumes:
         - "application/json"
@@ -1398,7 +1398,7 @@ paths:
       parameters:
         - name: "id"
           in: "path"
-          description: "Id of video that will to be commented"
+          description: "Id of videos that will to be commented"
           required: true
           type: "string"
         - in: "body"
@@ -1434,7 +1434,7 @@ paths:
       parameters:
         - name: "id"
           in: "path"
-          description: "Id of video that has the comment"
+          description: "Id of videos that has the comment"
           required: true
           type: "string"
         - name: "comments"
