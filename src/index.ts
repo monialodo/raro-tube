@@ -8,7 +8,7 @@ import "reflect-metadata";
 import createDependencyInjector from "./config/dependencies/createInjector";
 import createServer from "./infra/server/server";
 
-dotenv.config();
+dotenv.config(); 
 
 export const start = async () => {
   try {
@@ -16,7 +16,7 @@ export const start = async () => {
     const app = createApp();
     createDependencyInjector();
     createServer(app);
-  } catch (error) {
+  } catch (error) { 
     console.error("Fatal error: ", error);
   }
 };

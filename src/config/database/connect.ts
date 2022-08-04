@@ -1,6 +1,6 @@
 import { Connection, createConnection, getConnectionOptions } from "typeorm";
 
-export default async (host = "localhost"): Promise<Connection> => {
+export default async (host = "database"): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
 
   return createConnection(
@@ -11,5 +11,5 @@ export default async (host = "localhost"): Promise<Connection> => {
           ? "raro_tube_test"
           : defaultOptions.database,
     })
-  );
+  ); 
 };

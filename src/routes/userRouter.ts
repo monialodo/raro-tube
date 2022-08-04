@@ -7,6 +7,8 @@ const router = Router();
 
 const getController = (): UserController => {
   return Container.get<UserController>("UserController");
+  console.log('Chamou o router');
+  
 };
 
 const createUserRouter = () => {
