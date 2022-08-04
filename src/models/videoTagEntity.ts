@@ -47,6 +47,6 @@ export class VideoTag {
     if (!this.updatedAt) {
       this.updatedAt = new Date();
     }
-    this.updatedAt = new Date();
+    this.createdAt = new Date();
   }
 }

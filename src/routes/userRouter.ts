@@ -14,7 +14,7 @@ const getController = (): UserController => {
 
 const createUserRouter = () => {
   router.get("/", (req, res) => getController().findAll(req, res));
-  router.get("/:id", authMiddleware, (req, res) => getController().find(req, res));
+  router.get("/:id", (req, res) => getController().find(req, res));
   router.post("/", (req, res) => getController().create(req, res));
   router.put("/:id", (req, res) => getController().update(req, res));
   router.delete("/:id", (req, res) => getController().delete(req, res));

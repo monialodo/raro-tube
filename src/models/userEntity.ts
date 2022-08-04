@@ -88,6 +88,6 @@ export class User {
       this.id = uuidV4();
       this.updatedAt = new Date();
     }
-    this.updatedAt = new Date();
+    this.createdAt = new Date();
   }
 }

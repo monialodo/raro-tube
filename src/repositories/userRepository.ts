@@ -7,3 +7,4 @@ import { User } from "../models/userEntity";
 export class UserRepository
   extends Repository<User>
   implements IUserRepository {}
+ 

@@ -11,7 +11,7 @@ export class UserService implements IUserService {
     @Inject("UserRepository")
     private userRepository: IUserRepository
   ) { }
-
+ 
   async create(user: User): Promise<User> {
     return this.userRepository.save(user);
   }
