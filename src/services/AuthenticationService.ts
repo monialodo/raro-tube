@@ -4,7 +4,7 @@ import { EmailRegistered } from "../@types/errors/EmailRegistered";
 import { UserOrPasswordInvalid } from "../@types/errors/UserPasswordInvalid";
 import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { IAuthenticationService } from "../@types/services/IAuthenticationService";
-import { hashSenha } from "../helpers/HashSenha";
+import { hashPassword } from "../helpers/HashPassword";
 import { generateToken } from "../helpers/Token";
 
 
@@ -13,14 +13,14 @@ export class AuthenticationService implements IAuthenticationService {
   constructor(
     @Inject("UserRepository") private userRepository: IUserRepository
   ) { }
- 
 
-  async authenticate(login: string, senha: string): Promise<AuthResponseDTO> {
-    const registeredUser = await this.userRepository.findOne({ login });
+
+  async authenticate(login: string, password: string): Promise<AuthResponseDTO> {
+    const registeredUser = await this.userRepository.findOne({ email: login });
     if (!registeredUser) {
       throw new UserOrPasswordInvalid();
     }
-    if (registeredUser.password !== hashSenha(senha)) {
+    if (registeredUser.password !== hashPassword(password)) {
       throw new Error("Invalid password");
     }
     return generateToken({
@@ -30,7 +30,7 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   async userSignup(user: UserRegistrationDTO): Promise<UserResponseDTO> {
-    const hash = hashSenha(user.password);
+    const hash = hashPassword(user.password);
     const registeredUser = await this.userRepository.findOne(user.email);
     if (registeredUser) {
       throw new EmailRegistered();

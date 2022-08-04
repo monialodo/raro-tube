@@ -29,7 +29,7 @@ export class UserService implements IUserService {
   }
 
   async findByLogin(login: string): Promise<User> {
-    const user = await this.userRepository.findOne({ login })
+    const user = await this.userRepository.findOne({ email: login });
     if (!user) {
       throw new NotFoundError("User not found");
     }

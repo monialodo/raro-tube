@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 
-import { TagDto } from "../@types/dto/TagsDto";
+
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { ITagRepository } from "../@types/repositories/ITagRepository";
 import { ITagService } from "../@types/services/ITagService";
