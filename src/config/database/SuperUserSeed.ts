@@ -4,31 +4,31 @@ import createConnection from "./connect";
 
 async function create(): Promise<void> {
   const connection = await createConnection("localhost");
-  const user_id = uuidV4();
-  const password = "7d35bf544ac09df9e6138670ac40abc0";
-  const superUser_id = uuidV4();
+  const admin_id = uuidV4();
+  const teacher_id = uuidV4();
+  const student_id = uuidV4();
+  const password = "mysecret";
 
-  if (
-    (await connection.query(`SELECT * FROM USERS WHERE role = 'superUser'`))
-      .length > 0
-  ) {
-    console.log("SuperUser already exists");
-    return;
-  }
   await connection.query(
-    `INSERT INTO USERS (id, email, password, role, created_at, updated_at)
-    values('${user_id}', 'superuser@rarotube.com.br', '${password}', 'superUser', 'now()', 'now()' )`
-  );
+    `INSERT INTO USERS (id, name, email, password, role, created_at, updated_at)
+    values('${admin_id}', 'Admin',  'admin@rarotube.com.br', '${password}', 'admin', 'now()', 'now()')`
 
-  if ((await connection.query(`SELECT * FROM SUPER_USER`)).length > 0) {
-    console.log("SuperUser already exists");
-    return;
-  }
-  await connection.query(
-    `INSERT INTO SUPER_USER (id, name, user_id, created_at, updated_at)
-    values('${superUser_id}', 'superUser', '${user_id}', 'now()', 'now()' )`
   );
+  await connection.query(
+
+    `INSERT INTO USERS (id, name, email, password, role, created_at, updated_at)
+    values('${teacher_id}', 'Teacher',  'teacher@rarotube.com.br', '${password}', 'teacher', 'now()', 'now()')`
+
+  )
+
+  await connection.query(
+
+    `INSERT INTO USERS (id, name, email, password, role, created_at, updated_at)
+    values('${student_id}', 'Student',  'student@rarotube.com.br', '${password}', 'student', 'now()', 'now()')`
+
+  )
+
   await connection.close();
 }
 
-create().then(() => console.log("Super User created"));
+create().then(() => console.log("User created"));

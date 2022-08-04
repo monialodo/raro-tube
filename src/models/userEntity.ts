@@ -81,6 +81,7 @@ export class User {
   @IsOptional()
   @DeleteDateColumn({ name: "deleted_at" })
   deletedAt?: Date;
+  senha: string;
 
   constructor() {
     if (!this.id && !this.updatedAt) {

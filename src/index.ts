@@ -1,12 +1,12 @@
 import * as dotenv from "dotenv";
-
-import createApp from "./config/app";
-import createDatabaseConnection from "./config/database/connect";
-
 import "reflect-metadata";
 
-import createDependencyInjector from "./config/dependencies/createInjector";
 import createServer from "./infra/server/server";
+import createApp from "./config/app";
+import createDatabaseConnection from "./config/database/connect";
+import createDependencyInjector from "./config/dependencies/createInjector";
+
+
 
 dotenv.config();
 
