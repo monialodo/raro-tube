@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  title: "Raro Tube"
+  title: "RaroTube"
   version: "1.0.0"
-  description: "Site de vídeoaulas da Raro"
+  description: "RaroTube video-lessons site"
 host: "localhost:3000"
 basePath: "/v1"
 tags:
