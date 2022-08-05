@@ -830,8 +830,8 @@ paths:
     post:
       tags:
         - Users
-      summary: "Post a users"
-      description: "Post a users"
+      summary: "Post a user"
+      description: "Post a user"
       operationId: "createUsers"
       consumes:
         - "application/json"
@@ -861,8 +861,8 @@ paths:
     get:
       tags:
         - Users
-      summary: "Get a users by id"
-      description: "Get a users by id"
+      summary: "Get a user by id"
+      description: "Get a user by id"
       operationId: "getUsers"
       produces:
         - "application/json"
@@ -971,8 +971,8 @@ paths:
     post:
       tags:
         - Classrooms
-      summary: "Post a classrooms"
-      description: "Post a classrooms"
+      summary: "Post a classroom"
+      description: "Post a classroom"
       operationId: "createClassrooms"
       consumes:
         - "application/json"
@@ -1002,8 +1002,8 @@ paths:
     get:
       tags:
         - Classrooms
-      summary: "Get a classrooms by id"
-      description: "Get a classrooms by id"
+      summary: "Get a classroom by id"
+      description: "Get a classroom by id"
       operationId: "getClassrooms"
       produces:
         - "application/json"
@@ -1095,8 +1095,8 @@ paths:
     get:
       tags:
         - Classrooms
-      summary: "Get all users from a classrooms"
-      description: "Get all users from a classrooms"
+      summary: "Get all users from a classroom"
+      description: "Get all users from a classroom"
       operationId: "getClassroomsUsers"
       produces:
         - "application/json"
@@ -1124,8 +1124,8 @@ paths:
     get:
       tags:
         - Classrooms
-      summary: "Get all teachers from a classrooms"
-      description: "Get all teachers from a classrooms"
+      summary: "Get all teachers from a classroom"
+      description: "Get all teachers from a classroom"
       operationId: "getClassroomsTeachers"
       produces:
         - "application/json"
@@ -1172,8 +1172,8 @@ paths:
     post:
       tags:
         - "videos"
-      summary: "Post a videos"
-      description: "Post a videos to a classrooms"
+      summary: "Post a video"
+      description: "Post a video to a classroom"
       operationId: "createVideos"
       consumes:
         - "application/json"
@@ -1203,7 +1203,7 @@ paths:
     post:
       tags:
         - "videos"
-      summary: "Upload videos"
+      summary: "Upload video"
       description: "Upload a video to a classroom"
       operationId: "uploadVideos"
       consumes:
@@ -1233,8 +1233,8 @@ paths:
     get:
       tags:
         - "videos"
-      summary: "Get a videos"
-      description: "Get a videos by its id"
+      summary: "Get a video"
+      description: "Get a video by its id"
       operationId: "findVideosById"
       produces:
         - "application/json"
@@ -1351,8 +1351,8 @@ paths:
     patch:
       tags:
         - "videos"
-      summary: "Favorite a videos"
-      description: "Favorite a videos"
+      summary: "Favorite a video"
+      description: "Favorite a video"
       operationId: "favoriteVideos"
       consumes:
         - "application/json"
@@ -1385,8 +1385,8 @@ paths:
     get:
       tags:
         - "videos"
-      summary: "Get all comments of a videos"
-      description: "Get all comments of a videos"
+      summary: "Get all comments of a video"
+      description: "Get all comments of a video"
       operationId: "findAllCommentsOfVideos"
       produces:
         - "application/json"
@@ -1418,8 +1418,8 @@ paths:
     post:
       tags:
         - "videos"
-      summary: "Post a comment to a videos"
-      description: "Post a comment to a videos"
+      summary: "Post a comment to a video"
+      description: "Post a comment to a video"
       operationId: "createComment"
       consumes:
         - "application/json"
