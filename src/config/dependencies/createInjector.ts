@@ -22,7 +22,6 @@ import "../../controllers/FileController";
 import "../../controllers/TagController";
 import "../../controllers/UserController";
 import "../../controllers/VideoController";
-import "../../controllers/AuthController";
 
 
 
@@ -35,7 +34,6 @@ import "../../services/FileService";
 import "../../services/TagService";
 import "../../services/UserService";
 import "../../services/VideoService";
-import "../../services/AuthService";
 
 
 
