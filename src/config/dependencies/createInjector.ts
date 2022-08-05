@@ -3,13 +3,14 @@ import { getCustomRepository } from "typeorm";
 
 import { ClassroomRepository } from "../../repositories/classroomRepository";
 import { CommentRepository } from "../../repositories/commentRepository";
+import { FavoritesRepository } from "../../repositories/favoritesRepository";
 import { FileRepository } from "../../repositories/filesRepository";
 import { TagRepository } from "../../repositories/tagsRepository";
 import { UserRepository } from "../../repositories/userRepository";
 import { VideoRepository } from "../../repositories/videoRepository";
-import { FavoritesRepository } from "../../repositories/favoritesRepository";
+
 // import { AuthenticationController } from "../../controllers/AuthenticationController";
- 
+
 
 // inicializador de dependências:
 // inicializa controllers

@@ -11,5 +11,5 @@ export default async (host = "database"): Promise<Connection> => {
           ? "raro_tube_test"
           : defaultOptions.database,
     })
-  );
+  ); 
 };

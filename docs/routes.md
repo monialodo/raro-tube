@@ -1,6 +1,7 @@
 # ROUTES
-
 ## LEGENDA
+
+## LABELS
 - OW: Own
 - OC: Own Class
 
@@ -20,6 +21,7 @@
   - must return a token
 - [ ] POST /forgot
   - (ADMIN, STUDENT, TEACHER)
+
 - [ ] POST /logout
   - (ADMIN, STUDENT, TEACHER)
   - logout user
@@ -41,6 +43,29 @@
   - (ADMIN[OW], STUDENT[OW], TEACHER[OW])
 - [ ]  DELETE /:id
   - (ADMIN, STUDENT[OW], TEACHER[OW])
+=======
+- [ ] POST /code
+  - (ADMIN, STUDENT, TEACHER)
+  - verify if code is valid to change password
+- [ ] POST /logout
+  - (ADMIN, STUDENT, TEACHER)
+  - logout user
+<!-- - [ ] POST /me
+  - (ADMIN[OW], STUDENT[OW], TEACHER[OW])
+  - must return user data -->
+
+## USER
+- [ ]  GET /
+  - (ADMIN))
+- [ ]  POST /
+  - (ADMIN)
+- [ ]  GET /:id
+  - (ADMIN)
+- [ ]  PUT /:id
+  - (ADMIN, STUDENT[OW], TEACHER[OW])
+- [ ]  DELETE /:id
+  - (ADMIN)
+>>>>>>> develop
 
 ## CLASSROOM
 - [ ]  GET /
@@ -62,6 +87,8 @@
   - (ADMIN, TEACHER[OC])
   - get all students of a classroom
 - [ ] POST /:id/teachers
+=======
+- [ ] GET /:id/teachers
   - (ADMIN, TEACHER[OC], STUDENT[OC])
   - get all teachers of a classroom
 
@@ -87,28 +114,54 @@
 - [ ]  PATCH /:id/favorite
   - (ADMIN, TEACHER[OW], STUDENT[OW])
   - favorite a video (switch favorite)
+
+  - (ADMIN, STUDENT[OC], TEACHER[OC])
+  - get video by id
+- [ ]  PUT /:id
+  - (ADMIN, TEACHER[OC])
+  - update video by id
+- [ ]  DELETE /:id
+  - (ADMIN, TEACHER[OC])
+  - delete video from classroom
+- [ ]  PATCH /:id/favorite
+  - (ADMIN, TEACHER[OW], STUDENT[OW])
+  - favorite a video (switch favorite)
+- [ ]  GET /:id/favorite
+  - (ADMIN, TEACHER[OW], STUDENT[OW])
+  - get favorite videos from classroom
 - [ ]  GET /:id/comments
   - (ADMIN, TEACHER[OC], ALUNO[OC])
   - get all comments of a video
 - [ ]  POST /:id/comments
   - (ADMIN, TEACHER[OC], ALUNO[OC])
   - post a comment to a video
+ HEAD
 - [ ]  GET /:id/comments/:id
   - (ADMIN, TEACHER[OC], ALUNO[OC])
   - get a specific comment from a video
+<!-- - [ ]  GET /:id/comments/:id
+  - (ADMIN, TEACHER[OC], ALUNO[OC])
+  - get a specific comment from a video -->
+>>>>>>> develop
 - [ ]  PATCH /:id/comments/:id
   - (ADMIN, TEACHER[OC], ALUNO[OC])
   - react to a comment from a video (downvote, upvote)
 
 ## TAG
 - [ ]  GET /
+ 
   - (ADMIN)
+
+  - (ADMIN, TEACHER[OC])
   - get all tags
 - [ ]  POST /
   - (ADMIN)
   - post a tag
 - [ ]  GET /:id
+
   - (ADMIN)
+
+  - (ADMIN, TEACHER[OC])
   - get tag by id
 - [ ]  PUT /:id
   - (ADMIN)

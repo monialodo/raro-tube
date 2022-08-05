@@ -1,3 +1,10 @@
 import { User } from "../../models/userEntity";
 
-export class UserDto extends User {}
+export class UserDto extends User {
+  constructor(user: User) {
+    super();
+    this.name = user.name;
+    this.email = user.email;
+
+  }
+}
