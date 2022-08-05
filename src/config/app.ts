@@ -11,4 +11,3 @@ const createApp = (): express.Express => {
 };
 
 export default createApp;
- 

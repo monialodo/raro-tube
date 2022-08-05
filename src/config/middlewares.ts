@@ -1,6 +1,6 @@
-import * as express from "express";
-import * as cors from "cors";
 import { json } from "body-parser";
+import * as cors from "cors";
+import * as express from "express";
 import * as morgan from "morgan";
 
 const createMiddlewares = (app: express.Express) => {
@@ -10,3 +10,4 @@ const createMiddlewares = (app: express.Express) => {
 };
 
 export default createMiddlewares;
+
