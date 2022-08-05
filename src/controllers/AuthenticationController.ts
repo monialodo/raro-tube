@@ -26,6 +26,6 @@ export class AuthenticationController {
     
     response.status(201).send(user);
     console.log('Passou no controller');
- 
+  
   }
 }

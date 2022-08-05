@@ -7,7 +7,7 @@ import { IAuthenticationService } from "../@types/services/IAuthenticationServic
 import { hashPassword } from "../helpers/HashPassword";
 import { generateToken } from "../helpers/Token";
 import { User } from "../models/userEntity";
-import{v4 as uuid} from "uuid";
+import { plainToInstance } from "class-transformer";
 
 @Service("AuthenticationService")
 export class AuthenticationService implements IAuthenticationService {
@@ -36,17 +36,16 @@ export class AuthenticationService implements IAuthenticationService {
     const hash = hashPassword(user.password);
     console.log('Hash: ', hash);
 
-    const registeredUser = await this.userRepository.findOne(user.email);
-    console.log('Usuário registrado: ', registeredUser);
+    // const registeredUser = await this.userRepository.findOne(user.email);
+    // console.log('Usuário registrado: ', registeredUser);
 
-    if (registeredUser) {
-      throw new EmailRegistered();
-    }
+    // if (registeredUser) {
+    //   throw new EmailRegistered();
+    // }
 
     const newUser: UserRegistrationDTO = new User();
     console.log('Usuário criado: ', newUser);
 
-    newUser.id = uuid()
     newUser.name = user.name;
     console.log('Nome: ', newUser.name);
 
@@ -54,9 +53,12 @@ export class AuthenticationService implements IAuthenticationService {
     console.log('Email: ', newUser.email);
 
     newUser.password = hash;
-    // newUser.role = user.role;
+    newUser.role = user.role;
     console.log('Usuário criado: ', newUser);
     console.log('Passou no service');
+    
+
+    // const teste = plainToInstance(User, newUser);
 
     return this.userRepository.save(newUser);
 
