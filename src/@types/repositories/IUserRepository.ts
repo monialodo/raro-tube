@@ -1,5 +1,8 @@
 import { Repository } from "typeorm";
 
 import { User } from "../../models/userEntity";
-
-export type IUserRepository = Repository<User>;
+import { LoginDto } from "../dto/AuthDto";
+export interface IUserRepository extends Repository<User> {
+  findByEmail(email: string): Promise<User>;
+  findByEmailAndPassword(loginData: LoginDto): Promise<User>;
+};
