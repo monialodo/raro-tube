@@ -1,5 +1,5 @@
 import { jwt } from 'jsonwebtoken';
-import { Role } from '../@types/middlewares/Role';
+import { Role } from '../@types/middlewares/role';
 
 export const authorizeMiddleware = () => {
     const roles: Role = {

@@ -5,6 +5,8 @@ export class UserDto extends User {
     super();
     this.name = user.name;
     this.email = user.email;
+    this.password = user.password;
+    this.role = user.role;
 
   }
 }

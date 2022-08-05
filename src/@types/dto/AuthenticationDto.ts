@@ -1,22 +1,26 @@
+import { User } from "../../models/userEntity"
+
 export interface LoginDTO {
   name: string
   password: string
 }
 
-export interface UserRegistrationDTO {
-  name: string
-  email: string
-  password: string
+export class UserRegistrationDTO extends User {
+  constructor(user: User) {
+    super();
+    this.name = user.name;
+    this.email = user.email;
+    this.password = user.password;
+    this.role = user.role;
+}
 }
 
 export interface UserTokenDTO {
-  id: string
   role: string
 
 }
 
 export interface UserResponseDTO {
-  id: string
   name: string
   email: string
   role: string

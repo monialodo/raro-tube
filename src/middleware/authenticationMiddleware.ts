@@ -5,6 +5,8 @@ import { checkToken } from "../helpers/Token";
 
 export const authMiddleware = (request: RequestUsuer, response: Response, next: NextFunction) => {
   const authorization = request.headers.authorization;
+  console.log('authorization', authorization);
+  
   if (!authorization) {
     throw new UnauthorizedError();
   }

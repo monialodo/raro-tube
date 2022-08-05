@@ -9,12 +9,12 @@ import { TagRepository } from "../../repositories/tagsRepository";
 import { UserRepository } from "../../repositories/userRepository";
 import { VideoRepository } from "../../repositories/videoRepository";
 
-// import { AuthenticationController } from "../../controllers/AuthenticationController";
 
 
 // inicializador de dependências:
 // inicializa controllers
 
+import "../../controllers/AuthenticationController";
 import "../../controllers/ClassroomController";
 import "../../controllers/CommentController";
 import "../../controllers/FavoritesController";
@@ -22,11 +22,11 @@ import "../../controllers/FileController";
 import "../../controllers/TagController";
 import "../../controllers/UserController";
 import "../../controllers/VideoController";
-// import "../../controllers/AuthenticationController";
 
 
 
 // inicializa services
+import "../../services/AuthenticationService";
 import "../../services/ClassroomService";
 import "../../services/CommentService";
 import "../../services/favoritesService";
@@ -34,7 +34,6 @@ import "../../services/FileService";
 import "../../services/TagService";
 import "../../services/UserService";
 import "../../services/VideoService";
-// import "../../services/AuthenticationService";
 
 
 
@@ -53,7 +52,6 @@ const createDependencyInjector = () => {
   Container.set("TagRepository", getCustomRepository(TagRepository));
   Container.set("FilesRepository", getCustomRepository(FileRepository));
   Container.set("FavoriteRepository", getCustomRepository(FavoritesRepository));
-  // Container.set("AuthenticationController", getCustomRepository(AuthenticationController));
 };
 
 export default createDependencyInjector;

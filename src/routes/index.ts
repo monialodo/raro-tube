@@ -1,7 +1,7 @@
 import * as express from "express";
 import createFavoritesRouter from "./favoritesRouter";
 
-// import createAuthenticationRouter from "./authenticationRouter";
+import createAuthenticationRouter from "./authenticationRouter";
 import createClassroomRouter from "./classroomRouter";
 import createCommentRouter from "./commentRouter";
 import createFileRouter from "./fileRouter";
@@ -17,8 +17,10 @@ const createRouters = (app: express.Express) => {
   app.use("/v1/videos", createVideoRouter())
   app.use("/v1/files", createFileRouter()); 
   app.use("/v1/favorites", createFavoritesRouter())
-  // app.use("/v1/auth", createAuthenticationRouter());
+  app.use("/v1/auth", createAuthenticationRouter());
 
+  console.log('Routers created');
+  
 };
 
 export default createRouters;

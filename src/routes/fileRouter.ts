@@ -7,7 +7,7 @@ const router = Router();
 
 const getController = (): FileController => {
   return Container.get<FileController>("FileController");
-}
+} 
 
 const createRouter = () => {
   router.get("", (req, res) => getController().findAll(req, res));
