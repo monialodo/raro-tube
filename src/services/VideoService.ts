@@ -27,7 +27,11 @@ export class VideosService implements IVideosService {
         return video
     }
     async update(id: string, video: Video): Promise<Video> {
-       return this.videoRepository.save({id, ...video})
+        const foundVideo = await this.videoRepository.findOne(id);
+        if (!foundVideo) {
+          throw new NotFoundError("Video not found");
+        }
+        return this.videoRepository.save({id,...video});
     }
     async delete(id: string): Promise<void> {
         const video = await this.videoRepository.findOne(id)

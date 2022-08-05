@@ -64,6 +64,7 @@ export class Video {
   videoTags: VideoTag[];
 
   @ManyToOne(() => Classroom, (classroom) => classroom.videos)
+  @JoinColumn({name:"classroom_id"})
   classroom: Classroom;
 
   @OneToMany(() => Comment, (comment) => comment.video)

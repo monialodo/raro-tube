@@ -1,3 +1,4 @@
+import { loadavg } from "os";
 import { Inject, Service } from "typedi";
 
 import { NotFoundError } from "../@types/errors/NotFoundError";
@@ -21,6 +22,7 @@ export class UserService implements IUserService {
   }
 
   async findOne(id: string): Promise<User> {
+        
     const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundError("User not found");

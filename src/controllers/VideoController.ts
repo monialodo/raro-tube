@@ -1,13 +1,26 @@
+import { plainToInstance } from "class-transformer";
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
-
+import { FileDto } from "../@types/dto/FileDto";
+import { UserDto } from "../@types/dto/UserDto";
+import {  videosRequestDTO } from "../@types/dto/VideosDto";
+import { IClassroomService } from "../@types/services/IClassroomService";
+import { IFileService } from "../@types/services/IFileService";
+import { IUserService } from "../@types/services/IUserService";
 import { IVideosService } from "../@types/services/IVideosService";
+import { Video } from "../models/videoEntity";
 
 @Service("VideoController")
 export class VideoController {
   constructor(
     @Inject("VideoService")
-    private readonly videosService: IVideosService
+    private readonly videosService: IVideosService,
+    @Inject("FileService")
+    private readonly filesService:IFileService,
+    @Inject("UserService")
+    private readonly usersService:IUserService,
+    @Inject("ClassroomService")
+    private readonly classroomService: IClassroomService
   ) {}
 
   async findAll(request: Request, response: Response) {
@@ -20,9 +33,40 @@ export class VideoController {
     response.send(Video);
   }
 
-  async create(request: Request, response: Response) {
-    const Video = await this.videosService.create(request.body);
-    response.status(201).send(Video);
+  async upload(request: videosRequestDTO, response: Response) {
+    
+    const {title,description,duration, teacher_id} = request.body
+    
+    const classroom_id = request.body.classroom_id || null
+    const video = request.files.video[0]
+    const thumbnail = request.files.thumbnail[0]    
+    
+    const videoFile = this.fileToInstance(video)
+    const thumbFile = this.fileToInstance(thumbnail)  
+
+    const teacher = await this.usersService.findOne(teacher_id)  
+    
+    if(!teacher){
+      response.send(404)
+    }
+    
+    let classroom = null 
+    
+    if(classroom_id){
+      classroom = await this.classroomService.findOne(classroom_id)
+    }
+ 
+    const videoInstance = plainToInstance(Video, {
+      title,description,duration, thumbnail:thumbFile,
+      video:videoFile, teacher, classroom
+      
+    })
+        
+    await this.filesService.upload(thumbFile)
+    await this.filesService.upload(videoFile)
+    await this.videosService.create(videoInstance)  
+
+    response.status(201).send(videoInstance);
   }
 
   async update(request: Request, response: Response) {
@@ -35,6 +79,19 @@ export class VideoController {
     response.send();
   }
 
+  private fileToInstance(file:Express.Multer.File):FileDto{
+
+    const fileInstance = plainToInstance(FileDto,{
+      name: file.originalname,
+      path: file.path,
+      format: file.mimetype,
+      sizeBytes: file.size,
+      type: file.fieldname
+    })
+
+    return fileInstance
+
+  }
 
 
 }
