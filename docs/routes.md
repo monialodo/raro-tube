@@ -12,20 +12,20 @@
 - v1/tags
 
 ## AUTH
-- [ ] POST /signup
+- [x] POST /signup
   - (ADMIN, STUDENT, TEACHER)
   - must return a token
-- [ ]  POST /login
+- [x]  POST /login
   - (ADMIN, STUDENT, TEACHER)
   - must return a token
-- [ ] POST /forgot
+- [x] POST /forgot
   - (ADMIN, STUDENT, TEACHER)
-- [ ] POST /code
+- [x] POST /code
   - (ADMIN, STUDENT, TEACHER)
   - verify if code is valid to change password
-- [ ] POST /logout
+<!-- - [ ] POST /logout
   - (ADMIN, STUDENT, TEACHER)
-  - logout user
+  - logout user -->
 <!-- - [ ] POST /me
   - (ADMIN[OW], STUDENT[OW], TEACHER[OW])
   - must return user data -->
