@@ -1199,6 +1199,36 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
+  /videos/upload:
+    post:
+      tags:
+        - "videos"
+      summary: "Upload videos"
+      description: "Upload a video to a classroom"
+      operationId: "uploadVideos"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "formData"
+          name: "file"
+          description: "Video file"
+          required: true
+          type: "file"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/VideosDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
   /videos/{id}:
     get:
       tags:
