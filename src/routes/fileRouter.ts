@@ -18,7 +18,7 @@ const createRouter = () => {
   router.get("", (req, res) => getController().findAll(req, res));
   router.post("", upload.single('file'),(req, res) => getController().create(req, res));
   router.get("/:id", (req, res) => getController().find(req, res));
-  router.patch("/:id", (req, res) => getController().update(req, res));
+  router.put("/:id", (req, res) => getController().update(req, res));
   router.delete("/:id", (req, res) => getController().delete(req, res));
 
   return router;
