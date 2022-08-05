@@ -47,7 +47,7 @@ const createDependencyInjector = () => {
   );
   Container.set("CommentRepository", getCustomRepository(CommentRepository));
   Container.set("TagRepository", getCustomRepository(TagRepository));
-  Container.set("FilesRepository", getCustomRepository(FileRepository));
+  Container.set("FileRepository", getCustomRepository(FileRepository));
   Container.set("FavoriteRepository", getCustomRepository(FavoritesRepository));
 };
 

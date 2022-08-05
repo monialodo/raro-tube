@@ -11,7 +11,7 @@ import createVideoRouter from "./videoRouter";
 const createRouters = (app: express.Express) => {
   app.use("/v1/classrooms", createClassroomRouter());
   app.use("/v1/users", createUserRouter());
-  app.use("v1/comments", createCommentRouter());
+  app.use("/v1/comments", createCommentRouter());
   app.use("/v1/tags", createTagRouter());
   app.use("/v1/videos", createVideoRouter())
   app.use("/v1/files", createFileRouter());
