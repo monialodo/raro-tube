@@ -863,7 +863,7 @@ paths:
         - Users
       summary: "Get a user by id"
       description: "Get a user by id"
-      operationId: "getUsers"
+      operationId: "getUsersId"
       produces:
         - "application/json"
       parameters:
@@ -1004,7 +1004,7 @@ paths:
         - Classrooms
       summary: "Get a classroom by id"
       description: "Get a classroom by id"
-      operationId: "getClassrooms"
+      operationId: "getClassroomsId"
       produces:
         - "application/json"
       parameters:
