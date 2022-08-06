@@ -26,6 +26,25 @@ export class CommentService implements ICommentService {
     }
     return comment;
   }
+
+  async patchUpVote(id: string): Promise<Comment> {
+    const comment = await this.commentRepository.findOne(id);
+    if(comment.upvoteQuantity === 1) {
+      comment.upvoteQuantity -= 1;
+    }
+    comment.upvoteQuantity += 1;
+    return this.commentRepository.save(comment);
+  }
+
+  async patchDownVote(id: string): Promise<Comment> {
+    const comment = await this.commentRepository.findOne(id);
+    if(comment.downvoteQuantity === 1) {
+      comment.downvoteQuantity -= 1;
+    }
+    comment.downvoteQuantity += 1;
+    return this.commentRepository.save(comment);
+  }
+
   async update(id: string, comment: Comment): Promise<Comment> {
     return this.commentRepository.save({ id, ...comment });
   }

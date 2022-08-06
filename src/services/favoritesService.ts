@@ -30,6 +30,14 @@ export class FavoritesService implements IFavoritesService {
     return favorite;
   }
 
+  async favAndUnfav(userId: string, videoId: string): Promise<Favorites> {
+    const favorite = await this.favoritesRepository.findOne({ userId, videoId });
+    if (favorite) {
+      await this.favoritesRepository.softDelete({ userId, videoId });
+    }
+    return this.favoritesRepository.create({ userId, videoId });
+  }
+
   async update(id: string, favorite: Favorites): Promise<Favorites> {
     return this.favoritesRepository.save({ id, ...favorite });
   }

@@ -14,6 +14,8 @@ const createCommentRouter = () => {
   router.post("", (req, res) => getController().create(req, res));
   router.get("/:id", (req, res) => getController().find(req, res));
   router.put("/:id", (req, res) => getController().update(req, res));
+  router.patch("/:id/upvote", (req, res) => getController().patchUpvote(req, res));
+  router.patch("/:id/downvote", (req, res) => getController().patchDownvote(req, res));
   router.delete("/:id", (req, res) => getController().delete(req, res));
 
   return router;
