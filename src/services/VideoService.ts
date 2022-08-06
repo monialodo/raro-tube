@@ -17,7 +17,9 @@ export class VideosService implements IVideosService {
        return this.videoRepository.save(video)
     }
     async findAll(): Promise<Video[]> {
-       return this.videoRepository.find()
+       return this.videoRepository.find({
+        relations:['classroom']
+       })
     }
     async findOne(id: string): Promise<Video> {
         const video = await this.videoRepository.findOne(id)

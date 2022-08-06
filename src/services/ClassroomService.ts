@@ -4,6 +4,7 @@ import { NotFoundError } from "../@types/errors/NotFoundError";
 import { IClassroomRepository } from "../@types/repositories/IClassroomRepository";
 import { IClassroomService } from "../@types/services/IClassroomService";
 import { Classroom } from "../models/classroomEntity";
+import { User } from "../models/userEntity";
 
 @Service("ClassroomService")
 export class ClassroomsService implements IClassroomService {
@@ -17,13 +18,13 @@ export class ClassroomsService implements IClassroomService {
   }
 
   async findAll(): Promise<Classroom[]> {
-    return this.classroomRepository.find();
+    return this.classroomRepository.find({relations: ['logo']});
   }
 
   async findOne(id: string): Promise<Classroom> {
-    const classroom = await this.classroomRepository.findOne(id);
+    const classroom = await this.classroomRepository.findOne({where:{id},relations:['logo']});
     if (!classroom) {
-      throw new NotFoundError("classroom not found");
+      throw new NotFoundError("Classroom not found");
     }
     return classroom;
   }
@@ -40,4 +41,12 @@ export class ClassroomsService implements IClassroomService {
 
     await this.classroomRepository.softDelete(id);
   }
+
+  async findStudents(id:string):Promise<User[]>{
+   
+    throw new Error
+    
+  }
+
+
 }

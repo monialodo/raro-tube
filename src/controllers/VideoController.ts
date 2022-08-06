@@ -1,4 +1,4 @@
-import { plainToInstance } from "class-transformer";
+import {  plainToInstance } from "class-transformer";
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
 import { FileDto } from "../@types/dto/FileDto";
@@ -9,7 +9,7 @@ import { IFileService } from "../@types/services/IFileService";
 import { IUserService } from "../@types/services/IUserService";
 import { IVideosService } from "../@types/services/IVideosService";
 import { Video } from "../models/videoEntity";
-
+import { fileToInstance } from "../helpers/fileToInstance";
 @Service("VideoController")
 export class VideoController {
   constructor(
@@ -31,18 +31,19 @@ export class VideoController {
   async find(request: Request, response: Response) {
     const Video = await this.videosService.findOne(request.params.id);
     response.send(Video);
+    
   }
 
   async upload(request: videosRequestDTO, response: Response) {
     
-    const {title,description,duration, teacher_id} = request.body
+    const {title,description,duration, teacher_id } = request.body
     
     const classroom_id = request.body.classroom_id || null
     const video = request.files.video[0]
     const thumbnail = request.files.thumbnail[0]    
     
-    const videoFile = this.fileToInstance(video)
-    const thumbFile = this.fileToInstance(thumbnail)  
+    const videoFile = fileToInstance(video, 'video')
+    const thumbFile = fileToInstance(thumbnail,'thumbnail')  
 
     const teacher = await this.usersService.findOne(teacher_id)  
     
@@ -78,20 +79,5 @@ export class VideoController {
     await this.videosService.delete(request.params.id);
     response.send();
   }
-
-  private fileToInstance(file:Express.Multer.File):FileDto{
-
-    const fileInstance = plainToInstance(FileDto,{
-      name: file.originalname,
-      path: file.path,
-      format: file.mimetype,
-      sizeBytes: file.size,
-      type: file.fieldname
-    })
-
-    return fileInstance
-
-  }
-
 
 }
