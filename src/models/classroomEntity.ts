@@ -22,7 +22,7 @@ import { File } from "./fileEntity";
 import { UserClassroom } from "./userClasroomEntity";
 import { Video } from "./videoEntity";
 
-@Entity("class")
+@Entity("classrooms")
 export class Classroom {
   @IsUUID()
   @PrimaryGeneratedColumn("uuid")
