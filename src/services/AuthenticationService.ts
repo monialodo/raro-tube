@@ -2,6 +2,7 @@ import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
 import { AuthResponseDTO, LoginDTO, ResetPasswordDto, SignupDto, UserRegistrationDTO, UserResponseDTO } from "../@types/dto/AuthenticationDto";
 import { UserDto } from "../@types/dto/UserDto";
+import { EmailRegistered } from "../@types/errors/EmailRegistered";
 import { ForbiddenError } from "../@types/errors/ForbiddenError";
 import { InvalidEmailOrPassword } from "../@types/errors/InvalidEmailOrPassword";
 import { UserOrPasswordInvalid } from "../@types/errors/UserPasswordInvalid";
@@ -28,117 +29,112 @@ export class AuthenticationService implements IAuthenticationService {
     if (registeredUser.password !== hashPassword(password)) {
       throw new Error("Invalid password");
     }
-    return generateToken({
-      role: registeredUser.role,
+    return
 
-    })
+  }
+
+  async create(user: UserRegistrationDTO): Promise<UserResponseDTO> {
+    const hash = hashPassword(Math.random().toString(16).substring(2, 12));
+
+    const authCode = Math.random().toString(16).substring(2, 8)
+
+    const registeredUser = await this.userRepository.findByEmail(user.email);
+
+    if (registeredUser) {
+      throw new EmailRegistered();
+    }
+
+    const newUser: UserRegistrationDTO = new User();
+    newUser.name = user.name;
+    newUser.email = user.email;
+    newUser.password = hash;
+    newUser.role = user.role;
+
+    await sendEmail(user.email, {
+      subject: "Welcome to Monia",
+      text: `Welcome to ${user.name}!
+      Your authentication code is: ${authCode}`
+    });
+    return this.userRepository.save(newUser);
   }
 
   async signup(signupData: SignupDto): Promise<AuthResponseDTO> {
     const { name, email, password, code } = signupData;
 
-    // Replace this line after implementing the token verification
     if (!code) {
       throw new ForbiddenError("You must provide a code to signup");
     }
-
-    // Replace this line after implementing the token generation
-    const tokenMock = "hgjfdsjf3ghtrh45.h5h54hg54g54g54gh54h.h5445h5h454h45h54h";
-
     const user = await this.userRepository.findByEmail(email);
+    const userToken = generateToken(
+      {
+        email: email,
+        role: user.role,
+      },
+    )
+    const token = userToken.token;
     const newUser = await this.userRepository.save(plainToInstance(UserDto, {
       ...user,
       name: name || user.name,
-      password: password || user.password,
+      password: hashPassword(password) || hashPassword(user.password),
     }));
 
     return {
       user: newUser,
-      token: tokenMock,
-    }
-  }
-
-
-  async create(user: UserRegistrationDTO): Promise<UserResponseDTO> {
-    console.log('Registrando usuário');
-
-    const hash = hashPassword(user.password);
-    console.log('Hash: ', hash);
-
-    // const registeredUser = await this.userRepository.findOne(user.email);
-    // console.log('Usuário registrado: ', registeredUser);
-
-    // if (registeredUser) {
-    //   throw new EmailRegistered();
-    // }
-
-    const newUser: UserRegistrationDTO = new User();
-    console.log('Usuário criado: ', newUser);
-
-    newUser.name = user.name;
-    console.log('Nome: ', newUser.name);
-
-    newUser.email = user.email;
-    console.log('Email: ', newUser.email);
-
-    newUser.password = hash;
-    newUser.role = user.role;
-    console.log('Usuário criado: ', newUser);
-    console.log('Passou no service');
-
-
-    // const teste = plainToInstance(User, newUser);
-
-    return this.userRepository.save(newUser);
+      token,
+    };
   }
 
   async login(loginData: LoginDTO): Promise<AuthResponseDTO> {
-    const user = await this.userRepository.findByEmailAndPassword(loginData);
+    const { email, password } = loginData;
+    const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
       throw new InvalidEmailOrPassword();
     }
+    if (user.password !== hashPassword(password)) {
+      throw new InvalidEmailOrPassword();
+    }
+    const userToken = generateToken(
+      {
+        email: user.email,
+        role: user.role,
+      }
+    )
+    console.log('token', userToken);
 
-    // Replace this line after implementing the token generation
-    const tokenMock = "hgjfdsjf3ghtrh45.h5h54hg54g54g54gh54h.h5445h5h454h45h54h";
-
+    const token = userToken.token;
     return {
       user,
-      token: tokenMock,
+      token,
     };
   }
-
   async forgot(email: string): Promise<void> {
     const user = await this.userRepository.findByEmail(email);
-
-    // Replace this line after implementing the token generation
-    const tokenMock = "hgjfdsjf3ghtrh45.h5h54hg54g54g54gh54h.h5445h5h454h45h54h";
+    const authCode = Math.random().toString(16).substring(2, 8)
 
     if (user) {
       const options = {
         subject: "Reset Password | Daniel",
-        text: `Here is your code to reset your password: ${tokenMock}`,
+        text: `Here is your code to reset your password: ${authCode}`,
       };
       await sendEmail(email, options);
     }
   }
 
-  async code(ResetPasswordDto: ResetPasswordDto): Promise<void> {
-    const { password, confirmPassword, code } = ResetPasswordDto;
-    // Replace this line after implementing the token verification
+  async resetPassword(ResetPasswordDto: ResetPasswordDto): Promise<void> {
+    const { password, code } = ResetPasswordDto;
     if (!code) {
       throw new ForbiddenError("You must provide a code to reset your password");
     }
-
-    if (password !== confirmPassword) {
-      throw new ForbiddenError("Passwords do not match");
+    const id = "3c8a91e3-ebd6-4ce0-b797-a750d48af416"
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new ForbiddenError("User not found");
     }
 
-    // Replace this line after implementing the token generation
-    const id = '1889ccd9-2139-4cce-88d6-be913603a6a9';
+    const passwordHash = hashPassword(password);
 
-    const user = await this.userRepository.findOne(id);
-    await this.userRepository.save(plainToInstance(UserDto, { ...user, password }))
+    await this.userRepository.save(plainToInstance(UserDto, { ...user, passwordHash }));
   }
 }
 

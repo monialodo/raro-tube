@@ -7,6 +7,7 @@ import createDatabaseConnection from "./config/database/connect";
 import createDependencyInjector from "./config/dependencies/createInjector";
 
 
+ 
 
 dotenv.config(); 
 
@@ -16,6 +17,7 @@ export const start = async () => {
     const app = createApp();
     createDependencyInjector();
     createServer(app);
+ ;
   } catch (error) { 
     console.error("Fatal error: ", error);
   }

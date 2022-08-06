@@ -24,7 +24,9 @@ export interface SignupDto {
 }
 
 export interface UserTokenDTO {
-  role: string
+  email: string;
+  role: string;
+  // token: string;
 
 }
 
@@ -34,6 +36,9 @@ export interface UserResponseDTO {
   role: string
 }
 
+export interface UserUpdateDTO {
+  code: string;
+}
 
 export interface AuthResponseDTO {
   user: UserDto;
@@ -46,6 +51,5 @@ export interface ForgotPasswordDto {
 
 export interface ResetPasswordDto {
   password: string;
-  confirmPassword: string;
   code: string;
 }

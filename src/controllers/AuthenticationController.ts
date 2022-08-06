@@ -30,7 +30,11 @@ export class AuthenticationController {
   }
 
   async login(req: Request, res: Response) {
+    console.log('chegou no controller');
+
     const userWithToken = await this.authService.login(req.body);
+    console.log('userWithToken', userWithToken);
+
     res.json(userWithToken);
   }
 
@@ -45,9 +49,10 @@ export class AuthenticationController {
     res.status(200).json({ message: "Email sent!" });
   }
 
-  async code(req: Request, res: Response) {
-    this.authService.code(req.body);
-    res.status(200).json({ message: "Code sent!" });
+  async resetPassword(req: Request, res: Response) {
+
+    this.authService.resetPassword(req.body);
+    res.status(200).json({ message: "Password updated" });
   }
 
 }

@@ -8,7 +8,7 @@ export interface IAuthenticationService {
   create(user: UserRegistrationDTO): Promise<UserResponseDTO>;
   login(loginData: LoginDTO): Promise<AuthResponseDTO>;
   forgot(email: string): Promise<void>;
-  code(ResetPasswordDto: ResetPasswordDto): Promise<void>;
+  resetPassword(ResetPasswordDto: ResetPasswordDto): Promise<void>;
 
 
 }

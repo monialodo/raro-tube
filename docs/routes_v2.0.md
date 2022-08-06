@@ -12,21 +12,21 @@
 - v1/tags
 
 ## AUTH
-- [ ] POST /signup
+- [x] POST /signup
   - (ADMIN, STUDENT, TEACHER)
   - must return a token
-- [ ]  POST /login
+- [x]  POST /login
   - (ADMIN, STUDENT, TEACHER)
   - must return a token
-- [ ] POST /forgot
+- [x] POST /forgot
   - (ADMIN, STUDENT, TEACHER)
-- [ ] POST /logout
+- [x] POST /logout
   - (ADMIN, STUDENT, TEACHER)
   - logout user
 <!-- - [ ] POST /me
   - (ADMIN[OW], STUDENT[OW], TEACHER[OW])
   - must return user data -->
-- [ ] POST /code
+- [x] POST /code
   - (ADMIN)
   - verify if code is valid to change password
 
@@ -43,13 +43,13 @@
   - (ADMIN, STUDENT[OW], TEACHER[OW])
 
 ## CLASSROOM
-- [ ]  GET /
+- [x]  GET /
   - (ADMIN, TEACHER[OC])
   - get all classrooms
-- [ ]  POST /
+- [x]  POST /
   - (ADMIN)
   - post a new classroom
-- [ ]  GET /:id
+- [x]  GET /:id
   - (ADMIN, STUDENT[OW], TEACHER[OW/OC])
   - get a classroom
 - [ ]  PUT /:id
@@ -66,16 +66,16 @@
   - get all teachers of a classroom
 
 ## VIDEO
-- [ ]  GET /
+- [x]  GET /
   - (ADMIN, TEACHER[OC], ALUNO[OC])
   - get all videos from classroom
-- [ ]  POST /
+- [x]  POST /
   - (ADMIN, TEACHER[OC])
   - post a video to a classroom
-- [ ]  GET /:id
+- [x]  GET /:id
   - (ADMIN, STUDENT[OW], TEACHER[OW/OC])
   - get video by id
-- [ ]  PUT /:id
+- [x]  PUT /:id
   - (ADMIN[OW], TEACHER[OW])
   - update video by id
 - [ ]  DELETE /:id
