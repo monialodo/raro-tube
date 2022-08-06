@@ -17,28 +17,23 @@ export class ClassroomController {
     private readonly filesService: IFileService
   ) {}
 
-  async findAll(request: Request, response: Response) {  
+  async findAllClassrooms(request: Request, response: Response) {  
     const classrooms = await this.classroomService.findAll();
     response.send(classrooms);
   }
 
-  async find(request: Request, response: Response) {
+  async findOne(request: Request, response: Response) {
     const classroom = await this.classroomService.findOne(request.params.id);
     response.send(classroom);
   }
 
   async create(request: classroomRequestDTO, response: Response) {
     const {file:logo} = request
-    const {name,description} = request.body
-    const logoInstance = fileToInstance(logo,'png')
-    
-    const a = await this.filesService.upload(logoInstance)
-    
-    const classRoomInstance = plainToInstance(ClassroomsDto,{
-      name, description,logo: a
-    })
-
-    const classroom = await this.classroomService.create(classRoomInstance);
+        
+    const logoInstance = await this.filesService.upload(
+      fileToInstance(logo,'png')
+    )     
+    const classroom = await this.classroomService.create(request.body,logoInstance);
     response.status(201).send(classroom);
   }
 
@@ -55,8 +50,10 @@ export class ClassroomController {
     response.send();
   }
 
-  async findStudents(request: Request, response: Response){
-    throw new Error
+  async findAllStudents(request: Request, response: Response){
+    const students = await this.classroomService.findStudents(request.params.id)
+
+    return students
 
   }
 }

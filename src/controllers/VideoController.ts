@@ -42,39 +42,34 @@ export class VideoController {
   }
 
   async upload(request: videosRequestDTO, response: Response) {
-    
-    const {title,description,duration, teacher_id } = request.body
-    
+      
     const classroom_id = request.body.classroom_id || null
     const video = request.files.video[0]
     const thumbnail = request.files.thumbnail[0]    
     
-    const videoFile = fileToInstance(video, 'video')
-    const thumbFile = fileToInstance(thumbnail,'thumbnail')  
-
-    const teacher = await this.usersService.findOne(teacher_id)  
+    const teacher = await this.usersService.findOne(request.body.teacher_id)  
     
     if(!teacher){
       response.send(404)
     }
+
+    const videoFile = await this.filesService.upload(
+      fileToInstance(video, 'video')
+    )
+    const thumbFile = await this.filesService.upload(
+      fileToInstance(thumbnail,'thumbnail')  
+    )
     
-    let classroom = null 
-    
+    let classroom = null     
     if(classroom_id){
       classroom = await this.classroomService.findOne(classroom_id)
-    }
- 
-    const videoInstance = plainToInstance(Video, {
-      title,description,duration, thumbnail:thumbFile,
-      video:videoFile, teacher, classroom
+    }         
       
-    })
-        
-    await this.filesService.upload(thumbFile)
-    await this.filesService.upload(videoFile)
-    await this.videosService.create(videoInstance)  
+    const videoS = await this.videosService.create(request.body,
+                                        [thumbFile,videoFile]
+                                        ,teacher,classroom)  
 
-    response.status(201).send(videoInstance);
+    response.status(201).send(videoS);
   }
 
   async update(request: Request, response: Response) {
@@ -90,24 +85,19 @@ export class VideoController {
   async sendComment(request:Request, response:Response){
     
     const {content} = request.body
-    const video = await this.videosService.findOne(request.params.id)
-    
+    const video = await this.videosService.findOne(request.params.id)   
     
     //Mock para teste
     const user = await this.usersService.findOne('1faa295d-c0c7-432e-8650-f6f61e014833')
     
     if(!video || !user){
       throw new NotFoundError
-    }
-    const commentInstance = plainToInstance(CommentDTO, {
+    } 
+    const commentDto = await this.commentService.create({
       content,video,user
     })
-
-    const commentDto = await this.commentService.create(commentInstance)
-
-    video.comments.push(commentDto)
-    
-    response.sendStatus(201)
+            
+    response.status(200).send(commentDto)
 
   }
 
@@ -115,8 +105,7 @@ export class VideoController {
     const video = await this.videosService.findOne(request.params.id)
 
     if(!video){
-      throw new NotFoundError
-    }
+      throw new NotFoundError    }
 
     const comments = video.comments
 

@@ -1,9 +1,13 @@
 import { Inject,Service } from "typedi";
-import { VideoDTO } from "../@types/dto/VideosDto";
+import { VideoDTO, VideoUploadDTO } from "../@types/dto/VideosDto";
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { IVideosService } from "../@types/services/IVideosService";
 import { Video } from "../models/videoEntity";
 import { IVideoRepository } from "../@types/repositories/IVideosRepository";
+import { FileDto } from "../@types/dto/FileDto";
+import { User } from "../models/userEntity";
+import { plainToInstance } from "class-transformer";
+import { Classroom } from "../models/classroomEntity";
 
 
 
@@ -13,9 +17,22 @@ export class VideosService implements IVideosService {
     constructor(@Inject("VideoRepository")
         private videoRepository: IVideoRepository){}
     
-    async create(video: Video): Promise<Video> {
-       return this.videoRepository.save(video)
+    async create(videoDto: VideoUploadDTO, files:FileDto[],
+        teacher:User, classroom:Classroom): Promise<Video> {
+    
+    const {title,description,duration } = videoDto
+    const [thumbnail,video] = files
+
+    const videoInstance = plainToInstance(Video, {
+        title,description,duration, thumbnail,
+        video, teacher, classroom
+            
+    })
+    
+    return this.videoRepository.save(videoInstance)
+    
     }
+    
     async findAll(): Promise<Video[]> {
        return this.videoRepository.find({
         relations:['classroom']

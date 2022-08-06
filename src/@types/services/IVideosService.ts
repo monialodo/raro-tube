@@ -1,8 +1,11 @@
+import { Classroom } from "../../models/classroomEntity";
+import { User } from "../../models/userEntity";
 import { Video } from "../../models/videoEntity";
-import { VideoDTO } from "../dto/VideosDto";
+import { FileDto } from "../dto/FileDto";
+import { VideoDTO, VideoUploadDTO } from "../dto/VideosDto";
 
 export interface IVideosService{
-    create(videoDto: VideoDTO): Promise<Video>;
+    create(videoDto: VideoUploadDTO,files:FileDto[],teacher:User, classroom:Classroom): Promise<Video>;
     findAll(): Promise<Video[]>;
     findOne(id: string): Promise<Video>;
     update(id: string, videoDto: VideoDTO): Promise<Video>;

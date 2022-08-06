@@ -19,7 +19,7 @@ import {
 import { v4 as uuidV4 } from "uuid";
 import { File } from "./fileEntity";
 
-import { UserClassroom } from "./userClasroomEntity";
+import { UserClassroom } from "./userClassroomEntity";
 import { Video } from "./videoEntity";
 
 @Entity("classrooms")

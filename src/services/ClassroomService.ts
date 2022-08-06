@@ -1,4 +1,7 @@
+import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
+import { ClassroomsDto } from "../@types/dto/ClassroomsDto";
+import { FileDto } from "../@types/dto/FileDto";
 
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { IClassroomRepository } from "../@types/repositories/IClassroomRepository";
@@ -13,8 +16,14 @@ export class ClassroomsService implements IClassroomService {
     private classroomRepository: IClassroomRepository
   ) { }
 
-  async create(classroom: Classroom): Promise<Classroom> {
-    return this.classroomRepository.save(classroom);
+  async create(classroom: ClassroomsDto, file:FileDto): Promise<Classroom> {
+    const {name,description} = classroom
+
+    const classroomInstance = plainToInstance(ClassroomsDto,{
+      name, description,logo: file
+    })
+
+    return this.classroomRepository.save(classroomInstance);
   }
 
   async findAll(): Promise<Classroom[]> {
@@ -42,9 +51,17 @@ export class ClassroomsService implements IClassroomService {
     await this.classroomRepository.softDelete(id);
   }
 
+  //Para fazer
   async findStudents(id:string):Promise<User[]>{
-    //Alterar aqui
-    throw new Error
+    const classroom = await this.classroomRepository.findOne(
+      {where:{id} }
+    )
+
+    if(!classroom){
+      throw new NotFoundError("classroom not found");
+    }
+    console.log(classroom);
+    return
     
   }
 

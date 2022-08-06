@@ -1,8 +1,8 @@
 import { Comment } from "../../models/commentEntity";
-import { CommentDTO } from "../dto/CommentDto";
+import { CommentDTO, CommentVideoDTO } from "../dto/CommentDto";
 
 export interface ICommentService {
-  create(commenDto: CommentDTO): Promise<Comment>;
+  create(commenDto: CommentVideoDTO): Promise<Comment>;
   findAll(): Promise<Comment[]>;
   findOne(id: string): Promise<Comment>;
   update(id: string, commenDto: CommentDTO): Promise<Comment>;
