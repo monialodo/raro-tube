@@ -1,4 +1,3 @@
-import { loadavg } from "os";
 import { Inject, Service } from "typedi";
 
 import { NotFoundError } from "../@types/errors/NotFoundError";

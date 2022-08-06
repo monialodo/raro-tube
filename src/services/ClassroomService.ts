@@ -43,7 +43,7 @@ export class ClassroomsService implements IClassroomService {
   }
 
   async findStudents(id:string):Promise<User[]>{
-   
+    //Alterar aqui
     throw new Error
     
   }

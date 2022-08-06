@@ -18,10 +18,12 @@ export class CreateComments1658844420579 implements MigrationInterface {
           {
             name: "upvote_quantity",
             type: "integer",
+            default: 0
           },
           {
             name: "downvote_quantity",
             type: "integer",
+            default:0
           },
           {
             name: "video_id",
