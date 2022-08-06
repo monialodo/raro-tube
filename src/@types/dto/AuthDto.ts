@@ -23,6 +23,5 @@ export interface ForgotPasswordDto {
 
 export interface ResetPasswordDto {
   password: string;
-  confirmPassword: string;
   code: string;
 }

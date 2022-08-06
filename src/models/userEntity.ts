@@ -83,9 +83,9 @@ export class User {
   deletedAt?: Date;
 
   constructor() {
-    if (!this.id && !this.updatedAt) {
+    if (!this.id && !this.createdAt) {
       this.id = uuidV4();
-      this.updatedAt = new Date();
+      this.createdAt = new Date();
     }
     this.updatedAt = new Date();
   }
