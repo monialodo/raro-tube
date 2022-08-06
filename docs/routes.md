@@ -84,9 +84,9 @@
 - [ ]  PATCH /:id/favorite
   - (ADMIN, TEACHER[OW], STUDENT[OW])
   - favorite a video (switch favorite)
-- [ ]  GET /:id/favorite
+- [ ]  GET /favorites
   - (ADMIN, TEACHER[OW], STUDENT[OW])
-  - get favorite videos from classroom
+  - get all favorites videos of a user
 - [ ]  GET /:id/comments
   - (ADMIN, TEACHER[OC], ALUNO[OC])
   - get all comments of a video
