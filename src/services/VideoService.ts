@@ -22,7 +22,7 @@ export class VideosService implements IVideosService {
        })
     }
     async findOne(id: string): Promise<Video> {
-        const video = await this.videoRepository.findOne(id)
+        const video = await this.videoRepository.findOne(id, {relations:['comments']})
         if(!video){
             throw new NotFoundError("Video not found")
         }

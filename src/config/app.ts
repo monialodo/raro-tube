@@ -1,8 +1,6 @@
-import { json } from "body-parser";
 import * as express from "express";
 
 import createRouters from "../routes";
-import createDependencyInjector from "./dependencies/createInjector";
 import createMiddlewares from "./middlewares";
 
 const createApp = (): express.Express => {

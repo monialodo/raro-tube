@@ -37,4 +37,5 @@ export class CommentController {
     await this.commentService.delete(request.params.id);
     response.send();
   }
+
 }

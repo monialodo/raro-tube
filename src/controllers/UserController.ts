@@ -1,5 +1,7 @@
+import { plainToInstance } from "class-transformer";
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
+import { UserDto } from "../@types/dto/UserDto";
 
 import { IUserService } from "../@types/services/IUserService";
 
@@ -21,7 +23,12 @@ export class UserController {
   }
 
   async create(request: Request, response: Response) {
-    const user = await this.userService.create(request.body);
+
+    const {name,email,role, password} = request.body
+    const userDto = plainToInstance(UserDto, {
+      name,email,role, password
+    })
+    const user = await this.userService.create(userDto);
     response.status(201).send(user);
   }
 

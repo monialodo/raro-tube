@@ -17,8 +17,10 @@ const createVideoRouter = () => {
     router.get("", (req, res) => getController().findAll(req, res));
     router.post("", upload.fields([{name:"video", maxCount:1}, {name:"thumbnail", maxCount:1}]),(req:videosRequestDTO, res) => getController().upload(req, res));
     router.get("/:id", (req, res) => getController().find(req, res));
+    router.post("/:id/comments", (req, res) => getController().sendComments(req, res));
     router.put("/:id", (req, res) => getController().update(req, res));
     router.delete("/:id", (req, res) => getController().delete(req, res));
+
   
     return router;
 }

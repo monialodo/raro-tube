@@ -10,6 +10,9 @@ import { IUserService } from "../@types/services/IUserService";
 import { IVideosService } from "../@types/services/IVideosService";
 import { Video } from "../models/videoEntity";
 import { fileToInstance } from "../helpers/fileToInstance";
+import { ICommentService } from "../@types/services/ICommentService";
+import { CommentDTO } from "../@types/dto/CommentDto";
+import { NotFoundError } from "../@types/errors/NotFoundError";
 @Service("VideoController")
 export class VideoController {
   constructor(
@@ -20,7 +23,10 @@ export class VideoController {
     @Inject("UserService")
     private readonly usersService:IUserService,
     @Inject("ClassroomService")
-    private readonly classroomService: IClassroomService
+    private readonly classroomService: IClassroomService,
+    @Inject("CommentService")
+    private readonly commentService: ICommentService
+
   ) {}
 
   async findAll(request: Request, response: Response) {
@@ -80,4 +86,27 @@ export class VideoController {
     response.send();
   }
 
+  async sendComments(request:Request, response:Response){
+    
+    const {content} = request.body
+    const video = await this.videosService.findOne(request.params.id)
+    console.log(video);
+    
+    //Mock para teste
+    const user = await this.usersService.findOne('8850d0b9-1d84-4efe-bf35-d6eace426945')
+    
+    if(!video){
+      throw new NotFoundError
+    }
+    const commentInstance = plainToInstance(CommentDTO, {
+      content,video,user, upvoteQuantity:0,downvoteQuantity:0
+    })
+
+    const commentDto = await this.commentService.create(commentInstance)
+
+    video.comments.push(commentDto)
+    
+    response.sendStatus(201)
+
+  }
 }

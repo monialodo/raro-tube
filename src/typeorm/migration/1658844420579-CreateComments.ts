@@ -12,6 +12,10 @@ export class CreateComments1658844420579 implements MigrationInterface {
             isPrimary: true,
           },
           {
+            name:"content",
+            type:"text"
+          },
+          {
             name: "upvote_quantity",
             type: "integer",
           },

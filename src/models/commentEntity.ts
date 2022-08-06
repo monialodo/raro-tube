@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
+  IsString,
   IsUUID,
   Min,
 } from "class-validator";
@@ -12,6 +13,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  IsNull,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -29,6 +31,10 @@ export class Comment {
   @IsUUID()
   @PrimaryGeneratedColumn("uuid")
   id: string;
+
+  @IsString()
+  @Column({name: "content"})
+  content:string
 
   @IsNumber()
   @IsDefined()
