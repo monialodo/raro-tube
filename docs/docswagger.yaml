@@ -889,8 +889,8 @@ paths:
     put:
       tags:
         - Users
-      summary: "Update a users"
-      description: "Update a users"
+      summary: "Update a user"
+      description: "Update a user"
       operationId: "updateUsers"
       consumes:
         - "application/json"
@@ -1030,8 +1030,8 @@ paths:
     put:
       tags:
         - Classrooms
-      summary: "Update a classrooms"
-      description: "Update a classrooms"
+      summary: "Update a classroom"
+      description: "Update a classroom"
       operationId: "updateClassrooms"
       consumes:
         - "application/json"
@@ -1265,8 +1265,8 @@ paths:
     put:
       tags:
         - "videos"
-      summary: "Update a videos"
-      description: "Update a videos by its id"
+      summary: "Update a video"
+      description: "Update a video by its id"
       operationId: "updateVideos"
       consumes:
         - "application/json"
