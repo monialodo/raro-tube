@@ -1213,9 +1213,14 @@ paths:
       parameters:
         - in: "formData"
           name: "file"
-          description: "Video file"
+          description: "file to be uploaded"
           required: true
           type: "file"
+        - in: "formData"
+          name: "format"
+          description: "file format data"
+          required: true
+          type: "string"
       responses:
         201:
           description: "Created"
