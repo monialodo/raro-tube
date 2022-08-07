@@ -26,7 +26,7 @@ export class UserService implements IUserService {
       throw new EmailRegistered();
     }
 
-    const newUser = await this.userRepository.save(plainToInstance(UserDto, {
+    await this.userRepository.save(plainToInstance(UserDto, {
       ...userDto,
       password: hash,
       authCode: authCode,
