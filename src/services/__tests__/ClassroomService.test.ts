@@ -53,7 +53,7 @@ describe("FindOne", () => {
   it("should throw NotFoundError when id are incorrect", () => {
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
 
-    expect(classroomService.findOne('')).rejects.toThrow(NotFoundError);
+    expect(classroomService.findOne('')).rejects.toThrowError(NotFoundError);
   });
 });
 
@@ -64,15 +64,12 @@ describe("Delete", () => {
     );
     classroomRepository.softDelete = jest.fn().mockResolvedValue(null);
     await classroomService.delete(faker.datatype.uuid());
-    expect(classroomRepository.softDelete).toBeCalledWith(
-      expect.any(String)
-    );
+    expect(classroomRepository.softDelete).toBeCalledWith(expect.any(String));
   });
 
   it("should throw NotFoundError when id are incorrect", () => {
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
     classroomRepository.softDelete = jest.fn().mockResolvedValue(null);
-
-    expect(classroomService.delete('')).rejects.toThrow(NotFoundError);
+    expect(classroomService.delete('')).rejects.toThrowError(NotFoundError);
   })
 })

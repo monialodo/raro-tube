@@ -1,8 +1,8 @@
 import { File } from "../../models/fileEntity";
-import { FileDto } from "../dto/FileDto";
+import { FileDto, UploadFileDto } from "../dto/FileDto";
 
 export interface IFileService {
-  upload(fileDto: FileDto): Promise<File>;
+  upload(fileDto: UploadFileDto): Promise<File>;
   findAll(): Promise<File[]>;
   download(id: string): Promise<File>;
   update(id: string, fileDTO: FileDto): Promise<File>;
