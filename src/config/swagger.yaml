@@ -1,86 +1,1619 @@
-openapi: 3.0.0
-paths:
-  
- 
+swagger: "2.0"
 info:
-  title: 
-  description: 
-  version: 1.0.0
-  contact: {}
-servers: []
-components:
-  securitySchemes:
-    bearer:
-      type: apiKey
-      in: header
-      name: Authorization
-  schemas:
-    Usuario:
-      type: object
-      properties:
-        nome:
-          type: string
-        email:
-          type: string
-          format: email
-        senha:
-          type: string
-      required:
-        - nome
-        - email
-        - senha
-    LoginResponse:
-      type: object
-      properties:
-        token:
-          type: string
-      required:
-        - token
-    Plano:
-      type: object
-      properties:
-        id:
+  title: "RaroTube"
+  version: "1.0.0"
+  description: "RaroTube videos-lessons site"
+host: "localhost:3000"
+basePath: "/v1"
+tags:
+  - name: "videos"
+    description: "Operations about videos"
+  - name: "tags"
+    description: "Operations about tags"
+schemes:
+  - "http"
+definitions:
+  AuthenticationDTO:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        format: token
+        description: "JWT token"
+  ForgotDTO:
+    type: object
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        format: email
+        description: "Email of the users"
+  LogOutDTO:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        format: token
+        description: "JWT token"
+  TokenDTO:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        format: token
+        description: "JWT token"
+  CreateVideosDTO:
+    type: "object"
+    required:
+      - title
+      - description
+      - videos_file_id
+      - tags
+      - teacher_id
+      - classrooms_id
+      - duration
+    properties:
+      title:
+        type: "string"
+        example: "Example videos"
+      description:
+        type: "string"
+        example: "Videos about CSS"
+      videos_file_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+          example: "CSS"
+      teacher_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      classrooms_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      duration:
+        type: "string"
+        example: "00:00:00"
+  VideosDTO:
+    type: "object"
+    required:
+      - id
+      - title
+      - description
+      - videos_file_id
+      - tags
+      - teacher_id
+      - classrooms_id
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      title:
+        type: "string"
+        example: "Example videos"
+      description:
+        type: "string"
+        example: "Videos about CSS"
+      videos_file_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+          example: "CSS"
+      teacher_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      classrooms_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      duration:
+        type: "string"
+        example: "00:00:00"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateClassroomsDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - description
+      - logo_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example classrooms"
+      description:
+        type: "string"
+        example: "Classrooms about CSS"
+      logo_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  ClassroomsDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - description
+      - teacher_id
+      - logo_id
+      - created_at
+      - updated_at
+      - deleted_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example classrooms"
+      teacher_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      description:
+        type: "string"
+        example: "Classrooms about CSS"
+      logo_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  UpdateClassroomsDTO:
+    type: "object"
+    required:
+      - id
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example classrooms"
+      description:
+        type: "string"
+        example: "Classrooms about CSS"
+      logo_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+  CreateUsersDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - email
+      - password
+      - avatar_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example users"
+      email:
+        type: "string"
+        example: "email@raro.com"
+      password:
+        type: "string"
+        example: "123456"
+      avatar_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      role:
+        type: "string"
+        example: "teacher"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  UsersDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - email
+      - password
+      - avatar_id
+      - role
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example users"
+      email:
+        type: "string"
+        example: "email@raro.com"
+      password:
+        type: "string"
+        example: "123456"
+      avatar_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      role:
+        type: "string"
+        example: "teacher"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  UpdateUsersDTO:
+    type: "object"
+    required:
+      - id
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+  CreateFilesDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - size_bites
+      - format
+      - path
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example file"
+      size_bites:
+        type: "integer"
+        example: "1536"
+      format:
+        type: "string"
+        example: "mp4"
+      path:
+        type: "string"
+        example: "https://example.com/file.pdf"
+      type:
+        type: "string"
+        example: "videos"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  FilesDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - size_bites
+      - format
+      - path
+      - type
+      - created_at
+      - updated_at
+      - deleted_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example file"
+      size_bites:
+        type: "integer"
+        example: "1536"
+      format:
+        type: "string"
+        example: "mp4"
+      path:
+        type: "string"
+        example: "https://example.com/file.pdf"
+      type:
+        type: "string"
+        example: "videos"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateCommentsDTO:
+    type: "object"
+    required:
+      - id
+      - content
+      - upvoteQuantity
+      - downvoteQuantity
+      - users_id
+      - videos_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      content:
+        type: "string"
+        example: "Example comment"
+      upvoteQuantity:
+        type: "integer"
+        example: "10"
+      downvoteQuantity:
+        type: "integer"
+        example: "10"
+      users_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      videos_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CommentsDTO:
+    type: "object"
+    required:
+      - id
+      - content
+      - upvoteQuantity
+      - downvoteQuantity
+      - users_id
+      - videos_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      content:
+        type: "string"
+        example: "Example comment"
+      upvoteQuantity:
+        type: "integer"
+        example: "10"
+      downvoteQuantity:
+        type: "integer"
+        example: "10"
+      users_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      videos_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateTagsDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example tag"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  TagsDTO:
+    type: "object"
+    required:
+      - id
+      - name
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      name:
+        type: "string"
+        example: "Example tag"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateCommentsReactionDTO:
+    type: "object"
+    required:
+      - id
+      - users_id
+      - comment_id
+      - reaction
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      users_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      comment_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      reaction:
+        type: "string"
+        example: "upvote"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CommentsReactionDTO:
+    type: "object"
+    required:
+      - id
+      - users_id
+      - comment_id
+      - reaction
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      users_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      comment_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      reaction:
+        type: "string"
+        example: "upvote"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  CreateFavoriteDTO:
+    type: "object"
+    required:
+      - id
+      - users_id
+      - videos_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      users_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      videos_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  FavoriteDTO:
+    type: "object"
+    required:
+      - id
+      - users_id
+      - videos_id
+      - created_at
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      users_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      videos_id:
+        type: "string"
+        format: "uuid"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      created_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      updated_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+      deleted_at:
+        type: "string"
+        format: "date-time"
+        example: "2020-01-01T00:00:00.000Z"
+  ErrorDTO:
+    type: "object"
+    properties:
+      statusCode:
+        type: "number"
+        example: 500
+      message:
+        type: "string"
+        example: "Internal Server Error"
+paths:
+  /authentication/SignUp:
+    post:
+      tags:
+        - Authentication
+      summary: "Sign Up"
+      description: "Sign Up a users"
+      operationId: "authenticate"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Users credentials"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthenticationDTO"
+      responses:
+        200:
+          description: "Users authenticated"
+          schema:
+            $ref: "#/definitions/AuthenticationDTO"
+        400:
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /authentication/SignIn:
+    post: 
+      tags:
+        - Authentication
+      summary: "Sign In"
+      description: "Sign In a users"
+      operationId: "authenticateSignIn"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Users credentials"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthenticationDTO"
+      responses:
+        200:
+          description: "Users authenticated"
+          schema:
+            $ref: "#/definitions/AuthenticationDTO"
+        400:
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /authentication/Forgot:
+    post:
+      tags:
+        - Authentication
+      summary: "Forgot Password"
+      description: "Forgot Password"
+      operationId: "authenticateForgot"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Users credentials"
+          required: true
+          schema:
+            $ref: "#/definitions/ForgotDTO"
+      responses:
+        200:
+          description: "Users authenticated"
+          schema:
+            $ref: "#/definitions/ForgotDTO"
+        404:
+          description: "Email not found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /authentication/Logout:
+    post:
+      tags:
+        - Authentication
+      summary: "Logout"
+      description: "Logout"
+      operationId: "authenticateLogout"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Users credentials"
+          required: true
+          schema:
+            $ref: "#/definitions/LogOutDTO"
+      responses:
+        200:
+          description: "Users authenticated"
+          schema:
+            $ref: "#/definitions/LogOutDTO"
+        400:
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /authentication/token:
+    post:
+      tags:
+        - Authentication
+      summary: "Token"
+      description: "verify if token is valid to change password"
+      operationId: "authenticateToken"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Users credentials"
+          required: true
+          schema:
+            $ref: "#/definitions/TokenDTO"
+      responses:
+        200:
+          description: "Users authenticated"
+          schema:
+            $ref: "#/definitions/TokenDTO"
+        400:
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /users:
+    get:
+      tags:
+        - Users
+      summary: "Get all users"
+      description: "Get all users"
+      operationId: "getUsers"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    post:
+      tags:
+        - Users
+      summary: "Post a user"
+      description: "Post a user"
+      operationId: "createUsers"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: body
+          in: body
+          description: "Users that will be added"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateUsersDTO"
+      responses:
+        201:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: "Get a user by id"
+      description: "Get a user by id"
+      operationId: "getUsersId"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Users id"
+          required: true
           type: string
           format: uuid
-        nome:
-          type: string
-        valor:
-          type: number
-        limiteGB:
-          type: number
-      required:
-        - id
-        - nome
-        - valor
-        - limiteGB
-    Arquivo:
-      type: object
-      properties:
-        id:
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    put:
+      tags:
+        - Users
+      summary: "Update a users"
+      description: "Update a users"
+      operationId: "updateUsers"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Users id"
+          required: true
           type: string
           format: uuid
-        usuarioId:
+        - name: body
+          in: body
+          description: "Users that will be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateUsersDTO"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    delete:
+      tags:
+        - Users
+      summary: "Delete a users"
+      description: "Delete a users"
+      operationId: "deleteUsers"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Users id"
+          required: true
           type: string
-        nome:
+          format: uuid
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /classrooms:
+    get:
+      tags:
+        - Classrooms
+      summary: "Get all classrooms"
+      description: "Get all classrooms"
+      operationId: "getClassrooms"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ClassroomsDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    post:
+      tags:
+        - Classrooms
+      summary: "Post a classroom"
+      description: "Post a classroom"
+      operationId: "createClassrooms"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: body
+          in: body
+          description: "Classrooms that will be added"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateClassroomsDTO"
+      responses:
+        201:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ClassroomsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /classrooms/{id}:
+    get:
+      tags:
+        - Classrooms
+      summary: "Get a classroom by id"
+      description: "Get a classroom by id"
+      operationId: "getClassroomsId"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Classrooms id"
+          required: true
           type: string
-        tipo:
+          format: uuid
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ClassroomsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    put:
+      tags:
+        - Classrooms
+      summary: "Update a classrooms"
+      description: "Update a classrooms"
+      operationId: "updateClassrooms"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Classrooms id"
+          required: true
           type: string
-      required:
-        - id
-        - usuarioId
-        - nome
-        - tipo
-    CompartilhamentoDto:
-      type: object
-      properties:
-        emails:
-          type: array
-          items:
-            type: string
-            format: email
-        dataFim:
-          format: date-time
+          format: uuid
+        - name: body
+          in: body
+          description: "Classrooms that will be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateClassroomsDTO"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ClassroomsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    delete:
+      tags:
+        - Classrooms
+      summary: "Delete a classrooms"
+      description: "Delete a classrooms"
+      operationId: "deleteClassrooms"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Classrooms id"
+          required: true
           type: string
-      required:
-        - emails
-        - dataFim
+          format: uuid
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ClassroomsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /classrooms/{id}/users:
+    get:
+      tags:
+        - Classrooms
+      summary: "Get all users from a classroom"
+      description: "Get all users from a classroom"
+      operationId: "getClassroomsUsers"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Classrooms id"
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /classrooms/{id}/teacher:
+    get:
+      tags:
+        - Classrooms
+      summary: "Get all teachers from a classroom"
+      description: "Get all teachers from a classroom"
+      operationId: "getClassroomsTeachers"
+      produces:
+        - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: "Classrooms id"
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UsersDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /videos:
+    get:
+      tags:
+        - "videos"
+      summary: "Get all videos"
+      description: "Get all videos"
+      operationId: "findAllVideos"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/VideosDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    post:
+      tags:
+        - "videos"
+      summary: "Post a video"
+      description: "Post a video to a classroom"
+      operationId: "createVideos"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Videos object that needs to be added to the database"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateVideosDTO"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/VideosDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /videos/upload:
+    post:
+      tags:
+        - "videos"
+      summary: "Upload video"
+      description: "Upload a video to a classroom"
+      operationId: "uploadVideos"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "formData"
+          name: "file"
+          description: "file to be uploaded"
+          required: true
+          type: "file"
+        - in: "formData"
+          name: "format"
+          description: "file format data"
+          required: true
+          type: "string"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/VideosDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /videos/{id}:
+    get:
+      tags:
+        - "videos"
+      summary: "Get a video"
+      description: "Get a video by its id"
+      operationId: "findVideosById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of videos that needs to be fetched"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VideosDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    put:
+      tags:
+        - "videos"
+      summary: "Update a videos"
+      description: "Update a videos by its id"
+      operationId: "updateVideos"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of videos that needs to be updated"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Videos object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/VideosDTO"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VideosDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    delete:
+      tags:
+        - "videos"
+      summary: "Delete a videos"
+      description: "Delete a videos by its id"
+      operationId: "deleteVideos"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of videos that needs to be deleted"
+          required: true
+          type: "string"
+      responses:
+        202:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VideosDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /videos/favorite:
+    get:
+      tags:
+        - "videos"
+      summary: "Get all favorite videos"
+      description: "Get all favorite videos"
+      operationId: "findAllFavoriteVideos"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/VideosDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /videos/{id}/favorite:
+    patch:
+      tags:
+        - "videos"
+      summary: "Favorite a video"
+      description: "Favorite a video"
+      operationId: "favoriteVideos"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of videos that will to be favorited"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VideosDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /videos/{id}/comments:
+    get:
+      tags:
+        - "videos"
+      summary: "Get all comments of a video"
+      description: "Get all comments of a video"
+      operationId: "findAllCommentsOfVideos"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of videos that will has the comments"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CommentsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    post:
+      tags:
+        - "videos"
+      summary: "Post a comment to a video"
+      description: "Post a comment to a video"
+      operationId: "createComment"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of videos that will to be commented"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Comment object that needs to be added to the database"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateCommentsDTO"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/CommentsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /:videos/{id}/{comments}/:comments/{id}:
+    patch:
+      tags:
+        - "videos"
+      summary: "React to a comment"
+      description: "React to a comment"
+      operationId: "reactToComment"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of videos that has the comment"
+          required: true
+          type: "string"
+        - name: "comments"
+          in: "path"
+          description: "Id of comment that will be reacted"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Comment object that needs to be added to the database"
+          required: true
+          schema:
+            $ref: "#/definitions/CommentsDTO"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CommentsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /tags:
+    get:
+      tags:
+        - "tags"
+      summary: "Get all tags"
+      description: "Get all tags"
+      operationId: "findAllTags"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TagsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    post:
+      tags:
+        - "tags"
+      summary: "Post a tag"
+      description: "Post a tag"
+      operationId: "createTag"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "id"
+          description: "id of tag that will be created"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateTagsDTO"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/TagsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+  /tags/{id}:
+    get:
+      tags:
+        - "tags"
+      summary: "Get a tag by id"
+      description: "Get a tag by id"
+      operationId: "findTag"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of tag that will be returned"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TagsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
+    put:
+      tags:
+        - "tags"
+      summary: "Update a tag"
+      description: "Update a tag"
+      operationId: "updateTag"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of tag that will be updated"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Tag object that will be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateTagsDTO"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TagsDTO"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorDTO"
