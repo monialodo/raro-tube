@@ -1,6 +1,6 @@
 import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
-import { ClassroomsDto } from "../@types/dto/ClassroomsDto";
+import { ClassroomsDto, CreateClassroomDto } from "../@types/dto/ClassroomsDto";
 import { FileDto } from "../@types/dto/FileDto";
 
 import { NotFoundError } from "../@types/errors/NotFoundError";
@@ -16,7 +16,7 @@ export class ClassroomsService implements IClassroomService {
     private classroomRepository: IClassroomRepository
   ) { }
 
-  async create(classroom: ClassroomsDto, file:FileDto): Promise<Classroom> {
+  async create(classroom: CreateClassroomDto, file:FileDto): Promise<Classroom> {
     const {name,description} = classroom
 
     const classroomInstance = plainToInstance(ClassroomsDto,{
