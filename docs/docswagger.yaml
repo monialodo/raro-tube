@@ -13,7 +13,7 @@ tags:
 schemes:
   - "http"
 definitions:
-  AuthenticationDTO:
+  AuthDTO:
     type: object
     required:
       - token
@@ -31,15 +31,6 @@ definitions:
         type: string
         format: email
         description: "Email of the users"
-  LogOutDTO:
-    type: object
-    required:
-      - token
-    properties:
-      token:
-        type: string
-        format: token
-        description: "JWT token"
   TokenDTO:
     type: object
     required:
@@ -117,7 +108,7 @@ definitions:
         type: "array"
         items:
           type: "string"
-          example: "CSS"
+          example: "CSS_id"
       teacher_id:
         type: "string"
         format: "uuid"
@@ -646,12 +637,12 @@ definitions:
         type: "string"
         example: "Internal Server Error"
 paths:
-  /authentication/SignUp:
+  /auth/Signup:
     post:
       tags:
-        - Authentication
+        - Auth
       summary: "Sign Up"
-      description: "Sign Up a users"
+      description: "Sign Up a user"
       operationId: "authenticate"
       consumes:
         - "application/json"
@@ -663,12 +654,12 @@ paths:
           description: "Users credentials"
           required: true
           schema:
-            $ref: "#/definitions/AuthenticationDTO"
+            $ref: "#/definitions/AuthDTO"
       responses:
         200:
           description: "Users authenticated"
           schema:
-            $ref: "#/definitions/AuthenticationDTO"
+            $ref: "#/definitions/AuthDTO"
         400:
           description: "Bad request"
           schema:
@@ -681,13 +672,13 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /authentication/SignIn:
+  /auth/Login:
     post: 
       tags:
-        - Authentication
+        - Auth
       summary: "Sign In"
-      description: "Sign In a users"
-      operationId: "authenticateSignIn"
+      description: "Sign In a user"
+      operationId: "authenticateLogin"
       consumes:
         - "application/json"
       produces:
@@ -698,12 +689,12 @@ paths:
           description: "Users credentials"
           required: true
           schema:
-            $ref: "#/definitions/AuthenticationDTO"
+            $ref: "#/definitions/AuthDTO"
       responses:
         200:
           description: "Users authenticated"
           schema:
-            $ref: "#/definitions/AuthenticationDTO"
+            $ref: "#/definitions/AuthDTO"
         400:
           description: "Bad request"
           schema:
@@ -716,10 +707,10 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /authentication/Forgot:
+  /auth/Forgot:
     post:
       tags:
-        - Authentication
+        - Auth
       summary: "Forgot Password"
       description: "Forgot Password"
       operationId: "authenticateForgot"
@@ -747,41 +738,10 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /authentication/Logout:
+  /auth/token:
     post:
       tags:
-        - Authentication
-      summary: "Logout"
-      description: "Logout"
-      operationId: "authenticateLogout"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Users credentials"
-          required: true
-          schema:
-            $ref: "#/definitions/LogOutDTO"
-      responses:
-        200:
-          description: "Users authenticated"
-          schema:
-            $ref: "#/definitions/LogOutDTO"
-        400:
-          description: "Bad request"
-          schema:
-            $ref: "#/definitions/ErrorDTO"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorDTO"
-  /authentication/token:
-    post:
-      tags:
-        - Authentication
+        - Auth
       summary: "Token"
       description: "verify if token is valid to change password"
       operationId: "authenticateToken"
@@ -813,9 +773,9 @@ paths:
     get:
       tags:
         - Users
-      summary: "Get all users"
-      description: "Get all users"
-      operationId: "getUsers"
+      summary: "Get all students"
+      description: "Get all students"
+      operationId: "getStudents"
       produces:
         - "application/json"
       responses:
@@ -830,9 +790,9 @@ paths:
     post:
       tags:
         - Users
-      summary: "Post a user"
-      description: "Post a user"
-      operationId: "createUsers"
+      summary: "Post a student"
+      description: "Post a student"
+      operationId: "createstudents"
       consumes:
         - "application/json"
       produces:
@@ -840,7 +800,7 @@ paths:
       parameters:
         - name: body
           in: body
-          description: "Users that will be added"
+          description: "students that will be added"
           required: true
           schema:
             $ref: "#/definitions/CreateUsersDTO"
@@ -1120,35 +1080,6 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /classrooms/{id}/teacher:
-    get:
-      tags:
-        - Classrooms
-      summary: "Get all teachers from a classroom"
-      description: "Get all teachers from a classroom"
-      operationId: "getClassroomsTeachers"
-      produces:
-        - "application/json"
-      parameters:
-        - name: id
-          in: path
-          description: "Classrooms id"
-          required: true
-          type: string
-          format: uuid
-      responses:
-        200:
-          description: "OK"
-          schema:
-            $ref: "#/definitions/UsersDTO"
-        400:
-          description: "Bad Request"
-          schema:
-            $ref: "#/definitions/ErrorDTO"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorDTO"
   /videos:
     get:
       tags:
@@ -1172,37 +1103,6 @@ paths:
     post:
       tags:
         - "videos"
-      summary: "Post a video"
-      description: "Post a video to a classroom"
-      operationId: "createVideos"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Videos object that needs to be added to the database"
-          required: true
-          schema:
-            $ref: "#/definitions/CreateVideosDTO"
-      responses:
-        201:
-          description: "Created"
-          schema:
-            $ref: "#/definitions/VideosDTO"
-        400:
-          description: "Bad Request"
-          schema:
-            $ref: "#/definitions/ErrorDTO"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorDTO"
-  /videos/upload:
-    post:
-      tags:
-        - "videos"
       summary: "Upload video"
       description: "Upload a video to a classroom"
       operationId: "uploadVideos"
@@ -1212,10 +1112,20 @@ paths:
         - "application/json"
       parameters:
         - in: "formData"
-          name: "file"
-          description: "file to be uploaded"
+          name: "video"
+          description: "video to be uploaded"
           required: true
           type: "file"
+        - in: "formData"
+          name: "thumbnail"
+          description: "thumbnail to be uploaded"
+          required: true
+          type: "file"
+        - in: "formData"
+          name: "Info about the video"
+          description: "Videos object that needs to be added to the database"
+          required: true
+          type: "string"
         - in: "formData"
           name: "format"
           description: "file format data"
@@ -1455,7 +1365,7 @@ paths:
           description: "Not Found"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /:videos/{id}/{comments}/:comments/{id}:
+  /videos/{videoId}/comments/{commentsId}:
     patch:
       tags:
         - "videos"
@@ -1467,12 +1377,12 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "id"
+        - name: "videoId"
           in: "path"
           description: "Id of videos that has the comment"
           required: true
           type: "string"
-        - name: "comments"
+        - name: "commentsId"
           in: "path"
           description: "Id of comment that will be reacted"
           required: true
