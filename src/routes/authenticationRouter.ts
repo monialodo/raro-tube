@@ -11,11 +11,10 @@ const getController = (): AuthenticationController => {
 }
 
 const createRouter = () => {
-  router.post("/signup", adminAuthMiddleware,  (req, res) => getController().signup(req, res));
-  router.post("/login", (req, res) => getController().login(req, res));
-  router.post("/forgot", (req, res) => getController().forgot(req, res));
-  router.post("/reset", (req, res) => getController().resetPassword(req, res));
-  router.post("/authenticate", (req, res) => getController().authenticate(req, res));
+  router.post("/signup", errorHandler, (req, res) => getController().signup(req, res));
+  router.post("/login", errorHandler, (req, res) => getController().login(req, res));
+  router.post("/forgot", errorHandler, (req, res) => getController().forgot(req, res));
+  router.post("/reset", errorHandler, (req, res) => getController().resetPassword(req, res));
   return router;
 }
 

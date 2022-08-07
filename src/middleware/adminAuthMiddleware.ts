@@ -11,12 +11,16 @@ export const adminAuthMiddleware = (request: RequestUser, response: Response, ne
   }
   const enumRoles = Role;
 
+  if (request.user.role === enumRoles.ROOT) {
+    next();
+  }
+
   const token = authorization.split(" ")[1];
-  
+
   const parseJwt = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
   const userRole = (parseJwt(token).role).toLowerCase();
 
-  userRole === enumRoles.ADMIN || enumRoles.ROOT ? next() : next(new UnauthorizedError());
+  userRole === enumRoles.ADMIN ? next() : next(new UnauthorizedError());
 
 }
 

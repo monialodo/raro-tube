@@ -37,6 +37,11 @@ export class AuthenticationService implements IAuthenticationService {
       throw new ForbiddenError("You must provide a code to signup");
     }
     const user = await this.userRepository.findByEmail(email);
+
+    if (!email) {
+      throw new ForbiddenError("You must provide a email to signup");
+    }
+
     const userToken = generateToken(
       {
         email: email,
@@ -48,9 +53,9 @@ export class AuthenticationService implements IAuthenticationService {
       ...user,
       name: name || user.name,
       password: hashPassword(password) || hashPassword(user.password),
-    }));   
-    
-      
+    }));
+
+
     return {
       user: newUser,
       token,
@@ -58,70 +63,73 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   async login(loginData: LoginDTO): Promise<AuthResponseDTO> {
+    
     const { email, password } = loginData;
-    const user = await this.userRepository.findByEmail(email);
+    
+    const user = await this.userRepository.findByEmailAndPassword(loginData);
+   if (!user) {
+      throw new InvalidEmailOrPassword();
+    }
+    
+    if (user.password !== hashPassword(password) || !email) {
+      throw new InvalidEmailOrPassword();
+    }
 
-    if (!user) {
-      throw new InvalidEmailOrPassword();
-    }
-    if (user.password !== hashPassword(password)) {
-      throw new InvalidEmailOrPassword();
-    }
     const userToken = generateToken(
       {
         email: user.email,
         role: user.role,
       }
-    )
-    const token = userToken.token;
+    )    
+    const token = userToken.token;    
     return {
       user,
       token,
     };
+ 
   }
   async forgot(email: string): Promise<void> {
     const user = await this.userRepository.findByEmail(email);
-    const authCode = Math.random().toString(16).substring(2, 8)
-
+    if (!user) {
+      throw new ForbiddenError();
+    }
+ 
     const resetToken = resetPassToken({
       email: user.email,
       id: user.id,
     })
     const token = resetToken.token;
+
     await this.userRepository.save(plainToInstance(UserDto, { ...user, token }));
 
- 
-      const options = {
-        subject: "Reset Password | Daniel",
-        text: `Here is your token to reset your password: ${token}.
-        Please copy and paste it in the browser to reset your password.
-        If you did not request this, please ignore this email and your password will remain unchanged.`,  
 
-      };
-      await sendEmail(email, options);
-    }
+    const options = {
+      subject: "Reset Password | Daniel",
+      text: `Here is your token to reset your password: ${token}.
+        Please copy and paste it in the browser to reset your password.
+        If you did not request this, please ignore this email and your password will remain unchanged.`,
+
+    };
+    await sendEmail(email, options);
+
+  }
 
   async resetPassword(ResetPasswordDto: ResetPasswordDto): Promise<void> {
-    console.log('chegou no service');
     const { password, token } = ResetPasswordDto;
 
     if (!token) {
       throw new ForbiddenError("You must provide a token to reset your password");
     }
     const decoded = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-    
+
     const user = await this.userRepository.findOne(decoded.id);
     if (!user) {
-      throw new ForbiddenError("User not found"); 
+      throw new ForbiddenError("User not found");
     }
-    console.log('user', user);
-    console.log('id', decoded.id);
-    
-
     const passwordHash = hashPassword(password);
 
     await this.userRepository.save(plainToInstance(UserDto, { ...user, passwordHash }));
   }
-} 
+}
 
 

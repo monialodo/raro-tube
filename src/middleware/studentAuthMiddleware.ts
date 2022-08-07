@@ -4,7 +4,7 @@ import { Role } from "../@types/helpers/EnumRoles";
 import { RequestUser } from "../@types/middlewares/requestUser";
 
 
-export const adminAuthMiddleware = (request: RequestUser, response: Response, next: NextFunction) => {
+export const studentAuthMiddleware = (request: RequestUser, response: Response, next: NextFunction) => {
   const authorization = request.headers.authorization;
   if (!authorization) {
     throw new UnauthorizedError();

@@ -1,3 +1,4 @@
+import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
 import { UserDto } from "../@types/dto/UserDto";
 import { EmailRegistered } from "../@types/errors/EmailRegistered";
@@ -25,18 +26,18 @@ export class UserService implements IUserService {
       throw new EmailRegistered();
     }
 
-    const newUser: UserDto = new User();
-    newUser.name = userDto.name;
-    newUser.email = userDto.email;
-    newUser.password = hash;
-    newUser.role = userDto.role;
+    const newUser = await this.userRepository.save(plainToInstance(UserDto, {
+      ...userDto,
+      password: hash,
+      authCode: authCode,
+    }));
 
     await sendEmail(userDto.email, {
       subject: "Welcome to Monia",
       text: `Welcome to ${userDto.name}!
       Your authentication code is: ${authCode}`
     });
-    return this.userRepository.save(newUser);
+    return;
   }
 
   async findAll(): Promise<User[]> {

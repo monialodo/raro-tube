@@ -3,6 +3,8 @@ import { Container } from "typedi";
 
 import { UserController } from "../controllers/UserController";
 import { adminAuthMiddleware } from "../middleware/adminAuthMiddleware";
+import { teacherAuthMiddleware } from "../middleware/teacherAuthMiddleware";
+import { errorHandler } from "../middleware/errorHandler";
 
 
 const router = Router();
@@ -12,11 +14,11 @@ const getController = (): UserController => {
 };
  
 const createUserRouter = () => {
-  router.get("/", (req, res) => getController().findAll(req, res));
-  router.get("/:id", (req, res) => getController().find(req, res));
-  router.post("/", adminAuthMiddleware, (req, res) => getController().create(req, res));
-  router.put("/:id", (req, res) => getController().update(req, res));
-  router.delete("/:id", (req, res) => getController().delete(req, res));
+  router.get("/", errorHandler, adminAuthMiddleware, teacherAuthMiddleware, (req, res) => getController().findAll(req, res));
+  router.get("/:id", errorHandler,  (req, res) => getController().find(req, res));
+  router.post("/", errorHandler, adminAuthMiddleware,  (req, res) => getController().create(req, res));
+  router.put("/:id",errorHandler, (req, res) => getController().update(req, res));
+  router.delete("/:id", errorHandler, (req, res) => getController().delete(req, res));
 
   return router;
 }; 

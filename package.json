@@ -10,7 +10,7 @@
     "typeorm": "ts-node-dev  -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "typeorm:run": "npm run typeorm migration:run",
     "typeorm:create": "npm run typeorm migration:create -- -n",
-    "seed:user": "ts-node-dev src/config/database/UserSeed.ts",
+    "seed:root": "ts-node-dev src/config/database/RootSeed.ts",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "npm run lint -- --fix"
   },
