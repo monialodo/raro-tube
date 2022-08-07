@@ -1,6 +1,8 @@
 import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
-import { ClassroomsDto, enrollStudentsDTO } from "../@types/dto/ClassroomsDto";
+import { ClassroomsDto, CreateClassroomDto } from "../@types/dto/ClassroomsDto";
+import { FileDto } from "../@types/dto/FileDto";
+
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { UnauthorizedError } from "../@types/errors/UnauthorizedError";
 import { IClassroomRepository } from "../@types/repositories/IClassroomRepository";
@@ -26,7 +28,7 @@ export class ClassroomsService implements IClassroomService {
     private readonly filesService: IFileService,
   ) { }
 
-  async create(classroom: ClassroomsDto, file:Express.Multer.File): Promise<Classroom> {
+  async create(classroom: CreateClassroomDto, file:FileDto): Promise<Classroom> {
     const {name,description} = classroom
 
     const logoInstance = await this.filesService.upload(

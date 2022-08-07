@@ -8,6 +8,12 @@ export class userClassroomDto {
   user : User
   classroom:Classroom
 }
+
+export interface CreateClassroomDto {
+  name: string;
+  description: string;
+}
+
 export interface classroomRequestDTO extends Request{
     file: Express.Multer.File
     body: Classroom
