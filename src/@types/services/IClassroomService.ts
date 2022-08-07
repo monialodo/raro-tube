@@ -1,13 +1,15 @@
 import { Classroom } from "../../models/classroomEntity";
+import { UserClassroom } from "../../models/userClassroomEntity";
 import { User } from "../../models/userEntity";
-import { ClassroomsDto } from "../dto/ClassroomsDto";
-import { FileDto } from "../dto/FileDto";
+import { ClassroomsDto, enrollStudentsDTO, userClassroomDto } from "../dto/ClassroomsDto";
+
 
 export interface IClassroomService {
-  create(classroom: ClassroomsDto, file:FileDto): Promise<Classroom>;
+  create(classroom: ClassroomsDto, file:Express.Multer.File): Promise<Classroom>;
   findAll(): Promise<Classroom[]>;
   findOne(id: string): Promise<Classroom>;
   update(id: string, classroomsDto: ClassroomsDto): Promise<Classroom>;
   delete(id: string): Promise<void>;
-  findStudents(id:string):Promise<User[]>
+  listStudents(id:string):Promise<UserClassroom[]>
+  enrollStuddents(userClassroom : enrollStudentsDTO): Promise<UserClassroom>
 }

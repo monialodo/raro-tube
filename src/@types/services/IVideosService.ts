@@ -1,13 +1,14 @@
-import { Classroom } from "../../models/classroomEntity";
-import { User } from "../../models/userEntity";
+import { Comment } from "../../models/commentEntity";
 import { Video } from "../../models/videoEntity";
-import { FileDto } from "../dto/FileDto";
-import { VideoDTO, VideoUploadDTO } from "../dto/VideosDto";
+import {  CommentVideoDTO } from "../dto/CommentDto";
+import { VideoDTO, videosRequestDTO } from "../dto/VideosDto";
 
 export interface IVideosService{
-    create(videoDto: VideoUploadDTO,files:FileDto[],teacher:User, classroom:Classroom): Promise<Video>;
+    upload(videoData : videosRequestDTO):Promise<Video>
     findAll(): Promise<Video[]>;
     findOne(id: string): Promise<Video>;
     update(id: string, videoDto: VideoDTO): Promise<Video>;
     delete(id: string): Promise<void>;  
+    findComments(id:string):Promise<Video>
+    sendComment(comment: CommentVideoDTO):Promise<Comment>
 }

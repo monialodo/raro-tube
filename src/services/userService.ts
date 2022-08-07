@@ -21,7 +21,7 @@ export class UserService implements IUserService {
   }
 
   async findOne(id: string): Promise<User> {
-        
+               
     const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundError("User not found");
