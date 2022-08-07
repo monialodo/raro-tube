@@ -34,6 +34,7 @@ export class FileController {
     response.send(files);
   }
 
+  //Reusar
   async find(request: Request, response: Response) {
     const {params: {id}} = request
     

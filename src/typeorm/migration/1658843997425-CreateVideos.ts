@@ -21,6 +21,11 @@ export class CreateVideos1658843997425 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: "classroom_id",
+            type: "uuid",
+            isNullable: true,
+          },
+          {
             name: "teacher_id",
             type: "uuid",
           },
@@ -65,6 +70,11 @@ export class CreateVideos1658843997425 implements MigrationInterface {
           {
             columnNames: ["teacher_id"],
             referencedTableName: "users",
+            referencedColumnNames: ["id"],
+          },
+          {
+            columnNames: ["classroom_id"],
+            referencedTableName: "classrooms",
             referencedColumnNames: ["id"],
           },
         ],

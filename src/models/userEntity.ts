@@ -22,7 +22,7 @@ import { Comment } from "./commentEntity";
 import { CommentReaction } from "./commentReactionEntity";
 import { Favorites } from "./favoritesEntity";
 import { File } from "./fileEntity";
-import { UserClassroom } from "./userClasroomEntity";
+import { UserClassroom } from "./userClassroomEntity";
 
 @Entity("users")
 export class User {

@@ -1,6 +1,7 @@
+import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
 
-import { CommentDTO } from "../@types/dto/CommentDto";
+import { CommentDTO, CommentVideoDTO } from "../@types/dto/CommentDto";
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { ICommentRepository } from "../@types/repositories/ICommentRepository";
 import { ICommentService } from "../@types/services/ICommentService";
@@ -13,8 +14,13 @@ export class CommentService implements ICommentService {
     private commentRepository: ICommentRepository
   ) {}
 
-  async create(comment: Comment): Promise<Comment> {
-    return this.commentRepository.save(comment);
+  async create(comment: CommentVideoDTO): Promise<Comment> {
+
+    const commentInstance = plainToInstance(CommentDTO, {
+      ...comment
+    })
+
+    return this.commentRepository.save(commentInstance);
   }
   async findAll(): Promise<Comment[]> {
     return this.commentRepository.find();
