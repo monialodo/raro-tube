@@ -1,15 +1,15 @@
 import { UserRepository } from "../../repositories/userRepository";
-import { AuthService } from "../AuthService";
+import { AuthenticationService } from "../AuthenticationService";
 import { faker } from "@faker-js/faker";
 import { plainToInstance } from "class-transformer";
-import { AuthReturnDto } from "../../@types/dto/AuthDto";
+import { AuthResponseDTO } from "../../@types/dto/AuthenticationDto";
 import { User } from "../../models/userEntity";
 import { ForbiddenError } from "../../@types/errors/ForbiddenError";
 import * as emailSender from "../../helpers/sendEmail";
 import { InvalidEmailOrPassword } from "../../@types/errors/InvalidEmailOrPassword";
 
 const userRepository = new UserRepository();
-const authService = new AuthService(userRepository);
+const authService = new AuthenticationService(userRepository);
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -25,7 +25,8 @@ describe("Signup", () => {
     code: faker.random.alphaNumeric(10),
   };
 
-  it("should returns AuthReturnDto", async () => {
+
+  it("should returns AuthResponseDTO", async () => {
     const { code, ...userData } = signupDto;
 
     const user = plainToInstance(User, {
@@ -41,7 +42,7 @@ describe("Signup", () => {
     const signup = await authService.signup(signupDto);
 
     expect(userRepository.findByEmail).toBeCalledWith(email);
-    expect(signup).toMatchObject<AuthReturnDto>({
+    expect(signup).toMatchObject<AuthResponseDTO>({
       user,
       token: expect.any(String),
     });
@@ -92,7 +93,7 @@ describe("Login", () => {
       email,
       password,
     });
-    expect(login).toMatchObject<AuthReturnDto>({
+    expect(login).toMatchObject<AuthResponseDTO>({
       user,
       token: expect.any(String),
     });
@@ -156,12 +157,12 @@ describe("Code", () => {
 
   it("should call userRepository.save", async () => {
     const code = faker.random.alphaNumeric(10);
-    await authService.code({ code, password });
+    await authService.resetPassword({ password, token: code });
     expect(userRepository.save).toBeCalled();
   });
 
   it("should throw ForbiddenError", () => {
     const code = undefined;
-    expect(authService.code({ code, password })).rejects.toThrow(ForbiddenError);
+    expect(authService.resetPassword({ password, token:code })).rejects.toThrow(ForbiddenError);
   });
 });

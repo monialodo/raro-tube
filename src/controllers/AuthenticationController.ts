@@ -15,20 +15,6 @@ export class AuthenticationController {
     response.status(200).send(token);
   }
 
-  async create(request: Request, response: Response) {
-    console.log('req', request.body);
-
-
-    console.log('chegou no controller');
-
-    const user = await this.authService.create(request.body);
-    console.log('Usuário criado: ', user);
-
-    response.status(201).send(user);
-    console.log('Passou no controller');
-
-  }
-
   async login(req: Request, res: Response) {
     console.log('chegou no controller');
 
@@ -38,7 +24,7 @@ export class AuthenticationController {
     res.json(userWithToken);
   }
 
-  async signup(req: Request, res: Response) {
+  async signup(req: Request, res: Response) {    
     const userWithToken = await this.authService.signup(req.body);
     res.json(userWithToken);
   }
@@ -46,7 +32,7 @@ export class AuthenticationController {
   async forgot(req: Request, res: Response) {
     const { email } = req.body;
     this.authService.forgot(email);
-    res.status(200).json({ message: "Email sent!" });
+    res.status(200).json({ message: "Email sent!"});
   }
 
   async resetPassword(req: Request, res: Response) {

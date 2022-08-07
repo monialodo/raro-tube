@@ -1,8 +1,7 @@
 import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
-import { AuthResponseDTO, LoginDTO, ResetPasswordDto, SignupDto, UserRegistrationDTO, UserResponseDTO } from "../@types/dto/AuthenticationDto";
+import { AuthResponseDTO, LoginDTO, ResetPasswordDto, SignupDto } from "../@types/dto/AuthenticationDto";
 import { UserDto } from "../@types/dto/UserDto";
-import { EmailRegistered } from "../@types/errors/EmailRegistered";
 import { ForbiddenError } from "../@types/errors/ForbiddenError";
 import { InvalidEmailOrPassword } from "../@types/errors/InvalidEmailOrPassword";
 import { UserOrPasswordInvalid } from "../@types/errors/UserPasswordInvalid";
@@ -10,8 +9,8 @@ import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { IAuthenticationService } from "../@types/services/IAuthenticationService";
 import { hashPassword } from "../helpers/HashPassword";
 import { sendEmail } from "../helpers/sendEmail";
-import { generateToken } from "../helpers/Token";
-import { User } from "../models/userEntity";
+import { generateToken, resetPassToken } from "../helpers/Token";
+
 
 
 @Service("AuthenticationService")
@@ -30,37 +29,10 @@ export class AuthenticationService implements IAuthenticationService {
       throw new Error("Invalid password");
     }
     return
-
-  }
-
-  async create(user: UserRegistrationDTO): Promise<UserResponseDTO> {
-    const hash = hashPassword(Math.random().toString(16).substring(2, 12));
-
-    const authCode = Math.random().toString(16).substring(2, 8)
-
-    const registeredUser = await this.userRepository.findByEmail(user.email);
-
-    if (registeredUser) {
-      throw new EmailRegistered();
-    }
-
-    const newUser: UserRegistrationDTO = new User();
-    newUser.name = user.name;
-    newUser.email = user.email;
-    newUser.password = hash;
-    newUser.role = user.role;
-
-    await sendEmail(user.email, {
-      subject: "Welcome to Monia",
-      text: `Welcome to ${user.name}!
-      Your authentication code is: ${authCode}`
-    });
-    return this.userRepository.save(newUser);
   }
 
   async signup(signupData: SignupDto): Promise<AuthResponseDTO> {
     const { name, email, password, code } = signupData;
-
     if (!code) {
       throw new ForbiddenError("You must provide a code to signup");
     }
@@ -76,8 +48,9 @@ export class AuthenticationService implements IAuthenticationService {
       ...user,
       name: name || user.name,
       password: hashPassword(password) || hashPassword(user.password),
-    }));
-
+    }));   
+    
+      
     return {
       user: newUser,
       token,
@@ -100,8 +73,6 @@ export class AuthenticationService implements IAuthenticationService {
         role: user.role,
       }
     )
-    console.log('token', userToken);
-
     const token = userToken.token;
     return {
       user,
@@ -112,30 +83,45 @@ export class AuthenticationService implements IAuthenticationService {
     const user = await this.userRepository.findByEmail(email);
     const authCode = Math.random().toString(16).substring(2, 8)
 
-    if (user) {
+    const resetToken = resetPassToken({
+      email: user.email,
+      id: user.id,
+    })
+    const token = resetToken.token;
+    await this.userRepository.save(plainToInstance(UserDto, { ...user, token }));
+
+ 
       const options = {
         subject: "Reset Password | Daniel",
-        text: `Here is your code to reset your password: ${authCode}`,
+        text: `Here is your token to reset your password: ${token}.
+        Please copy and paste it in the browser to reset your password.
+        If you did not request this, please ignore this email and your password will remain unchanged.`,  
+
       };
       await sendEmail(email, options);
     }
-  }
 
   async resetPassword(ResetPasswordDto: ResetPasswordDto): Promise<void> {
-    const { password, code } = ResetPasswordDto;
-    if (!code) {
-      throw new ForbiddenError("You must provide a code to reset your password");
+    console.log('chegou no service');
+    const { password, token } = ResetPasswordDto;
+
+    if (!token) {
+      throw new ForbiddenError("You must provide a token to reset your password");
     }
-    const id = "3c8a91e3-ebd6-4ce0-b797-a750d48af416"
-    const user = await this.userRepository.findOne(id);
+    const decoded = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    
+    const user = await this.userRepository.findOne(decoded.id);
     if (!user) {
-      throw new ForbiddenError("User not found");
+      throw new ForbiddenError("User not found"); 
     }
+    console.log('user', user);
+    console.log('id', decoded.id);
+    
 
     const passwordHash = hashPassword(password);
 
     await this.userRepository.save(plainToInstance(UserDto, { ...user, passwordHash }));
   }
-}
+} 
 
 

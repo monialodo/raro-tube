@@ -31,15 +31,15 @@
   - verify if code is valid to change password
 
 ## USER
-- [ ]  GET /
+- [x]  GET /
   - (ADMIN, TEACHER[OC]))
-- [ ]  POST /
+- [x]  POST /
   - (ADMIN)
-- [ ]  GET /:id
+- [x]  GET /:id
   - (ADMIN, STUDENT[OW], TEACHER[OW/OC])
-- [ ]  PUT /:id
+- [x]  PUT /:id
   - (ADMIN[OW], STUDENT[OW], TEACHER[OW])
-- [ ]  DELETE /:id
+- [x]  DELETE /:id
   - (ADMIN, STUDENT[OW], TEACHER[OW])
 
 ## CLASSROOM

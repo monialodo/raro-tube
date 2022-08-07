@@ -84,9 +84,9 @@ export class User {
   senha: string;
 
   constructor() {
-    if (!this.id && !this.createdAt) {
+    if (!this.id && !this.updatedAt) {
       this.id = uuidV4();
-      this.createdAt = new Date();
+      this.updatedAt = new Date();
     }
     this.createdAt = new Date();
   }

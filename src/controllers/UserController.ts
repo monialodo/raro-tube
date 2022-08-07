@@ -1,4 +1,3 @@
-import { log } from "console";
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
 
@@ -22,10 +21,10 @@ export class UserController {
   }
 
   async create(request: Request, response: Response) {
-    console.log("Chamou o controller");
     
     const user = await this.userService.create(request.body);
-    response.status(201).send(user);
+      response.status(201).send(user);
+   
   }
 
   async update(request: Request, response: Response) {

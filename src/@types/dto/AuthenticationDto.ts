@@ -1,4 +1,3 @@
-import { User } from "../../models/userEntity"
 import { UserDto } from "./UserDto";
 
 export interface LoginDTO {
@@ -6,15 +5,6 @@ export interface LoginDTO {
   password: string
 }
 
-export class UserRegistrationDTO extends User {
-  constructor(user: User) {
-    super();
-    this.name = user.name;
-    this.email = user.email;
-    this.password = user.password;
-    this.role = user.role;
-}
-}
 
 export interface SignupDto {
   name: string;
@@ -26,8 +16,6 @@ export interface SignupDto {
 export interface UserTokenDTO {
   email: string;
   role: string;
-  // token: string;
-
 }
 
 export interface UserResponseDTO {
@@ -36,8 +24,9 @@ export interface UserResponseDTO {
   role: string
 }
 
-export interface UserUpdateDTO {
-  code: string;
+export interface UserResetPasswordDTO {
+  email: string;
+  id: string;
 }
 
 export interface AuthResponseDTO {
@@ -51,5 +40,6 @@ export interface ForgotPasswordDto {
 
 export interface ResetPasswordDto {
   password: string;
-  code: string;
+  token: string;
+
 }

@@ -7,6 +7,12 @@ export class UserDto extends User {
   //   this.email = user.email;
   //   this.password = user.password;
   //   this.role = user.role;
-
   // }
 }
+
+export class UserUpdateDTO extends User {
+  constructor(user: User) {
+    super();
+    this.role = user.role;
+  }
+} 
