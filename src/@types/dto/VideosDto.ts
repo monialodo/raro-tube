@@ -20,7 +20,7 @@ export interface videosRequestDTO extends Request{
         title : string 
         description : string
         duration :string
-        teacher_id: string
-        classroom_id?: string
+        teacherId: string
+        classroomId?: string
     }
   }

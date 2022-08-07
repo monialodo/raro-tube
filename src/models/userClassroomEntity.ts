@@ -14,11 +14,12 @@ import { User } from "./userEntity";
 
 @Entity("user_classrooms")
 export class UserClassroom {
-  @PrimaryColumn({ name: "user_id" })
-  userId: string;
 
-  @PrimaryColumn({ name: "classroom_id" })
+  @PrimaryColumn('uuid' ,{ name: "classroom_id" })
   classroomId: string;
+  
+  @PrimaryColumn('uuid' ,{ name: "user_id" })
+  userId: string;
 
   @ManyToOne(() => User, (user) => user.userClassrooms)
   @JoinColumn({ name: "user_id" })

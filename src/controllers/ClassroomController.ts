@@ -1,20 +1,17 @@
-import { plainToInstance } from "class-transformer";
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
-import { classroomRequestDTO, ClassroomsDto } from "../@types/dto/ClassroomsDto";
-import { FileDto } from "../@types/dto/FileDto";
+import { classroomRequestDTO, ClassroomsDto, enrollStudentsDTO } from "../@types/dto/ClassroomsDto";
+import { TypedRequestBody } from "../@types/dto/Request";
+
 
 import { IClassroomService } from "../@types/services/IClassroomService";
-import { IFileService } from "../@types/services/IFileService";
-import { fileToInstance } from "../helpers/fileToInstance";
+
 
 @Service("ClassroomController")
 export class ClassroomController {
   constructor(
     @Inject("ClassroomService")
-    private readonly classroomService: IClassroomService,
-    @Inject("FileService")
-    private readonly filesService: IFileService
+    private readonly classroomService: IClassroomService
   ) {}
 
   async findAllClassrooms(request: Request, response: Response) {  
@@ -29,11 +26,8 @@ export class ClassroomController {
 
   async create(request: classroomRequestDTO, response: Response) {
     const {file:logo} = request
-        
-    const logoInstance = await this.filesService.upload(
-      fileToInstance(logo,'png')
-    )     
-    const classroom = await this.classroomService.create(request.body,logoInstance);
+
+    const classroom = await this.classroomService.create(request.body,logo);
     response.status(201).send(classroom);
   }
 
@@ -50,10 +44,20 @@ export class ClassroomController {
     response.send();
   }
 
-  async findAllStudents(request: Request, response: Response){
-    const students = await this.classroomService.findStudents(request.params.id)
+  async enrollStudents(request: TypedRequestBody<enrollStudentsDTO>, response: Response){
 
-    return students
+    const {userId,classroomId} = request.body  
+    const userClassroom = await this.classroomService.enrollStuddents({userId,classroomId})
+    
+    response.send(userClassroom)
+
+  }
+
+  async listStudents(request: Request, response: Response){
+        
+    const students = await this.classroomService.listStudents(request.params.id)
+
+    response.send(students)
 
   }
 }
