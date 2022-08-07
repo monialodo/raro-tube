@@ -5,9 +5,6 @@ import * as morgan from "morgan";
 import { serve, setup } from 'swagger-ui-express';
 import * as YAML from 'yamljs';
 
-
-
-
 const createMiddlewares = (app: express.Express) => {
   app.use(cors());
   app.use(json({ limit: '5mb' }));
@@ -18,4 +15,5 @@ const createMiddlewares = (app: express.Express) => {
 }; 
 
 export default createMiddlewares;
+
 

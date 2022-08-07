@@ -10,7 +10,7 @@ export class FileService implements IFileService {
     @Inject("FileRepository") private fileRepository: IFilesRepository
   ) { }
 
-  async create(file: File): Promise<File> {
+  async upload(file: FileDto): Promise<File> {
     return this.fileRepository.save(file);
   }
 
@@ -18,16 +18,17 @@ export class FileService implements IFileService {
     return this.fileRepository.find();
   }
 
-  async findOne(id: string): Promise<File> {
-    return this.fileRepository.findOne(id);
+  async download(id: string): Promise<File> {
+    return this.fileRepository.findOne(id)
   }
 
-  async update(id: string, file: File): Promise<File> {
+  async update(id: string, file: FileDto): Promise<File> {
+    
     const foundFile = await this.fileRepository.findOne(id);
     if (!foundFile) {
       throw new Error("File not found");
     }
-    return this.fileRepository.save(file);
+    return this.fileRepository.save({id, ...file})
   }
 
   async delete(id: string): Promise<void> {
