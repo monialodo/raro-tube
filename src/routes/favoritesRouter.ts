@@ -13,11 +13,12 @@ const createFavoritesRouter = () => {
     router.get("", (req, res) => getController().findAll(req, res));
     router.post("", (req, res) => getController().create(req, res));
     router.get("/:id", (req, res) => getController().find(req, res));
+    router.post("/:userId/:videoId", (req, res) => getController().favAndUnfav(req, res));
     router.put("/:id", (req, res) => getController().update(req, res));
     router.delete("/:id", (req, res) => getController().delete(req, res));
 
     return router;
 };
 
-export default createFavoritesRouter
+export default createFavoritesRouter;
   

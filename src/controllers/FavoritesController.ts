@@ -25,6 +25,13 @@ export class FavoritesController {
     response.status(201).send(favorite);
   }
 
+  async favAndUnfav(request: Request, response: Response) {
+    const favorite = await this.favoriteService.favAndUnfav(
+      request.params.userId, request.params.videoId
+    );
+    response.send(favorite);
+  }
+
   async update(request: Request, response: Response) {
     const favorite = await this.favoriteService.update(
       request.params.id,

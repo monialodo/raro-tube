@@ -25,6 +25,16 @@ export class CommentController {
     response.status(201).send(Comment);
   }
 
+  async patchUpvote(request: Request, response: Response) {
+    const Comment = await this.commentService.patchUpVote(request.params.id);
+    response.send(Comment);
+  }
+
+  async patchDownvote(request: Request, response: Response) {
+    const Comment = await this.commentService.patchDownVote(request.params.id);
+    response.send(Comment);
+  }
+
   async update(request: Request, response: Response) {
     const Comment = await this.commentService.update(
       request.params.id,
