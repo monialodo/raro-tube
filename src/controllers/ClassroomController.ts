@@ -12,7 +12,7 @@ export class ClassroomController {
   constructor(
     @Inject("ClassroomService")
     private readonly classroomService: IClassroomService
-  ) {}
+  ){}
 
   async findAllClassrooms(request: Request, response: Response) {  
     const classrooms = await this.classroomService.findAll();
