@@ -31,13 +31,13 @@ export class UserService implements IUserService {
       password: hash,
       authCode: authCode,
     }));
-
+ 
     await sendEmail(userDto.email, {
       subject: "Welcome to Monia",
       text: `Welcome to ${userDto.name}!
       Your authentication code is: ${authCode}`
     });
-    return;
+    return this.userRepository.findByEmail(userDto.email);
   }
 
   async findAll(): Promise<User[]> {

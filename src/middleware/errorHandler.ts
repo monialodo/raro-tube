@@ -25,7 +25,7 @@ export const errorHandler = (app: express.Express) => {
     if (isErrorHandled(err)) {
       res.status(err.httpStatus).json({ err });
     }
-    res.status(500).json({ err: err.message });
+    // res.status(500).json({ err: err.message });
   })
 }
 
