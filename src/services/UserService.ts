@@ -42,11 +42,8 @@ export class UserService implements IUserService {
       subject: "Welcome to RaroTube",
       html: signupTemplate(token)
     });
-
-    const { password, ...userWithoutPassword } = user;
-
-
-    return userWithoutPassword as User;
+    const {password, ...userWithoutPassword} = user
+    return userWithoutPassword as User
   }
 
   async findAll(): Promise<User[]> {
@@ -81,6 +78,9 @@ export class UserService implements IUserService {
     const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundError("User not found");
+    }
+    if (user.role === "role") {
+      throw new NotFoundError("Root user cannot be deleted");
     }
     await this.userRepository.softDelete(id);
   }
