@@ -10,11 +10,11 @@ export interface SignupDto {
   name: string;
   email: string;
   password: string;
-  code: string;
+  authToken: string;
 }
 
 export interface UserTokenDTO {
-  email: string;
+  id: string;
   role: string;
 }
 
@@ -25,8 +25,8 @@ export interface UserResponseDTO {
 }
 
 export interface UserResetPasswordDTO {
-  email: string;
   id: string;
+  role: string;
 }
 
 export interface AuthResponseDTO {

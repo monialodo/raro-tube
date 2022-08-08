@@ -1,26 +1,22 @@
 import { NextFunction, Response } from "express";
 import { UnauthorizedError } from "../@types/errors/UnauthorizedError";
-import { Role } from "../@types/helpers/EnumRoles";
 import { RequestUser } from "../@types/middlewares/requestUser";
 
 
-export const adminAuthMiddleware = (request: RequestUser, response: Response, next: NextFunction) => {
+export const allUserAuthMiddleware = (request: RequestUser, response: Response, next: NextFunction) => {
+  console.log('allUserAuthMiddleware');
 
   const authorization = request.headers.authorization;
-
   if (!authorization) {
     throw new UnauthorizedError();
   }
-  const enumRoles = Role;
-
   const token = authorization.split(" ")[1];
+  console.log('token', token);
 
   const parseJwt = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+  console.log('parseJwt', parseJwt.role);
 
-  if ((parseJwt.role === enumRoles.ADMIN) || (parseJwt.role === enumRoles.ROOT)) {
-    next();
-  } else {
-    throw new UnauthorizedError()
-  }
+  parseJwt.role ? next() : next(new UnauthorizedError());
 
 }
+

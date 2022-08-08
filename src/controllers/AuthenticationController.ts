@@ -16,7 +16,6 @@ export class AuthenticationController {
   }
 
   async login(req: Request, res: Response) {
-    console.log('chegou no controller');
 
     const userWithToken = await this.authService.login(req.body);
     console.log('userWithToken', userWithToken);

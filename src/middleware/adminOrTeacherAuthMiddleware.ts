@@ -4,7 +4,9 @@ import { Role } from "../@types/helpers/EnumRoles";
 import { RequestUser } from "../@types/middlewares/requestUser";
 
 
-export const teacherAuthMiddleware = (request: RequestUser, response: Response, next: NextFunction) => {
+export const adminOrTeacherAuthMiddleware = (request: RequestUser, response: Response, next: NextFunction) => {
+    console.log('teacherAuthMiddleware');
+    
     const authorization = request.headers.authorization;
     if (!authorization) {
         throw new UnauthorizedError();
@@ -13,11 +15,14 @@ export const teacherAuthMiddleware = (request: RequestUser, response: Response, 
 
     const token = authorization.split(" ")[1];
     const parseJwt = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-
-
-    const userRole = (parseJwt(token).role).toLowerCase();
-
-    userRole === enumRoles.TEACHER || enumRoles.ROOT ? next() : next(new UnauthorizedError());
+    
+    console.log('parseJwt', parseJwt.role);
+    if ((parseJwt.role === enumRoles.ADMIN) || (parseJwt.role === enumRoles.TEACHER)) {
+        next();
+    } else {
+        throw new UnauthorizedError()
+    }
+    
 
 }
 

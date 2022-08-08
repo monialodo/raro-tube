@@ -13,7 +13,7 @@ export const generateToken = (user: UserTokenDTO) => {
   }
 }
 
-export const resetPassToken = (user: UserResetPasswordDTO) => {
+export const generatePassToken = (user: UserResetPasswordDTO) => {
 
   const token: string = sign(user, process.env.JWT_SECRET, {
       expiresIn: "2h",

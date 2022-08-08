@@ -32,7 +32,7 @@
 
 ## USER
 - [x]  GET /
-  - (ADMIN, TEACHER[OC]))
+  - (ADMIN, TEACHER[OC])) 
 - [x]  POST /
   - (ADMIN)
 - [x]  GET /:id
@@ -40,7 +40,7 @@
 - [x]  PUT /:id
   - (ADMIN[OW], STUDENT[OW], TEACHER[OW])
 - [x]  DELETE /:id
-  - (ADMIN, STUDENT[OW], TEACHER[OW])
+  - (ADMIN)
 
 ## CLASSROOM
 - [x]  GET /

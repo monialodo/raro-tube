@@ -9,8 +9,10 @@ import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { IAuthenticationService } from "../@types/services/IAuthenticationService";
 import { hashPassword } from "../helpers/HashPassword";
 import { sendEmail } from "../helpers/sendEmail";
-import { generateToken, resetPassToken } from "../helpers/Token";
+import { generateToken, generatePassToken } from "../helpers/Token";
 import { signupTemplate } from "../public/emails/signupTemplate";
+
+
 
 
 @Service("AuthenticationService")
@@ -32,8 +34,8 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   async signup(signupData: SignupDto): Promise<AuthResponseDTO> {
-    const { name, email, password, code } = signupData;
-    if (!code) {
+    const { name, email, password, authToken } = signupData;
+    if (!authToken) {
       throw new ForbiddenError("You must provide a code to signup");
     }
     const user = await this.userRepository.findByEmail(email);
@@ -42,9 +44,9 @@ export class AuthenticationService implements IAuthenticationService {
       throw new ForbiddenError("You must provide a email to signup");
     }
 
-    const userToken = generateToken(
+    const userToken = generatePassToken(
       {
-        email: email,
+        id: user.id,
         role: user.role,
       },
     )
@@ -63,46 +65,47 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   async login(loginData: LoginDTO): Promise<AuthResponseDTO> {
-    
-    const { email, password } = loginData;
-    
-    const user = await this.userRepository.findByEmailAndPassword(loginData);
-   if (!user) {
+   const { email, password } = loginData;
+
+
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
       throw new InvalidEmailOrPassword();
     }
-    
-    if (user.password !== hashPassword(password) || !email) {
+    if (user.password !== hashPassword(password)) {
       throw new InvalidEmailOrPassword();
     }
 
     const userToken = generateToken(
       {
-        email: user.email,
+        id: user.id,
         role: user.role,
       }
-    )    
-    const token = userToken.token;    
+    )
+    const token = userToken.token;
     return {
       user,
       token,
     };
- 
+
   }
   async forgot(email: string): Promise<void> {
+    
     const user = await this.userRepository.findByEmail(email);
+    
     if (!user) {
       throw new ForbiddenError();
     }
- 
-    const resetToken = resetPassToken({
-      email: user.email,
+
+    const resetToken = generatePassToken({
       id: user.id,
+      role: user.role,
     })
     const token = resetToken.token;
 
     await this.userRepository.save(plainToInstance(UserDto, { ...user, token }));
 
-
+ 
     const options = {
       subject: "Raro Tube | Reset Password",
       html: signupTemplate(token),

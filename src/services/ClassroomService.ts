@@ -40,6 +40,8 @@ export class ClassroomsService implements IClassroomService {
   }
 
   async findAll(): Promise<Classroom[]> {
+
+    
     return this.classroomRepository.find({relations: ['logo']});
   }
 
