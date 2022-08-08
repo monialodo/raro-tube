@@ -29,7 +29,7 @@ export const errorHandler = (app: express.Express) => {
   })
 }
 
-export const errorMiddleware = (handler: express.RequestHandler) => {
+export const errorMiddleware = (handler: express.RequestHandler) => 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
       Promise.resolve(handler(req, res, next)).catch(next);
@@ -37,5 +37,3 @@ export const errorMiddleware = (handler: express.RequestHandler) => {
       next(error);
     }
   }
-
-}
