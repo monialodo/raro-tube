@@ -56,10 +56,10 @@ export class CommentService implements ICommentService {
 
   async isItMineComment(id: string, userId: string): Promise<boolean> {
     const comments = await this.commentRepository.find({ where: { userId } });
-    if (comments) {
-      return true;
+    if (!comments) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   async update(id: string, comment: Comment): Promise<Comment> {
