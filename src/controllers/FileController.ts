@@ -32,7 +32,6 @@ export class FileController {
     response.send(files);
   }
 
-  //Reusar
   async find(request: Request, response: Response) {
     const {params: {id}} = request
     
@@ -41,7 +40,6 @@ export class FileController {
     if(!file){
       response.send(404)
     }
-    console.log(file.path);
     
     response.setHeader('Content-disposition', `attachment; filename=${file.name}`);
     response.setHeader('Content-Type', file.format);

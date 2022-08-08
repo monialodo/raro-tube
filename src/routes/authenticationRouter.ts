@@ -14,7 +14,7 @@ const getController = (): AuthenticationController => {
 const createRouter = () => {
   router.post("/signup", errorMiddleware((req, res) => getController().signup(req, res)));
   router.post("/login", allUserAuthMiddleware, errorMiddleware((req, res) => getController().login(req, res)));
-  router.post("/forgot", allUserAuthMiddleware, errorMiddleware((req, res) => getController().forgot(req, res)));
+  router.post("/forgot", errorMiddleware((req, res) => getController().forgot(req, res)));
   router.post("/reset", allUserAuthMiddleware, errorMiddleware((req, res) => getController().resetPassword(req, res)));
   return router;
 }

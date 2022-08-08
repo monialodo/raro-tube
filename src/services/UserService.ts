@@ -22,7 +22,6 @@ export class UserService implements IUserService {
   async create(userDto: UserDto): Promise<User> {
     const hash = hashPassword(Math.random().toString(16).substring(2, 12));
     const registeredUser = await this.userRepository.findByEmail(userDto.email);
-    console.log(userDto)
     if (registeredUser) {
       throw new EmailRegistered();
     }

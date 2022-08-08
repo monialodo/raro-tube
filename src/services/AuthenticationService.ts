@@ -34,6 +34,7 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   async signup(signupData: SignupDto): Promise<AuthResponseDTO> {
+    
     const { name, email, password, token } = signupData
     
     const decoded = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
@@ -43,7 +44,8 @@ export class AuthenticationService implements IAuthenticationService {
     }
     
     const user = await this.userRepository.findByEmail(decoded.email);
-    if (!email) {
+    
+    if (!user) {
       throw new ForbiddenError("You must provide a email to signup");
     }
 
@@ -51,17 +53,18 @@ export class AuthenticationService implements IAuthenticationService {
       {
         id: user.id,
         role: user.role,
-      },
+      }
     )
     const token_user = userToken.token;
+
+    
     const newUser = await this.userRepository.save(plainToInstance(UserDto, {
       ...user,
       name: name || user.name,
       password: hashPassword(password) || hashPassword(user.password),
     }));
-    console.log('token', token_user);
     
-
+  
     return {
       user: newUser,
       token: token_user,
@@ -70,8 +73,6 @@ export class AuthenticationService implements IAuthenticationService {
 
   async login(loginData: LoginDTO): Promise<AuthResponseDTO> {
     const { email, password } = loginData;
-
-
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
       throw new InvalidEmailOrPassword();
@@ -96,11 +97,7 @@ export class AuthenticationService implements IAuthenticationService {
   async forgot(email: string): Promise<void> {
 
     const user = await this.userRepository.findByEmail(email);
-
-    if (!user) {
-      throw new ForbiddenError();
-    }
-
+  
     const resetToken = generatePassToken({
       id: user.id,
       role: user.role,
@@ -108,7 +105,6 @@ export class AuthenticationService implements IAuthenticationService {
     const token = resetToken.token;
 
     await this.userRepository.save(plainToInstance(UserDto, { ...user, token }));
-
 
     const options = {
       subject: "Raro Tube | Reset Password",

@@ -9,7 +9,7 @@ import { User } from "../../models/userEntity";
 import { UserRepository } from "../../repositories/userRepository";
 import { AuthenticationService } from "../AuthenticationService";
 
-const sign = require('jwt-encode');
+import sign from 'jwt-encode';
 
 const userRepository = new UserRepository();
 const authService = new AuthenticationService(userRepository);
@@ -25,13 +25,13 @@ describe("Signup", () => {
     name: faker.name.findName(),
     email,
     password,
-    code: faker.random.alphaNumeric(10),
+    token: faker.random.alphaNumeric(10),
   };
 
 
   it("should returns AuthResponseDTO", async () => {
 
-    const { code, ...userData } = signupDto;
+    const { token, ...userData } = signupDto;
 
     const user = plainToInstance(User, {
       avatar: null,
@@ -51,9 +51,9 @@ describe("Signup", () => {
     };
 
     const jwt = sign(data, secret);
-    console.log('jwt', jwt);
+   
 
-    const tokenSpy = jest.spyOn(tokenGenerator, 'generateToken').mockReturnValue({ token: jwt });
+    const tokenSpy = jest.spyOn(tokenGenerator, 'generatePassToken').mockReturnValue({ token: jwt });
 
 
     const signup = await authService.signup(signupDto);
@@ -67,13 +67,13 @@ describe("Signup", () => {
   });
 
   it("should throws ForbiddenError when there's no code", async () => {
-    const { code, ...userData } = signupDto;
+    const { token, ...userData } = signupDto;
 
     userRepository.findByEmail = jest.fn().mockResolvedValue(null);
     userRepository.save = jest.fn().mockResolvedValue(null);
 
     await expect(
-      authService.signup({ code: undefined, ...userData })
+      authService.signup({ token: undefined, ...userData })
     ).rejects.toThrow(ForbiddenError);
   });
 
@@ -160,7 +160,7 @@ describe("Forgot", () => {
     };
     const jwt = sign(data, secret);
     
-    const tokenSpy = jest.spyOn(tokenGenerator, 'resetPassToken').mockReturnValue({ token: jwt });
+    const tokenSpy = jest.spyOn(tokenGenerator, 'generatePassToken').mockReturnValue({ token: jwt });
      
     userRepository.save = jest.fn().mockResolvedValue(user);
     
@@ -202,9 +202,8 @@ describe("Forgot", () => {
         id: user.id,
       };
       const jwt = sign(data, password);
-      console.log('jwt', jwt);
 
-      const tokenSpy = jest.spyOn(tokenGenerator, 'generateToken').mockReturnValue({ token: jwt });
+      const tokenSpy = jest.spyOn(tokenGenerator, 'generatePassToken').mockReturnValue({ token: jwt });
 
       userRepository.findOne = jest.fn().mockResolvedValue(user.id);
 

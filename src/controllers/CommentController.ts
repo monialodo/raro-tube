@@ -28,7 +28,6 @@ export class CommentController {
   async patchVote(request: Request, response: Response){
     const id = request.params.id
     const reaction = request.body.vote
-    //Mock
     const userId = 'dcfba9a4-e555-443f-bc86-23e972b9c3e7'
 
     const Comment = await this.commentService.patchVote({id,reaction,userId})

@@ -42,14 +42,15 @@ export class CommentService implements ICommentService {
   }
 
   async findUserComment(userId: string): Promise<Comment> {
-    // const comment = await this.commentRepository.findOne({ where: { userId } });
-    // const user = await this.userRepository.findOne(comment.user);
-    // if (!comment) {
-    //   throw new NotFoundError("Comment not found");
-    // }
-    // return user;
-
-    return
+    const comment = await this.commentRepository.findOne({ where: { userId } });
+    const user = await this.userRepository.findOne(comment.user);
+    if (!comment) {
+      throw new NotFoundError("Comment not found");
+    }
+    return plainToInstance(Comment, {
+      ...comment,
+      user: user
+    });
   }
 
 

@@ -18,8 +18,6 @@ export class AuthenticationController {
   async login(req: Request, res: Response) {
 
     const userWithToken = await this.authService.login(req.body);
-    console.log('userWithToken', userWithToken);
-
     res.json(userWithToken);
   }
 
@@ -31,7 +29,7 @@ export class AuthenticationController {
   async forgot(req: Request, res: Response) {
     const { email } = req.body;
     await this.authService.forgot(email);
-    res.status(200).json({ message: "Email sent!"});
+    res.status(200).json({ message: "If there is a user with this email, an email has been sent" });
   }
 
   async resetPassword(req: Request, res: Response) {

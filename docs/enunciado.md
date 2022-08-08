@@ -8,15 +8,15 @@ Queremos melhorar nosso modelo de distribuição deste conteúdo, criando um por
 
 ### Página principal (área não logada)
 
-- Deverá existir uma área não logada do portal de vídeos, onde qualquer pessoa pode acessar as gravações dos nossos aulões públicos;
-- Ao clicar em qualquer uma destas aulas, esta pessoa deverá ser redirecionada para a Tela de Visualização do vídeo;
-- Ainda na página principal, no topo da tela, deve existir um botão de login do usuário, que leva à Tela de login.
+- Deverá existir uma área não logada do portal de vídeos, onde qualquer pessoa pode acessar as gravações dos nossos aulões públicos; 
+- Ao clicar em qualquer uma destas aulas, esta pessoa deverá ser redirecionada para a Tela de Visualização do vídeo; 
+- Ainda na página principal, no topo da tela, deve existir um botão de login do usuário, que leva à Tela de login. 
 
 ### Tela de login
 
-- Nesta tela, os alunos terão a opção de fazer login ou se cadastrar na plataforma, caso seja seu primeiro acesso;
-- No primeiro caso, alunos já cadastrados serão autenticados para terem acesso aos conteúdos referentes a sua turma;
-- Após o login, o usuário deverá ser redirecionado novamente à página principal da aplicação, que passará a exibir os vídeos referentes à turma do usuário.
+- Nesta tela, os alunos terão a opção de fazer login ou se cadastrar na plataforma, caso seja seu primeiro acesso; 
+- No primeiro caso, alunos já cadastrados serão autenticados para terem acesso aos conteúdos referentes a sua turma; 
+- Após o login, o usuário deverá ser redirecionado novamente à página principal da aplicação, que passará a exibir os vídeos referentes à turma do usuário. 
 - Requisitos acessórios:
   - "Esqueci minha senha"
       - O usuário deverá preencher seu email de cadastro na aplicação. O sistema deverá enviar um email para o usuário, com o código de recuperação de senha. Ao receber este código, o usuário deverá preencher um formulário contendo o código recebido e a nova senha, seguida da confirmação da mesma. O código de recuperação de senha tem uma duração máxima de 2 horas.

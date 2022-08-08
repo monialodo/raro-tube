@@ -21,7 +21,6 @@ export class VideoController {
     if(!video){
       response.send(404)
     }
-    console.log(video);
     
     response.setHeader('Content-disposition', `attachment; filename=${video.name}`);
     response.setHeader('Content-Type', video.format);

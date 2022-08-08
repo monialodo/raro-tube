@@ -11,8 +11,6 @@ import { VideoRepository } from "../../repositories/videoRepository";
 import { UserClassroomRepository } from "../../repositories/userClassroomRepository";
 import { commentReactionRepository } from "../../repositories/commentReactionRepository";
 import { VideoTagRepository } from "../../repositories/videoTagRepository";
-// inicializador de dependências:
-// inicializa controllers
 
 import "../../controllers/AuthenticationController";
 import "../../controllers/ClassroomController";
@@ -25,7 +23,6 @@ import "../../controllers/VideoController";
 
 
 
-// inicializa services
 import "../../services/AuthenticationService";
 import "../../services/ClassroomService";
 import "../../services/CommentService";

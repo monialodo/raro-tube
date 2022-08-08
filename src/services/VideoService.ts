@@ -128,7 +128,6 @@ export class VideosService implements IVideosService {
     async sendComment(comment: CommentVideoDTO):Promise<Comment>{
         const {content, userId,videoId}= comment
         const video = await this.videoRepository.findOne(videoId)        
-        //Mock
         const user = await this.usersService.findOne(userId)     
         if(!video || !user){
             throw new NotFoundError
@@ -137,7 +136,6 @@ export class VideosService implements IVideosService {
         const commentVideo = await this.commentService.create({
             content,video,user
         })
-        console.log("passou =====>");
 
         return commentVideo
     }
