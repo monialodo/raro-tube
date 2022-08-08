@@ -12,7 +12,7 @@ export class FileService implements IFileService {
     @Inject("FileRepository") private fileRepository: IFilesRepository
   ) { }
 
-  async upload(file: UploadFileDto): Promise<File> {
+  async upload(file: FileDto): Promise<File> {
     return this.fileRepository.save(plainToInstance(File, file));
   }
 

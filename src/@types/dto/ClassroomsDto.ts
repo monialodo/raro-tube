@@ -19,7 +19,7 @@ export interface classroomRequestDTO extends Request{
     body: Classroom
 }
 
-export interface enrollStudentsDTO{
+export interface EnrollStudentsDTO{
   userId: string
   classroomId:string
 }

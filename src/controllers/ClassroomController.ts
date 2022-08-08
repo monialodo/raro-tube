@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
-import { classroomRequestDTO, ClassroomsDto, enrollStudentsDTO } from "../@types/dto/ClassroomsDto";
+import { classroomRequestDTO, EnrollStudentsDTO } from "../@types/dto/ClassroomsDto";
 import { TypedRequestBody } from "../@types/dto/Request";
 
 
@@ -44,10 +44,10 @@ export class ClassroomController {
     response.send();
   }
 
-  async enrollStudents(request: TypedRequestBody<enrollStudentsDTO>, response: Response){
+  async enrollStudents(request: TypedRequestBody<EnrollStudentsDTO>, response: Response){
 
     const {userId,classroomId} = request.body  
-    const userClassroom = await this.classroomService.enrollStuddents({userId,classroomId})
+    const userClassroom = await this.classroomService.enrollStudents({userId,classroomId})
     
     response.send(userClassroom)
 

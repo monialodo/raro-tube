@@ -1,7 +1,7 @@
 import { Classroom } from "../../models/classroomEntity";
 import { UserClassroom } from "../../models/userClassroomEntity";
 import { User } from "../../models/userEntity";
-import { ClassroomsDto, enrollStudentsDTO, userClassroomDto } from "../dto/ClassroomsDto";
+import { ClassroomsDto, EnrollStudentsDTO, userClassroomDto } from "../dto/ClassroomsDto";
 
 
 export interface IClassroomService {
@@ -11,5 +11,5 @@ export interface IClassroomService {
   update(id: string, classroomsDto: ClassroomsDto): Promise<Classroom>;
   delete(id: string): Promise<void>;
   listStudents(id:string):Promise<UserClassroom[]>
-  enrollStuddents(userClassroom : enrollStudentsDTO): Promise<UserClassroom>
+  enrollStudents(userClassroom : EnrollStudentsDTO): Promise<UserClassroom>
 }

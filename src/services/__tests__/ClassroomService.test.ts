@@ -1,13 +1,30 @@
 import { ClassroomRepository } from "../../repositories/classroomRepository";
 import { ClassroomsService } from "../ClassroomService";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 import { NotFoundError } from "../../@types/errors/NotFoundError";
 import { plainToInstance } from "class-transformer";
-import { ClassroomsDto } from "../../@types/dto/ClassroomsDto";
-import { FileDto } from "../../@types/dto/FileDto";
+import {
+  ClassroomsDto,
+  EnrollStudentsDTO,
+} from "../../@types/dto/ClassroomsDto";
+import { UserClassroomRepository } from "../../repositories/userClassroomRepository";
+import { UserRepository } from "../../repositories/userRepository";
+import { FileService } from "../FileService";
+import { FileRepository } from "../../repositories/filesRepository";
+import { UserDto } from "../../@types/dto/UserDto";
+import { UserClassroom } from "../../models/userClassroomEntity";
 
-const classroomRepository = new ClassroomRepository()
-const classroomService = new ClassroomsService(classroomRepository)
+const classroomRepository = new ClassroomRepository();
+const fileRepository = new FileRepository();
+const userClassroomRepository = new UserClassroomRepository();
+const userRepository = new UserRepository();
+const filesService = new FileService(fileRepository);
+const classroomService = new ClassroomsService(
+  classroomRepository,
+  userClassroomRepository,
+  userRepository,
+  filesService
+);
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -16,52 +33,64 @@ beforeEach(() => {
 const classroomMock = {
   name: faker.name.findName(),
   description: faker.lorem.paragraph(),
-}
+};
 
-const logoMock = plainToInstance(FileDto, {
-  name: faker.system.fileName(),
+const logoMock = {
+  originalname: faker.system.fileName(),
   path: faker.system.filePath(),
-  sizeBytes: faker.random.numeric(7),
-  format: faker.system.fileExt(),
-  type: faker.system.mimeType(),
-})
+  size: Number(faker.random.numeric(7)),
+  mimetype: faker.system.fileExt(),
+} as Express.Multer.File;
+
+const userMock = {
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+};
 
 describe("Create", () => {
   it("should call classroomRepository.save", async () => {
-    const { name, description } = classroomMock;
-    classroomRepository.save = jest.fn().mockResolvedValue(
-      { ...classroomMock, logo: logoMock }
-    );
-    classroomService.create({ name, description }, logoMock);
-    expect(classroomRepository.save).toBeCalled()
-  })
+    classroomRepository.save = jest
+      .fn()
+      .mockResolvedValue({ ...classroomMock, logo: logoMock });
+    filesService.upload = jest.fn().mockResolvedValue(logoMock);
+    const classroomDto = plainToInstance(ClassroomsDto, { ...classroomMock });
+
+    await classroomService.create(classroomDto, logoMock);
+    expect(classroomRepository.save).toBeCalled();
+  });
 });
 
 describe("FindOne", () => {
   it("should call findOne", () => {
-    classroomRepository.findOne = jest.fn().mockResolvedValue({...classroomMock, logo: logoMock});
+    classroomRepository.findOne = jest
+      .fn()
+      .mockResolvedValue({ ...classroomMock, logo: logoMock });
     classroomService.findOne(faker.datatype.uuid());
     expect(classroomRepository.findOne).toBeCalledWith(
       expect.objectContaining({
         where: {
-          id: expect.any(String)
+          id: expect.any(String),
         },
-        relations: ["logo"] })
+        relations: ["logo"],
+      })
     );
   });
 
   it("should throw NotFoundError when id are incorrect", () => {
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
 
-    expect(classroomService.findOne('')).rejects.toThrowError(NotFoundError);
+    expect(classroomService.findOne("")).rejects.toThrowError(NotFoundError);
   });
 });
 
 describe("Delete", () => {
   it("should call softDelete", async () => {
-    classroomRepository.findOne = jest.fn().mockResolvedValue(
-      plainToInstance(ClassroomsDto, { logo: logoMock, ...classroomMock })
-    );
+    classroomRepository.findOne = jest
+      .fn()
+      .mockResolvedValue(
+        plainToInstance(ClassroomsDto, { logo: logoMock, ...classroomMock })
+      );
     classroomRepository.softDelete = jest.fn().mockResolvedValue(null);
     await classroomService.delete(faker.datatype.uuid());
     expect(classroomRepository.softDelete).toBeCalledWith(expect.any(String));
@@ -70,6 +99,101 @@ describe("Delete", () => {
   it("should throw NotFoundError when id are incorrect", () => {
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
     classroomRepository.softDelete = jest.fn().mockResolvedValue(null);
-    expect(classroomService.delete('')).rejects.toThrowError(NotFoundError);
-  })
-})
+    expect(classroomService.delete("")).rejects.toThrowError(NotFoundError);
+  });
+});
+
+describe("ListStudents", () => {
+  it("should call find", () => {
+    userClassroomRepository.find = jest
+      .fn()
+      .mockResolvedValue([
+        plainToInstance(ClassroomsDto, { logo: logoMock, ...classroomMock }),
+      ]);
+    classroomService.listStudents(faker.datatype.uuid());
+    expect(userClassroomRepository.find).toBeCalledWith(
+      expect.objectContaining({
+        where: {
+          classroomId: expect.any(String),
+        },
+        relations: ["user"],
+      })
+    );
+  });
+
+  it("should throw NotFoundError when id are incorrect", () => {
+    userClassroomRepository.find = jest.fn().mockResolvedValue(null);
+    expect(classroomService.listStudents("")).rejects.toThrowError(
+      NotFoundError
+    );
+  });
+});
+
+describe("enrollStuddents", () => {
+  const enrollStudentsMock = {
+    userId: faker.datatype.uuid(),
+    classroomId: faker.datatype.uuid(),
+  } as EnrollStudentsDTO;
+  const userFindOneSpy = jest.spyOn(userRepository, "findOne").mockResolvedValue(
+    plainToInstance(UserDto, userMock)
+  );
+  const classroomFindOneSpy = jest.spyOn(classroomRepository, "findOne").mockResolvedValue(
+    plainToInstance(ClassroomsDto, { logo: logoMock, ...classroomMock })
+  );
+  const userClassroomSaveSpy = jest.spyOn(userClassroomRepository, "save").mockResolvedValue(
+    plainToInstance(UserClassroom, {
+      ...enrollStudentsMock,
+      user: userMock,
+      classroom: classroomMock,
+    })
+  );
+  const userClassroomFindOneSpy = jest.spyOn(userClassroomRepository, "findOne").mockResolvedValue(
+    plainToInstance(UserClassroom, {
+      ...enrollStudentsMock,
+      user: userMock,
+      classroom: classroomMock,
+    })
+  );
+
+  // userRepository.findOne = jest.fn().mockResolvedValue(null)
+  // classroomRepository.findOne = jest.fn().mockResolvedValue(null)
+  // userClassroomRepository.save = jest.fn().mockResolvedValue(null);
+  // userClassroomRepository.findOne = jest.fn().mockResolvedValue(null);
+
+  it.todo("should call save"/*, async () => {
+    await classroomService.enrollStudents(enrollStudentsMock);
+    userFindOneSpy.mockClear().mockResolvedValue()
+    expect(userClassroomRepository.save).toBeCalled();
+  }*/),
+  it.todo("should throw NotFoundError when userId are incorrect");
+  it.todo("should throw NotFoundError when classroomId are incorrect");
+  it.todo(
+    "should throw ForbiddenError if user is already enrolled in the classroom"
+  );
+});
+
+describe("FindAll", () => {
+  it("should call find", () => {
+    classroomRepository.find = jest.fn().mockResolvedValue([]);
+    classroomService.findAll();
+    expect(classroomRepository.find).toBeCalled();
+  });
+});
+
+describe("Update", () => {
+  const classroomDto = plainToInstance(ClassroomsDto, { ...classroomMock });
+  it("should call update", async () => {
+    classroomRepository.findOne = jest.fn().mockResolvedValue(classroomMock);
+    classroomRepository.save = jest.fn().mockResolvedValue(classroomMock);
+    await classroomService.update(faker.datatype.uuid(), classroomDto);
+    expect(classroomRepository.save).toBeCalled();
+  });
+
+  it("should throw NotFoundError when id are incorrect", () => {
+    classroomRepository.findOne = jest.fn().mockResolvedValue(null);
+    classroomRepository.save = jest.fn().mockResolvedValue(null);
+    expect(classroomService.update("", classroomDto)).rejects.toThrowError(
+      NotFoundError
+    );
+  });
+});
