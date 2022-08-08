@@ -38,11 +38,11 @@ export class VideosService implements IVideosService {
         const thumbnail = videoData.files.thumbnail[0]   
 
         const teacher = await this.usersService.findOne(videoData.body.teacherId)  
-        
-        
+
         if(!teacher){
-          throw new NotFoundError
+          throw new NotFoundError("Teacher not found")
         }
+
         const videoFile = await this.filesService.upload(
             fileToInstance(video, 'video')
         )

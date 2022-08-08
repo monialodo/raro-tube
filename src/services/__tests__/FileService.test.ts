@@ -36,7 +36,7 @@ describe("Download", () => {
     expect(fileRepository.findOne).toBeCalledWith(id);
   });
 
-  it("should throw NotFoundError when id are incorrect", () => {
+  it("should throw NotFoundError when id is incorrect", () => {
     fileRepository.findOne = jest.fn().mockResolvedValue(null);
     expect(fileService.download('')).rejects.toThrowError(NotFoundError);
   });
@@ -50,7 +50,7 @@ describe("Delete", () => {
     expect(fileRepository.softDelete).toBeCalledWith(expect.any(String));
   });
 
-  it("should throw NotFoundError when id are incorrect", () => {
+  it("should throw NotFoundError when id is incorrect", () => {
     fileRepository.findOne = jest.fn().mockResolvedValue(null);
     fileRepository.softDelete = jest.fn().mockResolvedValue(null);
 
@@ -74,7 +74,7 @@ describe("Update", () => {
     expect(fileRepository.save).toBeCalled();
   });
 
-  it("should throw NotFoundError when id are incorrect", () => {
+  it("should throw NotFoundError when id is incorrect", () => {
     fileRepository.findOne = jest.fn().mockResolvedValue(null);
     fileRepository.save = jest.fn().mockResolvedValue(null);
     expect(fileService.update('', fileMock)).rejects.toThrowError(NotFoundError);

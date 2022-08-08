@@ -11,8 +11,6 @@ import { UserClassroomRepository } from "../../repositories/userClassroomReposit
 import { UserRepository } from "../../repositories/userRepository";
 import { FileService } from "../FileService";
 import { FileRepository } from "../../repositories/filesRepository";
-import { UserDto } from "../../@types/dto/UserDto";
-import { UserClassroom } from "../../models/userClassroomEntity";
 import { ForbiddenError } from "../../@types/errors/ForbiddenError";
 
 const classroomRepository = new ClassroomRepository();
@@ -78,7 +76,7 @@ describe("FindOne", () => {
     );
   });
 
-  it("should throw NotFoundError when id are incorrect", () => {
+  it("should throw NotFoundError when id is incorrect", () => {
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
 
     expect(classroomService.findOne("")).rejects.toThrowError(NotFoundError);
@@ -97,7 +95,7 @@ describe("Delete", () => {
     expect(classroomRepository.softDelete).toBeCalledWith(expect.any(String));
   });
 
-  it("should throw NotFoundError when id are incorrect", () => {
+  it("should throw NotFoundError when id is incorrect", () => {
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
     classroomRepository.softDelete = jest.fn().mockResolvedValue(null);
     expect(classroomService.delete("")).rejects.toThrowError(NotFoundError);
@@ -122,7 +120,7 @@ describe("ListStudents", () => {
     );
   });
 
-  it("should throw NotFoundError when id are incorrect", () => {
+  it("should throw NotFoundError when id is incorrect", () => {
     userClassroomRepository.find = jest.fn().mockResolvedValue(null);
     expect(classroomService.listStudents("")).rejects.toThrowError(
       NotFoundError
@@ -166,7 +164,7 @@ describe("enrollStuddents", () => {
     expect(userClassroomRepository.save).toBeCalled();
   }),
 
-  it("should throw NotFoundError when userId are incorrect", () => {
+  it("should throw NotFoundError when userId is incorrect", () => {
     userRepository.findOne = jest.fn().mockResolvedValue(null);
     classroomRepository.findOne = jest.fn().mockResolvedValue({ ...classroomMock });
     userClassroomRepository.findOne = jest.fn().mockResolvedValue(null);
@@ -174,7 +172,7 @@ describe("enrollStuddents", () => {
     expect(classroomService.enrollStudents(enrollStudentsMock)).rejects.toThrowError(NotFoundError);
   });
 
-  it("should throw NotFoundError when classroomId are incorrect", () => {
+  it("should throw NotFoundError when classroomId is incorrect", () => {
     userRepository.findOne = jest.fn().mockResolvedValue({ ...userMock });
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
     userClassroomRepository.findOne = jest.fn().mockResolvedValue(null);
@@ -207,7 +205,7 @@ describe("Update", () => {
     expect(classroomRepository.save).toBeCalled();
   });
 
-  it("should throw NotFoundError when id are incorrect", () => {
+  it("should throw NotFoundError when id is incorrect", () => {
     classroomRepository.findOne = jest.fn().mockResolvedValue(null);
     classroomRepository.save = jest.fn().mockResolvedValue(null);
     expect(classroomService.update("", classroomDto)).rejects.toThrowError(
