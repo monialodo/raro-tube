@@ -10,11 +10,11 @@ import { Tag } from "../models/tagEntity";
 
 @Service("TagService")
 export class TagsService implements ITagService {
-  constructor(@Inject("TagRepository") private tagRepository: ITagRepository) {}
+  constructor(@Inject("TagRepository") private tagRepository: ITagRepository) { }
 
   async create(tag: Tag): Promise<Tag> {
-    const Tag = plainToInstance(TagDto,{
-      name:tag.name
+    const Tag = plainToInstance(TagDto, {
+      name: tag.name
     })
     return this.tagRepository.save(Tag);
   }

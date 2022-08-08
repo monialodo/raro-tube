@@ -11,8 +11,8 @@ export class VideoController {
     ) {}
 
   async findAll(request: Request, response: Response) {
-    const Videos = await this.videosService.findAll();
-    response.send(Videos);
+    const videos = await this.videosService.findAll();
+    response.send(videos);
   }
 
   async find(request: Request, response: Response) {
@@ -29,8 +29,8 @@ export class VideoController {
   }
 
   async update(request: Request, response: Response) {
-    const Video = await this.videosService.update(request.params.id, request.body);
-    response.send(Video);
+    const video = await this.videosService.update(request.params.id, request.body);
+    response.send(video);
   }
 
   async delete(request: Request, response: Response) {

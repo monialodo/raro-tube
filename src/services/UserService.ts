@@ -31,21 +31,19 @@ export class UserService implements IUserService {
       email: userDto.email,
       role: userDto.role,
     })
-    const token = createToken.token;
-    console.log('token', token);
-    
+    const token = createToken.token;    
 
-    await this.userRepository.save(plainToInstance(UserDto, {
+    const user = await this.userRepository.save(plainToInstance(UserDto, {
       ...userDto,
       password: hash,
-      authCode: token,
     }));
 
     await sendEmail(userDto.email, {
       subject: "Welcome to RaroTube",
       html: signupTemplate(token)
     });
-    return this.userRepository.findOne(userDto.id);
+    const {password, ...userWithoutPassword} = user
+    return userWithoutPassword as User
   }
 
   async findAll(): Promise<User[]> {
@@ -80,6 +78,9 @@ export class UserService implements IUserService {
     const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundError("User not found");
+    }
+    if (user.role === "role") {
+      throw new NotFoundError("Root user cannot be deleted");
     }
     await this.userRepository.softDelete(id);
   }
