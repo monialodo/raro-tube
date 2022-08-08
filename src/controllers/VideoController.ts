@@ -16,13 +16,22 @@ export class VideoController {
   }
 
   async find(request: Request, response: Response) {
-    const Video = await this.videosService.findOne(request.params.id);
-    response.send(Video);
+    const video = await this.videosService.findOne(request.params.id);
+
+    if(!video){
+      response.send(404)
+    }
+    console.log(video);
     
+    response.setHeader('Content-disposition', `attachment; filename=${video.name}`);
+    response.setHeader('Content-Type', video.format);
+    response.download(
+      video.path,
+      video.name
+    );
   }
 
-  async upload(request: videosRequestDTO, response: Response) {
-          
+  async upload(request: videosRequestDTO, response: Response) {   
     const videos = await this.videosService.upload(request)    
     
     response.status(201).send(videos);

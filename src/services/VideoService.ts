@@ -15,6 +15,7 @@ import { fileToInstance } from "../helpers/fileToInstance";
 import { ITagRepository } from "../@types/repositories/ITagRepository";
 import { IVideoTagRepository } from "../@types/repositories/IVideoTagRepository";
 import { Tag } from "../models/tagEntity";
+import { FileDto } from "../@types/dto/FileDto";
 
 @Service("VideoService")
 export class VideosService implements IVideosService {
@@ -36,7 +37,6 @@ export class VideosService implements IVideosService {
         ){}
     
     async upload(videoData : videosRequestDTO):Promise<Video>{
-        
         const {title,description,duration ,tags} = videoData.body
         const classroomId = videoData.body.classroomId || null
         const video = videoData.files.video[0]
@@ -49,7 +49,7 @@ export class VideosService implements IVideosService {
         }))
                 
         if(!teacher){
-          throw new NotFoundError("Teacher not found")
+            throw new NotFoundError("Teacher not found")
         }
 
         const videoFile = await this.filesService.upload(
@@ -89,13 +89,13 @@ export class VideosService implements IVideosService {
         relations:['classroom']
        })
     }
-    async findOne(id: string): Promise<Video> {
-        const video = await this.videoRepository.findOne(id, {relations:['comments']})
-        if(!video){
-            throw new NotFoundError("Video not found")
-        }
-        return video
-    } 
+    async findOne(id: string): Promise<FileDto> {
+        const foundVideo = await this.videoRepository.findOne(id,{
+            relations:['video']
+        });
+        const file = await this.filesService.download(foundVideo.video.id)
+        return file;
+    }
     async update(id: string, video: Video): Promise<Video> {
         const foundVideo = await this.videoRepository.findOne(id);
         if (!foundVideo) {
