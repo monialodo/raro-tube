@@ -40,6 +40,14 @@ export class CommentController {
     response.send(Comment);
   }
 
+  async isItMineComment(request: Request, response: Response) {
+    const Comment = await this.commentService.isItMineComment(
+      request.params.id,
+      request.params.userId
+    );
+    response.send(Comment);
+  }
+
   async update(request: Request, response: Response) {
     const Comment = await this.commentService.update(
       request.params.id,

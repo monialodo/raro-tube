@@ -6,8 +6,10 @@ export interface ICommentService {
   findAll(): Promise<Comment[]>;
   findOne(id: string): Promise<Comment>;
   update(id: string, commenDto: CommentDTO): Promise<Comment>;
+
   findUserComment(userId: string): Promise<Comment>;
   delete(id: string): Promise<void>;
   patchVote(commentDto: CommentReactionDTO):Promise<Comment>;
-  
+  isItMineComment(id: string, userId: string): Promise<boolean>;
+  delete(id: string): Promise<void>;
 }

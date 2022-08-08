@@ -18,6 +18,9 @@ const createCommentRouter = () => {
   router.patch("/:id/vote", errorMiddleware((req, res) => getController().patchVote(req, res)));  
   router.get("/:id/user", errorMiddleware((req, res) => getController().findUserComment(req, res)));
   router.delete("/:id", errorMiddleware((req, res) => getController().delete(req, res)));
+  router.get("/:id/isItMine", (req, res) => getController().isItMineComment(req, res));
+  router.delete("/:id", (req, res) => getController().delete(req, res));
+
   return router;
 };
 
