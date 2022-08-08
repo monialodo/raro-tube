@@ -1,4 +1,4 @@
 export type emailOptions = {
   subject: string;
-  text: string;
+  html: string;
 };

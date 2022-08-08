@@ -9,6 +9,7 @@ import { IUserService } from "../@types/services/IUserService";
 import { hashPassword } from "../helpers/HashPassword";
 import { sendEmail } from "../helpers/sendEmail";
 import { User } from "../models/userEntity";
+import { forgotTemplate } from "../public/emails/forgotTemplate";
 
 @Service("UserService")
 export class UserService implements IUserService {
@@ -31,13 +32,12 @@ export class UserService implements IUserService {
       password: hash,
       authCode: authCode,
     }));
- 
+
     await sendEmail(userDto.email, {
-      subject: "Welcome to Monia",
-      text: `Welcome to ${userDto.name}!
-      Your authentication code is: ${authCode}`
+      subject: "Welcome to RaroTube",
+      html: forgotTemplate(authCode)
     });
-    return this.userRepository.findByEmail(userDto.email);
+    return;
   }
 
   async findAll(): Promise<User[]> {

@@ -18,7 +18,7 @@ const createUserRouter = () => {
   router.post("/", adminAuthMiddleware, errorMiddleware((req, res) => getController().create(req, res)));
   router.put("/:id", errorMiddleware((req, res) => getController().update(req, res)));
   router.delete("/:id", errorMiddleware((req, res) => getController().delete(req, res)));
- 
+
   return router;
 }; 
 

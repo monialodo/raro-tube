@@ -10,7 +10,7 @@ import { IAuthenticationService } from "../@types/services/IAuthenticationServic
 import { hashPassword } from "../helpers/HashPassword";
 import { sendEmail } from "../helpers/sendEmail";
 import { generateToken, resetPassToken } from "../helpers/Token";
-
+import { signupTemplate } from "../public/emails/signupTemplate";
 
 
 @Service("AuthenticationService")
@@ -104,11 +104,8 @@ export class AuthenticationService implements IAuthenticationService {
 
 
     const options = {
-      subject: "Reset Password | Daniel",
-      text: `Here is your token to reset your password: ${token}.
-        Please copy and paste it in the browser to reset your password.
-        If you did not request this, please ignore this email and your password will remain unchanged.`,
-
+      subject: "Raro Tube | Reset Password",
+      html: signupTemplate(token),
     };
     await sendEmail(email, options);
 

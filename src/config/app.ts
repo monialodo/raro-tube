@@ -11,7 +11,7 @@ const createApp = (): express.Express => {
   errorHandler(app);
 
   return app;
- 
+
 }
 
 

@@ -15,7 +15,6 @@ export const start = async () => {
     const app = createApp();
     createDependencyInjector(); 
     createServer(app); 
-
   } catch (error) { 
     console.error("Fatal error: ", error);
   }
