@@ -8,12 +8,18 @@ export class userClassroomDto {
   user : User
   classroom:Classroom
 }
-export interface classroomRequestDTO extends Request{
+
+export interface CreateClassroomDto {
+  name: string;
+  description: string;
+}
+
+export interface ClassroomRequestDTO extends Request{
     file: Express.Multer.File
     body: Classroom
 }
 
-export interface enrollStudentsDTO{
+export interface EnrollStudentsDTO{
   userId: string
   classroomId:string
 }

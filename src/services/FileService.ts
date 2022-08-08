@@ -1,5 +1,7 @@
+import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
-import { FileDto } from "../@types/dto/FileDto";
+import { FileDto, UploadFileDto } from "../@types/dto/FileDto";
+import { NotFoundError } from "../@types/errors/NotFoundError";
 import { IFilesRepository } from "../@types/repositories/IFilesRepository";
 import { IFileService } from "../@types/services/IFileService";
 import { File } from "../models/fileEntity";
@@ -11,8 +13,7 @@ export class FileService implements IFileService {
   ) { }
 
   async upload(file: FileDto): Promise<File> {
- 
-    return this.fileRepository.save(file);
+    return this.fileRepository.save(plainToInstance(File, file));
   }
 
   async findAll(): Promise<File[]> {
@@ -20,14 +21,18 @@ export class FileService implements IFileService {
   }
 
   async download(id: string): Promise<File> {
-    return this.fileRepository.findOne(id)
+    const file = await this.fileRepository.findOne(id)
+    if (!file) {
+      throw new NotFoundError("File not found");
+    }
+    return file;
   }
 
   async update(id: string, file: FileDto): Promise<File> {
     
     const foundFile = await this.fileRepository.findOne(id);
     if (!foundFile) {
-      throw new Error("File not found");
+      throw new NotFoundError("File not found");
     }
     return this.fileRepository.save({id, ...file})
   }
@@ -35,7 +40,7 @@ export class FileService implements IFileService {
   async delete(id: string): Promise<void> {
     const file = await this.fileRepository.findOne(id);
     if (!file) {
-      throw new Error("File not found");
+      throw new NotFoundError("File not found");
     }
     await this.fileRepository.softDelete(id);
   }
