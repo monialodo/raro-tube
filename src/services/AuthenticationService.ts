@@ -9,8 +9,8 @@ import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { IAuthenticationService } from "../@types/services/IAuthenticationService";
 import { hashPassword } from "../helpers/HashPassword";
 import { sendEmail } from "../helpers/sendEmail";
-import { generateToken, generatePassToken } from "../helpers/Token";
-import { signupTemplate } from "../public/emails/signupTemplate";
+import { generatePassToken, generateToken } from "../helpers/Token";
+import { forgotTemplate } from "../public/emails/forgotTemplate";
 
 
 
@@ -34,12 +34,15 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   async signup(signupData: SignupDto): Promise<AuthResponseDTO> {
-    const { name, email, password, authToken } = signupData;
-    if (!authToken) {
+    const { name, email, password, token } = signupData
+    
+    const decoded = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+    
+    if (!decoded) {
       throw new ForbiddenError("You must provide a code to signup");
     }
-    const user = await this.userRepository.findByEmail(email);
-
+    
+    const user = await this.userRepository.findByEmail(decoded.email);
     if (!email) {
       throw new ForbiddenError("You must provide a email to signup");
     }
@@ -50,22 +53,23 @@ export class AuthenticationService implements IAuthenticationService {
         role: user.role,
       },
     )
-    const token = userToken.token;
+    const token_user = userToken.token;
     const newUser = await this.userRepository.save(plainToInstance(UserDto, {
       ...user,
       name: name || user.name,
       password: hashPassword(password) || hashPassword(user.password),
     }));
-
+    console.log('token', token_user);
+    
 
     return {
       user: newUser,
-      token,
+      token: token_user,
     };
   }
 
   async login(loginData: LoginDTO): Promise<AuthResponseDTO> {
-   const { email, password } = loginData;
+    const { email, password } = loginData;
 
 
     const user = await this.userRepository.findByEmail(email);
@@ -90,9 +94,9 @@ export class AuthenticationService implements IAuthenticationService {
 
   }
   async forgot(email: string): Promise<void> {
-    
+
     const user = await this.userRepository.findByEmail(email);
-    
+
     if (!user) {
       throw new ForbiddenError();
     }
@@ -105,10 +109,10 @@ export class AuthenticationService implements IAuthenticationService {
 
     await this.userRepository.save(plainToInstance(UserDto, { ...user, token }));
 
- 
+
     const options = {
       subject: "Raro Tube | Reset Password",
-      html: signupTemplate(token),
+      html: forgotTemplate(token),
     };
     await sendEmail(email, options);
 

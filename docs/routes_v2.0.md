@@ -52,16 +52,16 @@
 - [x]  GET /:id
   - (ADMIN, STUDENT[OW], TEACHER[OW/OC])
   - get a classroom
-- [ ]  PUT /:id
+- [x]  PUT /:id
   - (ADMIN)
   - update a classroom
-- [ ]  DELETE /:id
+- [x]  DELETE /:id
   - (ADMIN)
   - delete a classroom
-- [ ]  GET /:id/students
+- [X]  GET /:id/students
   - (ADMIN, TEACHER[OC])
   - get all students of a classroom
-- [ ] POST /:id/teachers
+- [ ] POST /:id/teachers  -- virou /students?
   - (ADMIN, TEACHER[OC], STUDENT[OC])
   - get all teachers of a classroom
 
@@ -78,16 +78,16 @@
 - [x]  PUT /:id
   - (ADMIN[OW], TEACHER[OW])
   - update video by id
-- [ ]  DELETE /:id
+- [ X  DELETE /:id
   - (ADMIN, TEACHER[OW])
   - delete video from classroom
-- [ ]  GET /favorites
+- [X]  GET /favorites
   - (ADMIN, TEACHER[OW], STUDENT[OW])
   - get all favorites videos from classroom
 - [ ]  PATCH /:id/favorite
   - (ADMIN, TEACHER[OW], STUDENT[OW])
   - favorite a video (switch favorite)
-- [ ]  GET /:id/comments
+- [X]  GET /:id/comments
   - (ADMIN, TEACHER[OC], ALUNO[OC])
   - get all comments of a video
 - [ ]  POST /:id/comments
@@ -101,18 +101,18 @@
   - react to a comment from a video (downvote, upvote)
 
 ## TAG
-- [ ]  GET /
+- [x]  GET /
   - (ADMIN)
   - get all tags
-- [ ]  POST /
+- [x]  POST /
   - (ADMIN)
   - post a tag
-- [ ]  GET /:id
+- [x]  GET /:id
   - (ADMIN)
   - get tag by id
-- [ ]  PUT /:id
+- [x]  PUT /:id
   - (ADMIN)
   - update tag by id
-- [ ]  DELETE /:id
+- [x]  DELETE /:id
   - (ADMIN)
   - delete tag by id

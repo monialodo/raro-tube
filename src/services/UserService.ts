@@ -8,8 +8,9 @@ import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { IUserService } from "../@types/services/IUserService";
 import { hashPassword } from "../helpers/HashPassword";
 import { sendEmail } from "../helpers/sendEmail";
+import { createUserToken, generatePassToken } from "../helpers/Token";
 import { User } from "../models/userEntity";
-import { forgotTemplate } from "../public/emails/forgotTemplate";
+import { signupTemplate } from "../public/emails/signupTemplate";
 
 @Service("UserService")
 export class UserService implements IUserService {
@@ -20,24 +21,31 @@ export class UserService implements IUserService {
 
   async create(userDto: UserDto): Promise<User> {
     const hash = hashPassword(Math.random().toString(16).substring(2, 12));
-    const authCode = Math.random().toString(16).substring(2, 8)
     const registeredUser = await this.userRepository.findByEmail(userDto.email);
 
     if (registeredUser) {
       throw new EmailRegistered();
     }
 
+    const createToken = createUserToken({
+      email: userDto.email,
+      role: userDto.role,
+    })
+    const token = createToken.token;
+    console.log('token', token);
+    
+
     await this.userRepository.save(plainToInstance(UserDto, {
       ...userDto,
       password: hash,
-      authCode: authCode,
+      authCode: token,
     }));
 
     await sendEmail(userDto.email, {
       subject: "Welcome to RaroTube",
-      html: forgotTemplate(authCode)
+      html: signupTemplate(token)
     });
-    return;
+    return this.userRepository.findOne(userDto.id);
   }
 
   async findAll(): Promise<User[]> {

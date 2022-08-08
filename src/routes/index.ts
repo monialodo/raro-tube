@@ -15,12 +15,10 @@ const createRouters = (app: express.Express) => {
   app.use("/v1/comments", createCommentRouter());
   app.use("/v1/tags", createTagRouter());
   app.use("/v1/videos", createVideoRouter());
-  app.use("/v1/files", createFileRouter()); 
+  app.use("/v1/files", createFileRouter());
   app.use("/v1/favorites", createFavoritesRouter())
   app.use("/v1/auth", createAuthenticationRouter());
 
-  console.log('Routers created');
-  
 };
 
 export default createRouters;

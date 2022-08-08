@@ -4,7 +4,6 @@ import { RequestUser } from "../@types/middlewares/requestUser";
 
 
 export const allUserAuthMiddleware = (request: RequestUser, response: Response, next: NextFunction) => {
-  console.log('allUserAuthMiddleware');
 
   const authorization = request.headers.authorization;
   if (!authorization) {
@@ -16,7 +15,10 @@ export const allUserAuthMiddleware = (request: RequestUser, response: Response, 
   const parseJwt = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
   console.log('parseJwt', parseJwt.role);
 
-  parseJwt.role ? next() : next(new UnauthorizedError());
-
+  if (!parseJwt.role) {
+    throw new UnauthorizedError();
+  } else {
+    next();
+  }
 }
 

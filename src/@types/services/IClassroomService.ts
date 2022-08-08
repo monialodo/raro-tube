@@ -1,6 +1,5 @@
 import { Classroom } from "../../models/classroomEntity";
 import { UserClassroom } from "../../models/userClassroomEntity";
-import { User } from "../../models/userEntity";
 import { ClassroomsDto, EnrollStudentsDTO } from "../dto/ClassroomsDto";
 
 

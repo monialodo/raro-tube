@@ -1,5 +1,5 @@
 import { sign, verify } from "jsonwebtoken";
-import { UserResetPasswordDTO, UserResponseDTO, UserTokenDTO } from "../@types/dto/AuthenticationDto";
+import { CreateUserTokenDTO, UserResetPasswordDTO, UserResponseDTO, UserTokenDTO } from "../@types/dto/AuthenticationDto";
 
 
 export const generateToken = (user: UserTokenDTO) => {
@@ -24,6 +24,18 @@ export const generatePassToken = (user: UserResetPasswordDTO) => {
     }
   }
 
+
+  export const createUserToken = (user: CreateUserTokenDTO) => {
+
+    const token: string = sign(user, process.env.JWT_SECRET, {
+        expiresIn: "2h",
+      });
+    
+      return {
+        token,
+      }
+    }
+  
 
 
 

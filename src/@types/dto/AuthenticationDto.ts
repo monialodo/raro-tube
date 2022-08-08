@@ -10,13 +10,19 @@ export interface SignupDto {
   name: string;
   email: string;
   password: string;
-  authToken: string;
+  token: string;
 }
 
 export interface UserTokenDTO {
   id: string;
   role: string;
 }
+
+export interface CreateUserTokenDTO {
+  email: string;
+  role: string;
+}
+
 
 export interface UserResponseDTO {
   name: string
