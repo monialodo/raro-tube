@@ -147,3 +147,32 @@ A única exceção é a nota da Apresentação, que será a mesma para todos os 
 - O trabalho da equipe seja regido pelo gitflow
 - Cada entrega das issues seja feita em um pull request separado
 - Os integrantes do grupo se comuniquem, ajudando uns aos outros, e revisando as entregas dos códigos, para garantir a melhor qualidade possível
+
+
+### E VAMOS AOS GRUPOS......
+```
+Grupo 1
+  Arthur Porto
+  Clayton Mendes
+  Larissa Leite
+  Octávio Rocha
+  Paulo André
+Grupo 2
+  Ana Paula
+  Felipe Patrocínio
+  Gabriel Balbinot
+  João Orlando
+  Matheus Pereira
+Grupo 3
+  André Valentim
+  Bruno Guirra
+  Igor Oszter
+  Jose Wesley
+  Tiago Macedo
+Grupo 4
+  Daniel Santana
+  Gabriel Zanco
+  Marcus Davi
+  Monia Lodo
+  William Ricardo
+```

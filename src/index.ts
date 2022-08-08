@@ -14,8 +14,8 @@ export const start = async () => {
     await createDatabaseConnection();
     const app = createApp();
     createDependencyInjector(); 
-    createServer(app);
- ;
+    createServer(app); 
+
   } catch (error) { 
     console.error("Fatal error: ", error);
   }
