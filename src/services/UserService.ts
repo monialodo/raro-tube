@@ -22,7 +22,7 @@ export class UserService implements IUserService {
   async create(userDto: UserDto): Promise<User> {
     const hash = hashPassword(Math.random().toString(16).substring(2, 12));
     const registeredUser = await this.userRepository.findByEmail(userDto.email);
-
+    console.log(userDto)
     if (registeredUser) {
       throw new EmailRegistered();
     }
@@ -32,20 +32,21 @@ export class UserService implements IUserService {
       role: userDto.role,
     })
     const token = createToken.token;
-    console.log('token', token);
-    
 
-    await this.userRepository.save(plainToInstance(UserDto, {
+    const user = await this.userRepository.save(plainToInstance(UserDto, {
       ...userDto,
       password: hash,
-      authCode: token,
     }));
 
     await sendEmail(userDto.email, {
       subject: "Welcome to RaroTube",
       html: signupTemplate(token)
     });
-    return this.userRepository.findOne(userDto.id);
+
+    const { password, ...userWithoutPassword } = user;
+
+
+    return userWithoutPassword as User;
   }
 
   async findAll(): Promise<User[]> {

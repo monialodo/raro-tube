@@ -18,7 +18,7 @@ export const adminOrTeacherAuthMiddleware = (request: RequestUser, response: Res
     
     console.log('parseJwt', parseJwt.role);
     if ((parseJwt.role === enumRoles.ADMIN) || (parseJwt.role === enumRoles.TEACHER)) {
-        next();
+        return next();
     } else {
         throw new UnauthorizedError()
     }
