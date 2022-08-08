@@ -11,7 +11,9 @@ import { Comment } from "../models/commentEntity";
 export class CommentService implements ICommentService {
   constructor(
     @Inject("CommentRepository")
-    private commentRepository: ICommentRepository
+    private commentRepository: ICommentRepository,
+    @Inject("UserRepository")
+    private userRepository: ICommentRepository
   ) {}
 
   async create(comment: CommentDTO): Promise<Comment> {
@@ -32,6 +34,16 @@ export class CommentService implements ICommentService {
     }
     return comment;
   }
+
+  async findUserComment(userId: string): Promise<Comment> {
+    const comment = await this.commentRepository.findOne({ where: { userId } });
+    const user = await this.userRepository.findOne(comment.user);
+    if (!comment) {
+      throw new NotFoundError("Comment not found");
+    }
+    return user;
+  }
+
 
   async patchUpVote(id: string): Promise<Comment> {
     const comment = await this.commentRepository.findOne(id);
