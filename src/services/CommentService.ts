@@ -4,6 +4,7 @@ import { Inject, Service } from "typedi";
 import { CommentDTO } from "../@types/dto/CommentDto";
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { ICommentRepository } from "../@types/repositories/ICommentRepository";
+import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { ICommentService } from "../@types/services/ICommentService";
 import { Comment } from "../models/commentEntity";
 
@@ -12,6 +13,8 @@ export class CommentService implements ICommentService {
   constructor(
     @Inject("CommentRepository")
     private commentRepository: ICommentRepository
+    @Inject("UserRepository")
+    private userRepository: IUserRepository
   ) {}
 
   async create(comment: CommentDTO): Promise<Comment> {
@@ -49,6 +52,15 @@ export class CommentService implements ICommentService {
     }
     comment.downvoteQuantity += 1;
     return this.commentRepository.save(comment);
+  }
+
+  async findUserComment(userId: string): Promise<Comment> {
+    const comment = await this.commentRepository.findOne({ where: { userId } });
+    const user = await this.userRepository.findOne(comment.user);
+    if (!comment) {
+      throw new NotFoundError("Comment not found");
+    }
+    return { ...comment, user };
   }
 
   async update(id: string, comment: Comment): Promise<Comment> {

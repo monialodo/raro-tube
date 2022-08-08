@@ -8,6 +8,7 @@ export interface ICommentService {
   update(id: string, commenDto: CommentDTO): Promise<Comment>;
   patchUpVote(id: string): Promise<Comment>;
   patchDownVote(id: string): Promise<Comment>;
+  findUserComment(userId: string): Promise<Comment>;
   delete(id: string): Promise<void>;
   
 }
