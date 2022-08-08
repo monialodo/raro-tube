@@ -1,5 +1,5 @@
 import { Inject,Service } from "typedi";
-import {  videosRequestDTO } from "../@types/dto/VideosDto";
+import {  videosRequestDTO, videoTagsDto } from "../@types/dto/VideosDto";
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { IVideosService } from "../@types/services/IVideosService";
 import { Video } from "../models/videoEntity";
@@ -12,8 +12,9 @@ import { ICommentService } from "../@types/services/ICommentService";
 import { Comment } from "../models/commentEntity";
 import { CommentVideoDTO } from "../@types/dto/CommentDto";
 import { fileToInstance } from "../helpers/fileToInstance";
-
-
+import { ITagRepository } from "../@types/repositories/ITagRepository";
+import { IVideoTagRepository } from "../@types/repositories/IVideoTagRepository";
+import { Tag } from "../models/tagEntity";
 
 @Service("VideoService")
 export class VideosService implements IVideosService {
@@ -27,18 +28,26 @@ export class VideosService implements IVideosService {
         @Inject("ClassroomService")
         private readonly classroomService: IClassroomService,
         @Inject("CommentService")
-        private readonly commentService: ICommentService
+        private readonly commentService: ICommentService,
+        @Inject("VideoTagRepository")
+        private readonly videoTagRepository: IVideoTagRepository,
+        @Inject("TagRepository")
+        private readonly tagRepository: ITagRepository,
         ){}
     
     async upload(videoData : videosRequestDTO):Promise<Video>{
         
-        const {title,description,duration } = videoData.body
+        const {title,description,duration ,tags} = videoData.body
         const classroomId = videoData.body.classroomId || null
         const video = videoData.files.video[0]
         const thumbnail = videoData.files.thumbnail[0]   
-
-        const teacher = await this.usersService.findOne(videoData.body.teacherId)  
-
+       
+        const teacher = await this.usersService.findOne(videoData.body.teacherId) 
+        
+        const tagsVideo = await Promise.all(tags.map( async tag => {
+             return this.tagRepository.findOne(tag)
+        }))
+                
         if(!teacher){
           throw new NotFoundError("Teacher not found")
         }
@@ -54,7 +63,7 @@ export class VideosService implements IVideosService {
         let classroom = null     
         if(classroomId){
           classroom = await this.classroomService.findOne(classroomId)
-        }
+        }        
         
         const videoInstance = plainToInstance(Video, {
             title,
@@ -63,10 +72,14 @@ export class VideosService implements IVideosService {
             teacher,            
             classroom,
             video:videoFile,
-            thumbnail:thumbFile
-        })      
-          
-        return  this.videoRepository.save(videoInstance)        
+            thumbnail:thumbFile,
+        })
+
+        const videoSaved = await this.videoRepository.save(videoInstance)   
+
+        await this.createvideoTags(videoSaved, tagsVideo)  
+    
+        return  this.videoRepository.save(videoSaved)        
 
     }
 
@@ -114,13 +127,9 @@ export class VideosService implements IVideosService {
 
     async sendComment(comment: CommentVideoDTO):Promise<Comment>{
         const {content, userId,videoId}= comment
-
-        const video = await this.videoRepository.findOne(videoId)
-        
+        const video = await this.videoRepository.findOne(videoId)        
         //Mock
-        const user = await this.usersService.findOne('dcfba9a4-e555-443f-bc86-23e972b9c3e7')
-        
-
+        const user = await this.usersService.findOne(userId)     
         if(!video || !user){
             throw new NotFoundError
         }
@@ -133,6 +142,20 @@ export class VideosService implements IVideosService {
         return commentVideo
     }
 
+    private async createvideoTags(video:Video, tags: Tag[]):Promise<videoTagsDto[]>{
+        let videoTags;
+        for(let tag of tags){
+            
+             videoTags = plainToInstance(videoTagsDto, {
+                videoId:video.id,
+                tagId:tag.id,
+                tag:tag,
+                video:video
+            })      
+            await this.videoTagRepository.save(videoTags)
+        }
+        return videoTags
+    }
 
 
 }

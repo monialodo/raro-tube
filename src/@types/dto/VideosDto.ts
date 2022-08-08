@@ -1,6 +1,7 @@
 
 import { Video } from "../../models/videoEntity";
 import { Request } from "express";
+import { VideoTag } from "../../models/videoTagEntity";
 
 export class VideoDTO extends Video{}
 export class VideoUploadDTO{
@@ -10,6 +11,8 @@ export class VideoUploadDTO{
   teacher_id:string
   classroom_id?: string
 }
+
+export class videoTagsDto extends VideoTag{}
 
 export interface videosRequestDTO extends Request{
     files : {
@@ -22,5 +25,6 @@ export interface videosRequestDTO extends Request{
         duration :string
         teacherId: string
         classroomId?: string
+        tags:string[]
     }
   }

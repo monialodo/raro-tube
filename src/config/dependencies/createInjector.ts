@@ -9,7 +9,8 @@ import { TagRepository } from "../../repositories/tagsRepository";
 import { UserRepository } from "../../repositories/userRepository";
 import { VideoRepository } from "../../repositories/videoRepository";
 import { UserClassroomRepository } from "../../repositories/userClassroomRepository";
-
+import { commentReactionRepository } from "../../repositories/commentReactionRepository";
+import { VideoTagRepository } from "../../repositories/videoTagRepository";
 // inicializador de dependências:
 // inicializa controllers
 
@@ -34,6 +35,7 @@ import "../../services/TagService";
 import "../../services/UserService";
 import "../../services/VideoService";
 
+
 const createDependencyInjector = () => {
   Container.set("UserRepository", getCustomRepository(UserRepository));
   Container.set(
@@ -49,6 +51,9 @@ const createDependencyInjector = () => {
   Container.set("FileRepository", getCustomRepository(FileRepository));
   Container.set("FavoriteRepository", getCustomRepository(FavoritesRepository));
   Container.set("UserClassroomRepository", getCustomRepository(UserClassroomRepository));
+  Container.set("CommentReactionRepository", getCustomRepository(commentReactionRepository));
+  Container.set("VideoTagRepository", getCustomRepository(VideoTagRepository))
+  
 };
 
 export default createDependencyInjector;

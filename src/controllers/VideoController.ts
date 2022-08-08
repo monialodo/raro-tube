@@ -22,7 +22,7 @@ export class VideoController {
   }
 
   async upload(request: videosRequestDTO, response: Response) {
-      
+          
     const videos = await this.videosService.upload(request)    
     
     response.status(201).send(videos);
