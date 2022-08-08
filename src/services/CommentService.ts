@@ -1,11 +1,14 @@
 import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
 
-import { CommentDTO } from "../@types/dto/CommentDto";
+import { CommentDTO, CommentReactionDTO } from "../@types/dto/CommentDto";
 import { NotFoundError } from "../@types/errors/NotFoundError";
+import { ICommentReactionRepository } from "../@types/repositories/ICommentReactionRepository";
 import { ICommentRepository } from "../@types/repositories/ICommentRepository";
+import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { ICommentService } from "../@types/services/ICommentService";
 import { Comment } from "../models/commentEntity";
+import { CommentReaction } from "../models/commentReactionEntity";
 
 @Service("CommentService")
 export class CommentService implements ICommentService {
@@ -13,7 +16,9 @@ export class CommentService implements ICommentService {
     @Inject("CommentRepository")
     private commentRepository: ICommentRepository,
     @Inject("UserRepository")
-    private userRepository: ICommentRepository
+    private userRepository: IUserRepository,
+    @Inject("CommentReactionRepository")
+    private commentReactionRepository: ICommentReactionRepository,
   ) {}
 
   async create(comment: CommentDTO): Promise<Comment> {
@@ -36,33 +41,100 @@ export class CommentService implements ICommentService {
   }
 
   async findUserComment(userId: string): Promise<Comment> {
-    const comment = await this.commentRepository.findOne({ where: { userId } });
-    const user = await this.userRepository.findOne(comment.user);
-    if (!comment) {
-      throw new NotFoundError("Comment not found");
-    }
-    return user;
+    // const comment = await this.commentRepository.findOne({ where: { userId } });
+    // const user = await this.userRepository.findOne(comment.user);
+    // if (!comment) {
+    //   throw new NotFoundError("Comment not found");
+    // }
+    // return user;
+    
+    return
   }
 
 
-  async patchUpVote(id: string): Promise<Comment> {
-    const comment = await this.commentRepository.findOne(id);
-    if(comment.upvoteQuantity === 1) {
-      comment.upvoteQuantity -= 1;
+  async patchVote(commentDto: CommentReactionDTO):Promise<Comment>{
+    const {id, reaction,userId} = commentDto
+  
+    const comment = await this.commentRepository.findOne(id)
+    if(!comment){
+      throw new NotFoundError
     }
-    comment.upvoteQuantity += 1;
-    return this.commentRepository.save(comment);
-  }
 
-  async patchDownVote(id: string): Promise<Comment> {
-    const comment = await this.commentRepository.findOne(id);
-    if(comment.downvoteQuantity === 1) {
-      comment.downvoteQuantity -= 1;
+    let commentReaction = await this.commentReactionRepository.findOne({
+      where:{commentId:id, userId:userId}
+    })
+
+    
+    const user = await this.userRepository.findOne(userId)
+
+    if(!commentReaction){
+      commentReaction = plainToInstance(CommentReaction,{
+        commentId:comment.id,
+        comment:comment,
+        userId:userId,
+        user:user, 
+        reaction:null
+      })
     }
-    comment.downvoteQuantity += 1;
-    return this.commentRepository.save(comment);
-  }
+       
 
+    if(reaction == commentReaction.reaction && reaction == 'up'){
+      if(comment.upvoteQuantity != 0){
+        comment.upvoteQuantity -=1
+      }
+
+      commentReaction.reaction = null
+      await this.commentReactionRepository.delete({comment,user})
+      return this.commentRepository.save(comment)
+    }
+
+    if(reaction == commentReaction.reaction && reaction == 'down'){
+      if(comment.downvoteQuantity != 0){
+        comment.downvoteQuantity -=1
+      }
+      commentReaction.reaction = null
+      await this.commentReactionRepository.delete({comment,user})
+      return this.commentRepository.save(comment)
+    }
+    
+    if(reaction != commentReaction.reaction && reaction == 'up'){
+      if(comment.downvoteQuantity != 0){
+        comment.downvoteQuantity -=1
+      }
+      comment.upvoteQuantity +=1
+      commentReaction.reaction = 'up'
+      await this.commentReactionRepository.save(commentReaction)
+      return this.commentRepository.save(comment)
+    }
+
+    if(reaction != commentReaction.reaction && reaction == 'down'){
+      if(comment.upvoteQuantity != 0){
+        comment.upvoteQuantity -=1
+      }
+      comment.downvoteQuantity +=1      
+      commentReaction.reaction = 'down'
+      await this.commentReactionRepository.save(commentReaction)
+      return this.commentRepository.save(comment)
+    }
+
+    if(commentReaction.reaction == null){
+      if(reaction == 'up'){
+        comment.upvoteQuantity +=1
+        commentReaction.reaction = 'up'
+      }
+      if(reaction == 'down'){
+        comment.downvoteQuantity +=1
+        commentReaction.reaction = 'down'
+      }
+
+     
+      await this.commentReactionRepository.save(commentReaction)
+      return this.commentRepository.save(comment)
+    }
+    
+
+ 
+  }
   async update(id: string, comment: Comment): Promise<Comment> {
     return this.commentRepository.save({ id, ...comment });
   }

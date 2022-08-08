@@ -1,4 +1,6 @@
+import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
+import { TagDto } from "../@types/dto/TagsDto";
 
 
 import { NotFoundError } from "../@types/errors/NotFoundError";
@@ -11,7 +13,10 @@ export class TagsService implements ITagService {
   constructor(@Inject("TagRepository") private tagRepository: ITagRepository) {}
 
   async create(tag: Tag): Promise<Tag> {
-    return this.tagRepository.save(tag);
+    const Tag = plainToInstance(TagDto,{
+      name:tag.name
+    })
+    return this.tagRepository.save(Tag);
   }
 
   async findAll(): Promise<Tag[]> {

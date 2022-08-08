@@ -25,14 +25,14 @@ export class CommentController {
     response.status(201).send(Comment);
   }
 
-  async patchUpvote(request: Request, response: Response) {
-    const Comment = await this.commentService.patchUpVote(request.params.id);
-    response.send(Comment);
-  }
+  async patchVote(request: Request, response: Response){
+    const id = request.params.id
+    const reaction = request.body.vote
+    //Mock
+    const userId = 'dcfba9a4-e555-443f-bc86-23e972b9c3e7'
 
-  async patchDownvote(request: Request, response: Response) {
-    const Comment = await this.commentService.patchDownVote(request.params.id);
-    response.send(Comment);
+    const Comment = await this.commentService.patchVote({id,reaction,userId})
+    response.send(Comment)
   }
 
   async findUserComment(request: Request, response: Response) {
