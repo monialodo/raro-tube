@@ -1,6 +1,4 @@
 import { File } from "../../models/fileEntity";
-import { UserClassroom } from "../../models/userClassroomEntity";
-import { EnrollStudentsDTO } from "../dto/ClassroomsDto";
 import { FileDto } from "../dto/FileDto";
 
 export interface IFileService {

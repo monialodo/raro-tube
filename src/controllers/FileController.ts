@@ -3,8 +3,6 @@ import { Request, Response } from "express";
 import { IFileService } from "../@types/services/IFileService";
 import { plainToInstance } from "class-transformer";
 import { File } from "../models/fileEntity";
-import { FileDto } from "../@types/dto/FileDto";
-import { BadRequestError } from "../@types/errors/BadRequestError";
 
 
 @Service("FileController")

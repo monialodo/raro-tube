@@ -1,5 +1,4 @@
-import { AuthResponseDTO, LoginDTO, ResetPasswordDto, SignupDto, UserResponseDTO } from "../dto/AuthenticationDto";
-import { Request } from "express";
+import { AuthResponseDTO, LoginDTO, ResetPasswordDto, SignupDto } from "../dto/AuthenticationDto";
 
 
 export interface IAuthenticationService {

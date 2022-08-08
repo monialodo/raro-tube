@@ -1,5 +1,5 @@
-import { sign, verify } from "jsonwebtoken";
-import { CreateUserTokenDTO, UserResetPasswordDTO, UserResponseDTO, UserTokenDTO } from "../@types/dto/AuthenticationDto";
+import { sign} from "jsonwebtoken";
+import { CreateUserTokenDTO, UserResetPasswordDTO, UserTokenDTO } from "../@types/dto/AuthenticationDto";
 
 
 export const generateToken = (user: UserTokenDTO) => {

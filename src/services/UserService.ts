@@ -8,7 +8,7 @@ import { IUserRepository } from "../@types/repositories/IUserRepository";
 import { IUserService } from "../@types/services/IUserService";
 import { hashPassword } from "../helpers/HashPassword";
 import { sendEmail } from "../helpers/sendEmail";
-import { createUserToken, generatePassToken } from "../helpers/Token";
+import { createUserToken} from "../helpers/Token";
 import { User } from "../models/userEntity";
 import { signupTemplate } from "../public/emails/signupTemplate";
 

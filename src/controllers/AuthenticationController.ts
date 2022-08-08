@@ -30,13 +30,13 @@ export class AuthenticationController {
 
   async forgot(req: Request, res: Response) {
     const { email } = req.body;
-    this.authService.forgot(email);
+    await this.authService.forgot(email);
     res.status(200).json({ message: "Email sent!"});
   }
 
   async resetPassword(req: Request, res: Response) {
 
-    this.authService.resetPassword(req.body);
+    await this.authService.resetPassword(req.body);
     res.status(200).json({ message: "Password updated" });
   }
 

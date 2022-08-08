@@ -1,8 +1,6 @@
-import { Comment } from "../../models/commentEntity";
 import { User } from "../../models/userEntity";
 import { Video } from "../../models/videoEntity";
 import { Reaction } from "../helpers/EnumReaction";
-import { Request } from "express";
 
 export class CommentDTO {
     content: string;

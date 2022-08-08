@@ -162,7 +162,7 @@ describe("enrollStuddents", () => {
     userClassroomRepository.save = jest.fn().mockResolvedValue({ ...enrollStudentsMock });
     await classroomService.enrollStudents(enrollStudentsMock);
     expect(userClassroomRepository.save).toBeCalled();
-  }),
+  })
 
   it("should throw NotFoundError when userId is incorrect", () => {
     userRepository.findOne = jest.fn().mockResolvedValue(null);

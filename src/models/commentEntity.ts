@@ -13,7 +13,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  IsNull,
   JoinColumn,
   ManyToOne,
   OneToMany,

@@ -1,6 +1,6 @@
 import { plainToInstance } from "class-transformer";
 import { Inject, Service } from "typedi";
-import { FileDto, UploadFileDto } from "../@types/dto/FileDto";
+import { FileDto} from "../@types/dto/FileDto";
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { IFilesRepository } from "../@types/repositories/IFilesRepository";
 import { IFileService } from "../@types/services/IFileService";

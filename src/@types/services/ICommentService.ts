@@ -1,5 +1,5 @@
 import { Comment } from "../../models/commentEntity";
-import { CommentDTO, CommentReactionDTO, CommentVideoDTO } from "../dto/CommentDto";
+import { CommentDTO, CommentReactionDTO} from "../dto/CommentDto";
 
 export interface ICommentService {
   create(commenDto: CommentDTO): Promise<Comment>;

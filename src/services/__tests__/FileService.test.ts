@@ -23,7 +23,7 @@ const fileMock = plainToInstance(FileDto, {
 describe("Upload", () => {
   it("should call fileRepository.save", async () => {
     fileRepository.save = jest.fn().mockResolvedValue(fileMock);
-    fileService.upload(fileMock);
+    await fileService.upload(fileMock);
     expect(fileRepository.save).toBeCalled()
   })
 });

@@ -1,6 +1,5 @@
 import * as nodemailer from 'nodemailer';
 import { emailOptions } from '../@types/helpers/EmailOptions';
-import { signupTemplate } from '../public/emails/signupTemplate';
 // UNCOMMENT THIS TO TEST WITHOUT RUNNING THE APP
 // import 'dotenv/config';
 
