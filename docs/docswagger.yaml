@@ -16,6 +16,7 @@ definitions:
   AuthDTO:
     type: object
     required:
+      - user
       - token
     properties:
       token:
@@ -34,6 +35,8 @@ definitions:
   TokenDTO:
     type: object
     required:
+      - role
+      - id
       - token
     properties:
       token:
@@ -45,10 +48,10 @@ definitions:
     required:
       - title
       - description
-      - videos_file_id
+      - videosFileId
       - tags
-      - teacher_id
-      - classrooms_id
+      - teacherId
+      - classroomsId
       - duration
     properties:
       title:
@@ -83,12 +86,12 @@ definitions:
       - id
       - title
       - description
-      - videos_file_id
+      - videosFileId
       - tags
-      - teacher_id
-      - classrooms_id
-      - created_at
-      - updated_at
+      - teacherId
+      - classroomsId
+      - createdAt
+      - updatedAt
     properties:
       id:
         type: "string"
@@ -138,8 +141,8 @@ definitions:
       - id
       - name
       - description
-      - logo_id
-      - created_at
+      - logoId
+      - createdAt
     properties:
       id:
         type: "string"
@@ -165,11 +168,11 @@ definitions:
       - id
       - name
       - description
-      - teacher_id
-      - logo_id
-      - created_at
-      - updated_at
-      - deleted_at
+      - teacherId
+      - logoId
+      - createdAt
+      - updatedAt
+      - deletedAt
     properties:
       id:
         type: "string"
@@ -227,8 +230,8 @@ definitions:
       - name
       - email
       - password
-      - avatar_id
-      - created_at
+      - avatarId
+      - createdAt
     properties:
       id:
         type: "string"
@@ -261,9 +264,9 @@ definitions:
       - name
       - email
       - password
-      - avatar_id
+      - avatarId
       - role
-      - created_at
+      - createdAt
     properties:
       id:
         type: "string"
@@ -311,10 +314,10 @@ definitions:
     required:
       - id
       - name
-      - size_bites
+      - sizeBites
       - format
       - path
-      - created_at
+      - createdAt
     properties:
       id:
         type: "string"
@@ -344,13 +347,13 @@ definitions:
     required:
       - id
       - name
-      - size_bites
+      - sizeBites
       - format
       - path
       - type
-      - created_at
-      - updated_at
-      - deleted_at
+      - createdAt
+      - updatedAt
+      - deletedAt
     properties:
       id:
         type: "string"
@@ -390,9 +393,9 @@ definitions:
       - content
       - upvoteQuantity
       - downvoteQuantity
-      - users_id
-      - videos_id
-      - created_at
+      - usersId
+      - videosId
+      - createdAt
     properties:
       id:
         type: "string"
@@ -426,9 +429,9 @@ definitions:
       - content
       - upvoteQuantity
       - downvoteQuantity
-      - users_id
-      - videos_id
-      - created_at
+      - usersId
+      - videosA
+      - createdAt
     properties:
       id:
         type: "string"
@@ -468,7 +471,7 @@ definitions:
     required:
       - id
       - name
-      - created_at
+      - createdAt
     properties:
       id:
         type: "string"
@@ -486,7 +489,7 @@ definitions:
     required:
       - id
       - name
-      - created_at
+      - createdAt
     properties:
       id:
         type: "string"
@@ -511,10 +514,10 @@ definitions:
     type: "object"
     required:
       - id
-      - users_id
-      - comment_id
+      - usersId
+      - commentId
       - reaction
-      - created_at
+      - createdAt
     properties:
       id:
         type: "string"
@@ -637,7 +640,7 @@ definitions:
         type: "string"
         example: "Internal Server Error"
 paths:
-  /auth/Signup:
+  /auth/signup:
     post:
       tags:
         - Auth
@@ -645,16 +648,26 @@ paths:
       description: "Sign Up a user"
       operationId: "authenticate"
       consumes:
-        - "application/json"
+        - "multipart/form-data"
       produces:
         - "application/json"
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Users credentials"
+        - in: "formData"
+          name: "email"
+          description: "Email of the user"
           required: true
-          schema:
-            $ref: "#/definitions/AuthDTO"
+          type: "string"
+          format: "email"
+        - in: "formData"
+          name: "username"
+          type: "string"
+          description: "Username"
+          required: true
+        - in: "formData"
+          name: "password"
+          type: "string"
+          description: "User password"
+          required: true
       responses:
         200:
           description: "Users authenticated"
@@ -672,24 +685,28 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /auth/Login:
+  /auth/login:
     post: 
       tags:
         - Auth
-      summary: "Sign In"
-      description: "Sign In a user"
+      summary: "Login"
+      description: "Login a user"
       operationId: "authenticateLogin"
       consumes:
-        - "application/json"
+        - "multipart/form-data"
       produces:
         - "application/json"
       parameters:
-        - in: "body"
-          name: "body"
+        - in: "formData"
+          name: "email"
+          type: "string"
           description: "Users credentials"
           required: true
-          schema:
-            $ref: "#/definitions/AuthDTO"
+        - in: "formData"
+          name: "password"
+          type: "string"
+          description: "Users credentials"
+          required: true
       responses:
         200:
           description: "Users authenticated"
@@ -707,7 +724,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/ErrorDTO"
-  /auth/Forgot:
+  /auth/forgot:
     post:
       tags:
         - Auth
@@ -715,19 +732,18 @@ paths:
       description: "Forgot Password"
       operationId: "authenticateForgot"
       consumes:
-        - "application/json"
+        - "multipart/form-data"
       produces:
         - "application/json"
       parameters:
-        - in: "body"
-          name: "body"
+        - in: "formData"
+          name: "email"
+          type: "string"
           description: "Users credentials"
           required: true
-          schema:
-            $ref: "#/definitions/ForgotDTO"
       responses:
         200:
-          description: "Users authenticated"
+          description: "Token sent"
           schema:
             $ref: "#/definitions/ForgotDTO"
         404:
@@ -746,16 +762,15 @@ paths:
       description: "verify if token is valid to change password"
       operationId: "authenticateToken"
       consumes:
-        - "application/json"
+        - "multipart/form-data"
       produces:
         - "application/json"
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Users credentials"
+        - in: "formData"
+          name: "token"
+          type: "string"
+          description: "Token"
           required: true
-          schema:
-            $ref: "#/definitions/TokenDTO"
       responses:
         200:
           description: "Users authenticated"
@@ -1214,8 +1229,8 @@ paths:
     delete:
       tags:
         - "videos"
-      summary: "Delete a videos"
-      description: "Delete a videos by its id"
+      summary: "Delete a video"
+      description: "Delete a video by its id"
       operationId: "deleteVideos"
       produces:
         - "application/json"
