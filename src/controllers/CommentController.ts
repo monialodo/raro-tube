@@ -35,8 +35,11 @@ export class CommentController {
     response.send(Comment);
   }
 
-  async findUserComment(request: Request, response: Response) {
-    const Comment = await this.commentService.findUserComment(request.params.id);
+  async isItMineComment(request: Request, response: Response) {
+    const Comment = await this.commentService.isItMineComment(
+      request.params.id,
+      request.params.userId
+    );
     response.send(Comment);
   }
 
