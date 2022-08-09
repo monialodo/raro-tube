@@ -9,7 +9,7 @@ import { User } from "../../models/userEntity";
 import { UserRepository } from "../../repositories/userRepository";
 import { AuthenticationService } from "../AuthenticationService";
 
-import sign from 'jwt-encode';
+const sign = require('jwt-encode');
 
 const userRepository = new UserRepository();
 const authService = new AuthenticationService(userRepository);
@@ -46,15 +46,14 @@ describe("Signup", () => {
     const secret = password;
 
     const data = {
-      email: email,
+      id: "91a38689-9894-4ce4-9249-7cb051edde34",
       role: 'student',
     };
 
+
     const jwt = sign(data, secret);
-   
 
     const tokenSpy = jest.spyOn(tokenGenerator, 'generatePassToken').mockReturnValue({ token: jwt });
-
 
     const signup = await authService.signup(signupDto);
 
@@ -112,11 +111,11 @@ describe("Login", () => {
       email: email,
       role: 'student',
     };
-    
-    const jwt = sign(data, secret);  
+
+    const jwt = sign(data, secret);
     const tokenSpy = jest.spyOn(tokenGenerator, 'generateToken').mockReturnValue({ token: jwt });
-    
-    userRepository.findByEmailAndPassword = jest.fn().mockResolvedValue(loginData);    
+
+    userRepository.findByEmailAndPassword = jest.fn().mockResolvedValue(loginData);
 
     const login = await authService.login(loginDto);
     expect(login).toMatchObject<AuthResponseDTO>({
@@ -153,17 +152,17 @@ describe("Forgot", () => {
   it("should call sendEmail with email and options", async () => {
     userRepository.findByEmail = jest.fn().mockResolvedValue(user);
     const secret = user.password;
-    
+
     const data = {
       email: user.email,
       id: user.id,
     };
     const jwt = sign(data, secret);
-    
+
     const tokenSpy = jest.spyOn(tokenGenerator, 'generatePassToken').mockReturnValue({ token: jwt });
-     
+
     userRepository.save = jest.fn().mockResolvedValue(user);
-    
+
     await authService.forgot(email);
 
     expect(emailSpy).toBeCalledWith(user.email,
@@ -173,46 +172,46 @@ describe("Forgot", () => {
       })
     );
 
-    });
-
-    it("should not call sendEmail when there's no user", async () => {
-
-      userRepository.findByEmail = jest.fn();
-      await expect(authService.forgot(email)).rejects.toThrow(ForbiddenError)
-      expect(emailSpy).not.toBeCalled();
-    });
   });
 
-  describe("ResetPassword", () => {
-    const password = faker.internet.password();
-    const user = plainToInstance(User, {
-      avatar: null,
-      password,
-      role: "student",
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-    });
-    userRepository.save = jest.fn().mockResolvedValue(user);
-    userRepository.findOne = jest.fn().mockResolvedValue(user);
+  it("should not call sendEmail when there's no user", async () => {
 
-    it("should call userRepository.save", async () => {
-
-      const data = {
-        email: user.email,
-        id: user.id,
-      };
-      const jwt = sign(data, password);
-
-      const tokenSpy = jest.spyOn(tokenGenerator, 'generatePassToken').mockReturnValue({ token: jwt });
-
-      userRepository.findOne = jest.fn().mockResolvedValue(user.id);
-
-      await authService.resetPassword({ password, token: jwt });
-      expect(userRepository.save).toBeCalled();
-    });
-
-    it("should throw ForbiddenError", () => {
-      const code = undefined;
-      expect(authService.resetPassword({ password, token: code })).rejects.toThrow(ForbiddenError);
-    });
+    userRepository.findByEmail = jest.fn();
+    await expect(authService.forgot(email)).rejects.toThrow(ForbiddenError)
+    expect(emailSpy).not.toBeCalled();
   });
+});
+
+describe("ResetPassword", () => {
+  const password = faker.internet.password();
+  const user = plainToInstance(User, {
+    avatar: null,
+    password,
+    role: "student",
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+  });
+  userRepository.save = jest.fn().mockResolvedValue(user);
+  userRepository.findOne = jest.fn().mockResolvedValue(user);
+
+  it("should call userRepository.save", async () => {
+
+    const data = {
+      email: user.email,
+      id: user.id,
+    };
+    const jwt = sign(data, password);
+
+    const tokenSpy = jest.spyOn(tokenGenerator, 'generatePassToken').mockReturnValue({ token: jwt });
+
+    userRepository.findOne = jest.fn().mockResolvedValue(user.id);
+
+    await authService.resetPassword({ password, token: jwt });
+    expect(userRepository.save).toBeCalled();
+  });
+
+  it("should throw ForbiddenError", () => {
+    const code = undefined;
+    expect(authService.resetPassword({ password, token: code })).rejects.toThrow(ForbiddenError);
+  });
+});

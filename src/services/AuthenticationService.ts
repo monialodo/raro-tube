@@ -34,11 +34,9 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   async signup(signupData: SignupDto): Promise<AuthResponseDTO> {
-    
     const { name, email, password, token } = signupData
-    
     const decoded = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
-    
+
     if (!decoded) {
       throw new ForbiddenError("You must provide a code to signup");
     }

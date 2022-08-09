@@ -4,11 +4,13 @@ import { NotFoundError } from "../../@types/errors/NotFoundError"
 import { Classroom } from "../../models/classroomEntity"
 import { User } from "../../models/userEntity"
 import { Video } from "../../models/videoEntity"
+import { TagRepository } from "../../repositories/tagsRepository"
 import { VideoRepository } from "../../repositories/videoRepository"
+import { VideoTagRepository } from "../../repositories/videoTagRepository"
 import { ClassroomsService } from "../ClassroomService"
 import { CommentService } from "../CommentService"
 import { FileService } from "../FileService"
-import { UserService } from "../userService"
+import { UserService } from "../UserService"
 import { VideosService } from "../VideoService"
 
 const videoRepository = {} as VideoRepository;
@@ -16,13 +18,15 @@ const filesService = {} as FileService;
 const userService = {} as UserService;
 const classroomService = {} as ClassroomsService;
 const commentService = {} as CommentService;
-  
+
 const videoService = new VideosService(
   videoRepository,
   filesService,
   userService,
   classroomService,
-  commentService
+  commentService,
+  new VideoTagRepository,
+  new TagRepository
 );
 
 // jest.mock("../../repositories/videoRepository", () => ({
@@ -39,19 +43,19 @@ const FileMock = [{
 }] as Express.Multer.File[]
 
 const videoMock = {
-  files : {
+  files: {
     video: FileMock,
     thumbnail: FileMock,
   },
   body: {
-      title : 'string', 
-      description : 'string',
-      duration :'string',
-      teacherId: 'string',
-      classroomId: 'string'
+    title: 'string',
+    description: 'string',
+    duration: 'string',
+    teacherId: 'string',
+    classroomId: 'string'
   }
 } as videosRequestDTO;
-  
+
 beforeEach(() => {
   jest.clearAllMocks();
 });
@@ -131,7 +135,7 @@ describe("findComments", () => {
     await videoService.findComments("string");
     expect(videoRepository.findOne).toBeCalledWith(
       expect.objectContaining({
-        where:{
+        where: {
           id: expect.any(String),
         },
         relations: ['comments']
