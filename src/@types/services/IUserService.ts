@@ -1,3 +1,4 @@
+import { UserClassroom } from "../../models/userClassroomEntity";
 import { User } from "../../models/userEntity";
 import { UserDto } from "../dto/UserDto";
 
@@ -6,6 +7,6 @@ export interface IUserService {
   findAll(): Promise<User[]>;
   findOne(id: string): Promise<User>;
   findByLogin(login: string): Promise<User>;
-  update(id: string, userDTO: UserDto): Promise<User>;
   delete(id: string): Promise<void>;
+  getUserClassrooms(userId: string): Promise<UserClassroom[]>;
 }

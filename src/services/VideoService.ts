@@ -16,6 +16,7 @@ import { ITagRepository } from "../@types/repositories/ITagRepository";
 import { IVideoTagRepository } from "../@types/repositories/IVideoTagRepository";
 import { Tag } from "../models/tagEntity";
 import { FileDto } from "../@types/dto/FileDto";
+import { In } from "typeorm";
 
 @Service("VideoService")
 export class VideosService implements IVideosService {
@@ -84,11 +85,31 @@ export class VideosService implements IVideosService {
     }
 
     
-    async findAll(): Promise<Video[]> {
-       return this.videoRepository.find({
-        relations:['classroom']
-       })
+    async findAllPublic({page, itemsPerPage}: {page: number, itemsPerPage: number}): Promise<Video[]> {
+        const queryPage = page || 1;
+        const take = itemsPerPage || 10;
+        return this.videoRepository.find({
+            where: {classroom: null},
+            relations:['classroom'],
+            skip: (queryPage - 1) * itemsPerPage,
+            take
+        })
     }
+
+    async findAllPrivate({page, itemsPerPage}: {page: number, itemsPerPage: number}, userId: string): Promise<Video[]> {
+        const queryPage = page || 1;
+        const take = itemsPerPage ||  10;
+      
+        const classroomIds =(await this.usersService.getUserClassrooms(userId)).map(({classroomId}) => classroomId)
+      
+        return this.videoRepository.find({
+            where: {classroomId: In(classroomIds)},
+            relations:['classroom'],
+            skip: (queryPage - 1) * itemsPerPage,
+            take
+        })
+      }
+
     async findOne(id: string): Promise<FileDto> {
         const foundVideo = await this.videoRepository.findOne(id,{
             relations:['video']

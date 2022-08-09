@@ -83,4 +83,8 @@ export class UserService implements IUserService {
     }
     await this.userRepository.softDelete(id);
   }
+
+  async getUserClassrooms(userId: string) {
+    return (await this.userRepository.findOne(userId, { relations: ['userClassrooms'] })).userClassrooms;
+  }
 }

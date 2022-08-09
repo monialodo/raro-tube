@@ -1104,6 +1104,15 @@ paths:
       operationId: "findAllVideos"
       produces:
         - "application/json"
+      parameters:
+      - in: query
+        name: page
+        type: integer
+        description: The number of items to skip before starting to collect the result set.
+      - in: query
+        name: itemsPerPage
+        type: integer
+        description: The numbers of items to return.
       responses:
         200:
           description: "OK"

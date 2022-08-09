@@ -78,7 +78,7 @@ describe("upload", () => {
 describe("findAll", () => {
   it("should call videoRepository.find", async () => {
     videoRepository.find = jest.fn().mockResolvedValueOnce([]);
-    await videoService.findAll();
+    await videoService.findAll({ page: 1, itemsPerPage: 10 });
     expect(videoRepository.find).toBeCalled();
   })
 });

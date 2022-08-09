@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
 import {  videosRequestDTO } from "../@types/dto/VideosDto";
+import { RequestUser } from "../@types/middlewares/requestUser";
 import { IVideosService } from "../@types/services/IVideosService";
+
 
 @Service("VideoController")
 export class VideoController {
@@ -10,8 +12,17 @@ export class VideoController {
     private readonly videosService: IVideosService
     ) {}
 
-  async findAll(request: Request, response: Response) {
-    const videos = await this.videosService.findAll();
+  async findAllPublic(request: Request, response: Response) {
+    const page = Number(request.query.page || 1);
+    const itemsPerPage = Number(request.query.itemsPerPage || 10);
+    const videos = await this.videosService.findAllPublic({ page, itemsPerPage });
+    response.send(videos);
+  }
+
+  async findAllPrivate(request: Request, response: Response) {
+    const page = Number(request.query.page || 1);
+    const itemsPerPage = Number(request.query.itemsPerPage || 10);
+    const videos = await this.videosService.findAllPrivate({ page, itemsPerPage }, (request as RequestUser).user.id);
     response.send(videos);
   }
 

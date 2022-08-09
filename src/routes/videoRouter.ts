@@ -18,7 +18,8 @@ const getController = (): VideoController => {
 const createVideoRouter = () => {
   const upload = multer({ dest: './uploads' })
 
-  router.get("/", errorMiddleware((req, res) => getController().findAll(req, res)));
+  router.get("/", errorMiddleware((req, res) => getController().findAllPublic(req, res)));
+  router.get("/private", allUserAuthMiddleware, errorMiddleware((req, res) => getController().findAllPrivate(req, res)));
   router.post("/", adminOrTeacherAuthMiddleware,
     upload.fields([{ name: "video", maxCount: 1 }, { name: "thumbnail", maxCount: 1 }]),
     errorMiddleware((req: videosRequestDTO, res) => getController().upload(req, res)));

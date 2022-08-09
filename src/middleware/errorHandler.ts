@@ -6,6 +6,7 @@ import { InternalServerError } from "../@types/errors/InternalServerErrorError";
 import { NotFoundError } from "../@types/errors/NotFoundError";
 import { UnauthorizedError } from "../@types/errors/UnauthorizedError";
 import { UnprocessableEntityError } from "../@types/errors/UnprocessableEntityError";
+import { RequestUser } from '../@types/middlewares/requestUser';
 
 const handledHttpStatusErrors = [
   BadRequestError,
